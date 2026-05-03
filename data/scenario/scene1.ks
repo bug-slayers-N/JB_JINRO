@@ -1,0 +1,100 @@
+[_tb_system_call storage=system/_scene1.ks]
+
+[cm  ]
+[bg  storage="93853245_p0.png"  time="1000"  ]
+[jump  storage="scene1.ks"  target="*attention"  cond="sf.attention==1"  ]
+[tb_show_message_window  ]
+[tb_start_text mode=1 ]
+#初回注意事項
+このゲームはファン活動の一環として作られた【非公式】のゲームです。原作者様ならびに各権利者様とは一切関係がございません。[p]
+公式に問い合わせたり、二次創作に理解のない方に向けて再配布することはご遠慮ください。[p]
+個人制作のフリーゲーム故に小さな不具合等の粗がございます。ご容赦ください。[p]
+特にAIの人狼ロジックは人力100％の力技なのでかなり漏れがあることが予測されます。[p]
+問題があった場合は即座に公開・配布を停止致しますので、クレジットよりご連絡お願いします。[p]
+[_tb_end_text]
+
+[tb_hide_message_window  ]
+[tb_eval  exp="sf.attention=1"  name="attention"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
+*attention
+
+[glink  color="btn_05_red"  storage="role.ks"  size="20"  text="・&nbsp;　ゲーム開始&nbsp;　・"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_white"  storage="scene1.ks"  size="20"  text="・プロローグを見る・"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*prologue"  ]
+[s  ]
+*prologue
+
+[tb_show_message_window  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[tb_start_text mode=1 ]
+#周防
+「VIPの皆様、大変長らくお待たせいたしました」[p]
+「より臨場感の高い、ギャンブラー視点でギャンブルを観戦したいという声にお応えしてご用意いたしましたエキシビション」[p]
+「ジャンケット人狼ゲームの開幕にございます」[p]
+「勿論、今回小間使いなのはギャンブラーの方にございます。選んだギャンブラーに指示を出し、人狼ゲームを攻略し、勝利に導いてくださいませ」[p]
+「おっと、意図的に敗北させても全く問題はございません」[p]
+「また役職やゲームの流れは遊ぶ度にランダムに展開されます」[p]
+「思うがままに我が銀行が誇るギャンブラー達の戦いを間近でごゆっくり楽しんでくださいませ」[p]
+[_tb_end_text]
+
+[mask  time="500"  effect="fadeIn"  color="0x000000"  ]
+[mask_off  time="500"  effect="fadeOut"  ]
+[tb_start_text mode=1 ]
+#周防
+「ここからはメタ発言になることをご了承くださいませ」[p]
+「ゲームを解説させていただきます」[p]
+
+[_tb_end_text]
+
+[chara_hide_all  time="1000"  wait="true"  ]
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara_260426kari.jpg"  ]
+[tb_start_text mode=1 ]
+#周防
+「まずはじめに、主人公としてプレイしたいギャンブラーをお選びください」[p]
+「選んだギャンブラーで難易度が前後します。自信のない方は真経津晨をお選びください。"主人公補正"がかかっております」[p]
+「高難易度がお望みの方は獅子神敬一を。またキャラクターは随時追加されていきますので、製作者のXをご確認ください」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="無題158_20260429163000.jpg"  ]
+[tb_start_text mode=1 ]
+#周防
+「次に人狼における役職をお選びください」[p]
+「《人狼》は毎晩1人人間を襲撃し、現在生存している人狼の数≧村人の数になることを目指します。また嘘がつけます」[p]
+「《狂人》は人間でありながら《人狼》に味方し、人狼勝利時に同時に勝利します。こちらも嘘がつけます」[p]
+「《占い師》はゲーム開始時と毎晩、占いにより1人の人間か？人狼か？の情報を得ます。人狼を全て処刑で勝利です」[p]
+「《村人》は特殊な能力は持ちません。人狼を全て処刑で勝利です」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="スクリーンショット_2026-04-29_161945.png"  ]
+[tb_start_text mode=1 ]
+「キャラと役職が決まれば、ゲームが開始します」[p]
+「こちらがメイン画面です。画面左のコマンドボタンでゲームは進みます」[p]
+「《疑う》、シンプルに対象を疑います。対象の平常心を減らします」[p]
+「《かばう》、対象をかばいます。対象の平常心を回復させます」[p]
+「《様子を見る》、プレイヤー以外のキャラが行動します。様子を見るの使用率が低いと少し悪いことが起きるそうです」[p]
+「《強く疑う》プレイヤーのみにある一度限りのコマンドです。通常より大ダメージを与える疑うを行います。特に大きなダメージを与えるには理由が必要なようです」[p]
+「《COする》《偽COする》、該当役職のみ活性化するコマンドです。自分は占い師だと宣言し、占い結果を報告します。それが偽だとしても」[p]
+「《COを促す》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
+「《人間と言え》、人間宣言させます。使用者は平常心を減らすかわりに、人狼と狂人の平常心も減らします。全体で一回のみのコマンドです」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara_noText_260429kari.png"  ]
+[tb_start_text mode=1 ]
+「規定ターンを経過すると投票フェーズに入ります」[p]
+「対象キャラに投票して、処刑されるキャラを決めましょう」[p]
+「人狼が処刑されるとゲーム終了し、村陣営の勝利となります」[p]
+「人狼が生き残っている限り、二日目に移行します」[p]
+「人狼は投票後、襲撃フェーズをはさみ、任意の対象を襲撃して死亡させます」[p]
+「勝利条件を達成するまでこれを繰り返します」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[tb_start_text mode=1 ]
+「正直、習うより慣れろというゲームです」[p]
+「細かいゲーム仕様はおまけページ内のよくありそうなQ＆Aにまとめてあります」[p]
+「特定条件で勝利を収めるとおまけページのおまけストーリーが解放されるそうです」[p]
+「お時間のあるVIPの方は是非に挑戦してみてください」[p]
+「それではゲーム説明を終了し、ゲームを開始させていただきます」[p]
+[_tb_end_text]
+
+[chara_hide_all  time="1000"  wait="true"  ]
+[jump  storage="role.ks"  target=""  ]
