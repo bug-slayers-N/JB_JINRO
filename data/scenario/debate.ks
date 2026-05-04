@@ -18,6 +18,11 @@
 [jump  storage="end.ks"  target="*turn_count"  ]
 *debate_top
 
+[iscript]
+var aliveArr = String(f.alive).split(",");
+if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
+[endscript]
+
 [jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
 [glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*kuro"  ]
 [glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
