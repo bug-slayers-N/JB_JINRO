@@ -42,7 +42,6 @@ f.win=0;
 *liar
 
 [iscript]
-// liar.ks
 var roles=[parseInt(f.mafutsu),parseInt(f.sisigami),parseInt(f.murasame),parseInt(f.kano),parseInt(f.tendo)];
 var playerNum=parseInt(f.player);
 var aliveArr=String(f.alive).split(",");
@@ -56,14 +55,12 @@ var t=[];
 for(var i=1;i<=5;i++){if(i!==a)t.push(i);}
 return o+t.indexOf(b);
 }
-// 確定値(3,4,5)は上書き不可
 function setLiar(idx,val){
 var cur=parseInt(lr[idx]);
 if(cur>=3)return;
 lr[idx]=String(val);
 }
 // ===== 全員共通①：処刑続行バレ =====
-// 処刑者を人狼と申告していたCO→全員視点でliar=1
 var executed=parseInt(f.result);
 if(executed>0){
 for(var i=1;i<=5;i++){
@@ -85,7 +82,6 @@ setLiar(gi(obs,i),1);
 }
 }
 // ===== 全員共通②：CO人数による正直確定 =====
-// 占い師COが3人以上→非COキャラは全員視点でliar=5
 var coCount=0;
 for(var i=1;i<=5;i++){
 if(coArr[i-1]==="1")coCount++;
@@ -98,6 +94,49 @@ for(var obs=1;obs<=5;obs++){
 if(obs===i)continue;
 if(aliveArr[obs-1]==="0")continue;
 setLiar(gi(obs,i),5);
+}
+}
+}
+// ===== 全員共通③：liar=5のキャラを人狼申告したCO→liar=1 =====
+for(var obs=1;obs<=5;obs++){
+if(aliveArr[obs-1]==="0")continue;
+for(var i=1;i<=5;i++){
+if(i===obs)continue;
+if(coArr[i-1]==="0")continue;
+var c1t=parseInt(claim[(i-1)*2]);
+var c1r=parseInt(claim[(i-1)*2+1]);
+var c2t=parseInt(claim2[(i-1)*2]);
+var c2r=parseInt(claim2[(i-1)*2+1]);
+if(c1r===1&&c1t>0&&parseInt(lr[gi(obs,c1t)])===5)setLiar(gi(obs,i),1);
+if(c2r===1&&c2t>0&&parseInt(lr[gi(obs,c2t)])===5)setLiar(gi(obs,i),1);
+}
+}
+// ===== 全員共通④：死亡COチェーン（A黒B・B黒C→C人狼確定） =====
+for(var a=1;a<=5;a++){
+if(coArr[a-1]==="0")continue;
+if(aliveArr[a-1]==="1")continue;
+for(var b=1;b<=5;b++){
+if(b===a)continue;
+if(coArr[b-1]==="0")continue;
+if(aliveArr[b-1]==="1")continue;
+var aBc1t=parseInt(claim[(a-1)*2]);
+var aBc1r=parseInt(claim[(a-1)*2+1]);
+var aBc2t=parseInt(claim2[(a-1)*2]);
+var aBc2r=parseInt(claim2[(a-1)*2+1]);
+var aClaimedB=(aBc1t===b&&aBc1r===1)||(aBc2t===b&&aBc2r===1);
+if(!aClaimedB)continue;
+var bc1t=parseInt(claim[(b-1)*2]);
+var bc1r=parseInt(claim[(b-1)*2+1]);
+var bc2t=parseInt(claim2[(b-1)*2]);
+var bc2r=parseInt(claim2[(b-1)*2+1]);
+var c=0;
+if(bc1r===1&&bc1t>0&&aliveArr[bc1t-1]==="1")c=bc1t;
+else if(bc2r===1&&bc2t>0&&aliveArr[bc2t-1]==="1")c=bc2t;
+if(c===0)continue;
+for(var obs=1;obs<=5;obs++){
+if(obs===c)continue;
+if(aliveArr[obs-1]==="0")continue;
+lr[gi(obs,c)]="3";
 }
 }
 }
@@ -120,23 +159,19 @@ if(c2t===mad&&c2r===1)setLiar(gi(mad,i),1);
 for(var seer=1;seer<=5;seer++){
 if(roles[seer-1]!==3)continue;
 if(aliveArr[seer-1]==="0")continue;
-// 自分以外のCO→liar=1
 for(var i=1;i<=5;i++){
 if(i===seer)continue;
 if(coArr[i-1]==="0")continue;
 setLiar(gi(seer,i),1);
 }
-// seer_result1・2で人狼判定→liar=3（人狼確定）
 var sr1=String(f.seer_result1).split(",");
 var sr2=String(f.seer_result2).split(",");
 var sr1tgt=parseInt(sr1[0]);var sr1res=parseInt(sr1[1]);
 var sr2tgt=parseInt(sr2[0]);var sr2res=parseInt(sr2[1]);
 if(sr1tgt>0&&sr1res===1)lr[gi(seer,sr1tgt)]="3";
 if(sr2tgt>0&&sr2res===1)lr[gi(seer,sr2tgt)]="3";
-// seer_resultで人間判定 かつ そのスロットがliar=1→即liar=4（狂人確定）
 if(sr1tgt>0&&sr1res===0&&parseInt(lr[gi(seer,sr1tgt)])===1)lr[gi(seer,sr1tgt)]="4";
 if(sr2tgt>0&&sr2res===0&&parseInt(lr[gi(seer,sr2tgt)])===1)lr[gi(seer,sr2tgt)]="4";
-// liar=4が既にいる状態でliar=1がもう一人いる→そいつはliar=3（人狼確定）
 var hasMad=false;
 for(var i=1;i<=5;i++){
 if(i===seer)continue;
@@ -168,13 +203,11 @@ if(c2t===vil&&c2r===1)setLiar(gi(vil,i),1);
 for(var wolf=1;wolf<=5;wolf++){
 if(roles[wolf-1]!==1)continue;
 if(aliveArr[wolf-1]==="0")continue;
-// liar=1のスロット→狂人確定(liar=4)
 for(var i=1;i<=5;i++){
 if(i===wolf)continue;
 if(aliveArr[i-1]==="0")continue;
 if(parseInt(lr[gi(wolf,i)])===1)lr[gi(wolf,i)]="4";
 }
-// COが自分以外を人狼と申告 or 自分を人間(白)と申告→狂人確定(liar=4)
 for(var i=1;i<=5;i++){
 if(i===wolf)continue;
 if(coArr[i-1]==="0")continue;
@@ -187,7 +220,6 @@ if(c2t>0&&c2t!==wolf&&c2r===1)lr[gi(wolf,i)]="4";
 if(c1t===wolf&&c1r===0)lr[gi(wolf,i)]="4";
 if(c2t===wolf&&c2r===0)lr[gi(wolf,i)]="4";
 }
-// 残りのスロット→人間確定(liar=2)
 for(var i=1;i<=5;i++){
 if(i===wolf)continue;
 if(aliveArr[i-1]==="0")continue;
@@ -285,7 +317,7 @@ addCalm(f.player,-20);
 var aliveArr=String(f.alive).split(",");
 var candidates=[];
 for(var i=1;i<=5;i++){
-    if(i!==parseInt(f.player)&&aliveArr[i-1]==="1")candidates.push(i);
+if(i!==parseInt(f.player)&&aliveArr[i-1]==="1")candidates.push(i);
 }
 f.target=candidates[Math.floor(Math.random()*candidates.length)];
 var names=['真経津','獅子神','村雨','叶','天堂'];

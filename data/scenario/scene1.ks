@@ -45,7 +45,7 @@
 [_tb_end_text]
 
 [chara_hide_all  time="1000"  wait="true"  ]
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara_260426kari.jpg"  ]
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
 [tb_start_text mode=1 ]
 #周防
 「まずはじめに、主人公としてプレイしたいギャンブラーをお選びください」[p]

@@ -22,7 +22,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_ki
 
-[chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_normal.png"  ]
+[chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_ki.png"  ]
 [return  ]
 *show_do
 
@@ -35,6 +35,10 @@ if(f.name==="叶")f.name="黎明";
 *show_jinro
 
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_insane.png"  ]
+[return  ]
+*show_jinro2
+
+[chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_insane2.png"  ]
 [return  ]
 *day01_01
 
@@ -64,6 +68,14 @@ if(f.name==="叶")f.name="黎明";
 
 [call  storage="tendo.ks"  target="*debate_Top"  ]
 [call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
+[jump  storage="tendo.ks"  target="*first"  cond="f.turn!=0"  ]
+[tb_start_text mode=1 ]
+#天堂
+「昼の議論ターンだ」[p]
+[_tb_end_text]
+
+*first
+
 [tb_start_text mode=1 ]
 #天堂
 「どうする？」[p]
@@ -147,6 +159,8 @@ if(f.name==="叶")f.name="黎明";
 *liar
 
 [call  storage="tendo.ks"  target="*tendo_namechange"  ]
+[call  storage="tendo.ks"  target="*show"  ]
+[call  storage="tendo.ks"  target="*show_jinro"  ]
 [tb_start_tyrano_code]
 #天堂
 ([emb exp="f.name"]は咎人のようだ)[p]
@@ -294,6 +308,7 @@ if(f.name==="叶")f.name="黎明";
 *human_win
 
 [call  storage="tendo.ks"  target="*show2"  ]
+[call  storage="tendo.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #天堂
 「善人が勝つのは当然の摂理だ。神がついているのだからな」[p]

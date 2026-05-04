@@ -28,6 +28,10 @@
 
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_insane.png"  ]
 [return  ]
+*show_jinro2
+
+[chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_insane2.png"  ]
+[return  ]
 *day01_01
 
 [call  storage="murasame.ks"  target="*show"  ]
@@ -42,7 +46,7 @@
 [call  storage="murasame.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 「…なんだ、対戦相手は獅子神達なのか」[p]
-「問題ない、私が勝つ」[p]
+「それなら問題ない、私が勝つ」[p]
 [_tb_end_text]
 
 [call  storage="murasame.ks"  target="*show_ki"  ]
@@ -56,6 +60,14 @@
 
 [call  storage="murasame.ks"  target="*debate_Top"  ]
 [call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
+[jump  storage="murasame.ks"  target="*first"  cond="f.turn!=0"  ]
+[tb_start_text mode=1 ]
+#村雨
+「昼の議論ターンの開始だ」[p]
+[_tb_end_text]
+
+*first
+
 [tb_start_text mode=1 ]
 #村雨
 「さて、どうする？」[p]
@@ -114,7 +126,7 @@
 *push
 
 [tb_start_text mode=1 ]
-「論理ではまだ証明は出来ないが、勘とやらが告げている」[p]
+「論理ではまだ証明は出来ないが、まだ勘の段階だ」[p]
 [_tb_end_text]
 
 [return  ]
@@ -138,6 +150,8 @@
 [return  ]
 *liar
 
+[call  storage="murasame.ks"  target="*show"  ]
+[call  storage="murasame.ks"  target="*show_jinro"  ]
 [tb_start_tyrano_code]
 #村雨
 (間違いない、[emb exp="f.name"]は嘘をついている)[p]

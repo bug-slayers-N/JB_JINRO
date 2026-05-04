@@ -7,7 +7,10 @@
 夜になりました。[p]
 [_tb_end_text]
 
+[jump  storage="night.ks"  target="*player_death"  cond="f.player_death==1"  ]
 [jump  storage="uranai.ks"  target="*uranai_night"  cond="f.role==3"  ]
+*player_death
+
 [call  storage="uranai.ks"  target="*uranai_randam"  ]
 *uranai_back
 
@@ -42,12 +45,18 @@ cands.push(c);
 }
 if(cands.length>0)target=cands[Math.floor(Math.random()*cands.length)];
 }
-// ③人狼がCOしている→非COキャラから平常心最高
+// ③人狼がCOしている→非COキャラ優先、なければやむを得ず全生存者から平常心最高
 if(target===0&&isCO(wolfChar)){
 var cands=[];
 for(var c=1;c<=5;c++){
 if(c===wolfChar||!isAlive(c)||isCO(c))continue;
 cands.push(c);
+}
+if(cands.length===0){
+for(var c=1;c<=5;c++){
+if(c===wolfChar||!isAlive(c))continue;
+cands.push(c);
+}
 }
 if(cands.length>0){
 cands.sort(function(a,b){var d=getPC(b)-getPC(a);return d!==0?d:a-b;});
@@ -62,7 +71,6 @@ if(c===wolfChar||!isAlive(c)||!isCO(c))continue;
 if(getLiar(c)===1)continue;
 cands.push(c);
 }
-// liar=1除外で候補なし→liar問わず全CO済みから
 if(cands.length===0){
 for(var c=1;c<=5;c++){
 if(c===wolfChar||!isAlive(c)||!isCO(c))continue;

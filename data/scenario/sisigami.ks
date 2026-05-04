@@ -28,6 +28,10 @@
 
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_insane.png"  ]
 [return  ]
+*show_jinro2
+
+[chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_insane2.png"  ]
+[return  ]
 *day01_01
 
 [call  storage="sisigami.ks"  target="*show"  ]
@@ -51,6 +55,14 @@
 
 [call  storage="sisigami.ks"  target="*debate_Top"  ]
 [call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
+[jump  storage="sisigami.ks"  target="*first"  cond="f.turn!=0"  ]
+[tb_start_text mode=1 ]
+#獅子神
+「昼の議論のターンだな」[p]
+[_tb_end_text]
+
+*first
+
 [tb_start_text mode=1 ]
 #獅子神
 「どうする？」[p]
@@ -133,6 +145,8 @@
 [return  ]
 *liar
 
+[call  storage="sisigami.ks"  target="*show"  ]
+[call  storage="sisigami.ks"  target="*show_jinro"  ]
 [tb_start_tyrano_code]
 #獅子神
 (間違いねぇ、[emb exp="f.name"]は嘘つきだ)[p]
@@ -284,6 +298,7 @@
 *human_win
 
 [call  storage="sisigami.ks"  target="*show2"  ]
+[call  storage="sisigami.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「おっし、村陣営の勝利だ。やったな」[p]

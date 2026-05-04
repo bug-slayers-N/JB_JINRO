@@ -94,6 +94,11 @@ f.name = names[f.target];
 [call  storage="UI.ks"  target="*te_B"  cond="f.list=='B'"  ]
 *te_B_jump
 
+[jump  storage="UI.ks"  target="*back2"  cond="f.jump=='uranai'"  ]
+[jump  storage="UI.ks"  target="*back2"  cond="f.jump=='CO'"  ]
+[call  storage="UI.ks"  target="*back"  cond="f.list=='A'"  ]
+*back2
+
 [s  ]
 *listB_check
 
@@ -151,6 +156,10 @@ f.result=(parseInt(f.player)===t||aliveArr[t-1]==="0")?1:0;
 *te_B
 
 [glink  color="btn_06_black"  storage="UI.ks"  size="20"  text="天堂弓彦にする"  x="1050"  y="500"  width=""  height=""  _clickable_img=""  target="*list_te"  ]
+[return  ]
+*back
+
+[glink  color="black"  storage="debate.ks"  size="20"  text="戻る"  target="*debate_top"  ]
 [return  ]
 *jump
 

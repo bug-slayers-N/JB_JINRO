@@ -30,7 +30,7 @@ f['mafutsu_calm']=110;
 f['sisigami_calm']=80; 
 f['murasame_calm']=110; 
 f['kano_calm']=100; 
-f['tendo_calm']=130; 
+f['tendo_calm']=120; 
 f['alive']='1,1,1,1,1'; 
 f['co']='0,0,0,0,0'; 
 f['claim']='0,0,0,0,0,0,0,0,0,0'; 
@@ -60,4 +60,7 @@ f['list']='A';
 f['action']=0; 
 f['push']=0; 
 f['day']=1; 
+f['claim2']='0,0,0,0,0,0,0,0,0,0'; 
+f['seer_result2']='0,0'; 
+f['seer_result1']='0,0'; 
 [endscript] 

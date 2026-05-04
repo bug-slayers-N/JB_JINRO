@@ -1,5 +1,5 @@
 [preload  storage="./data/bgimage/93853245_p0.png"  ]
-[preload  storage="./data/bgimage/BG_selectChara_260426kari.jpg"  ]
+[preload  storage="./data/bgimage/BG_selectChara.png"  ]
 [preload  storage="./data/bgimage/無題158_20260429163000.jpg"  ]
 [preload  storage="./data/bgimage/スクリーンショット_2026-04-29_161945.png"  ]
 [preload  storage="./data/bgimage/BG_selectChara_noText_260429kari.png"  ]

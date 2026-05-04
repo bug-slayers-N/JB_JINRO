@@ -36,6 +36,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_insane.png"  ]
 [return  ]
+*show_jinro2
+
+[chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_insane2.png"  ]
+[return  ]
 *day01_01
 
 [call  storage="kano.ks"  target="*show"  ]
@@ -44,6 +48,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 #叶
 「観てんだろ？オマエ」[p]
 「オレをゲームのキャラみたいに扱おうなんざ、いい度胸してんじゃん」[p]
+「…」[p]
 
 [_tb_end_text]
 
@@ -64,6 +69,14 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 
 [call  storage="kano.ks"  target="*debate_Top"  ]
 [call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
+[jump  storage="kano.ks"  target="*first"  cond="f.turn!=0"  ]
+[tb_start_text mode=1 ]
+#叶
+「昼の議論ターンだぞ！」[p]
+[_tb_end_text]
+
+*first
+
 [tb_start_text mode=1 ]
 #叶
 「どうすんだ？」[p]
@@ -148,6 +161,8 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *liar
 
 [call  storage="kano.ks"  target="*kano_namechange"  ]
+[call  storage="kano.ks"  target="*show"  ]
+[call  storage="kano.ks"  target="*show_jinro"  ]
 [tb_start_tyrano_code]
 #叶
 (あ～あ、[emb exp="f.name"]は嘘つきだな)[p]
@@ -307,6 +322,7 @@ if(nameMap[f.name2]!==undefined)f.name=nameMap[f.name2];
 *human_win
 
 [call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #叶
 「オレ達の勝利！悪い狼は退治してやったぞ！」[p]

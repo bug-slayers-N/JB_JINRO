@@ -32,7 +32,7 @@
 [_tb_end_text]
 
 [tb_hide_message_window  ]
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara_260426kari.jpg"  ]
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
 [glink  color="btn_06_red"  storage="role.ks"  size="20"  text="真経津晨にする"  x="50"  y="530"  width=""  height=""  _clickable_img=""  target="*mafutsu"  ]
 [glink  color="btn_06_yellow"  storage="role.ks"  size="20"  text="獅子神敬一にする"  x="280"  y="530"  width=""  height=""  _clickable_img=""  target="*sisigami"  ]
 [glink  color="btn_06_blue"  storage="role.ks"  size="20"  text="村雨礼二にする"  x="550"  y="530"  width=""  height=""  _clickable_img=""  target="*murasame"  ]

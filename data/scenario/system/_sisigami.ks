@@ -2,4 +2,5 @@
 [preload  storage="./data/fgimage/chara/2/shishigami_ki.png"  ]
 [preload  storage="./data/fgimage/chara/2/shishigami_aseri.png"  ]
 [preload  storage="./data/fgimage/chara/2/shishigami_insane.png"  ]
+[preload  storage="./data/fgimage/chara/2/shishigami_insane2.png"  ]
 [return]

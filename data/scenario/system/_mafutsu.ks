@@ -2,4 +2,5 @@
 [preload  storage="./data/fgimage/chara/1/mafutsu_raku.png"  ]
 [preload  storage="./data/fgimage/chara/1/mafutsu_ai.png"  ]
 [preload  storage="./data/fgimage/chara/1/mafutsu_insane.png"  ]
+[preload  storage="./data/fgimage/chara/1/mafutsu_insane2.png"  ]
 [return]

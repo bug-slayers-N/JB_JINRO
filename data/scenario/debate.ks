@@ -8,6 +8,8 @@
 [bg  time="0"  method="crossfade"  storage="93853245_p0.png"  ]
 [mask_off  time="300"  effect="fadeOut"  ]
 [call  storage="uranai.ks"  target="*uranai_randam"  ]
+*top2
+
 [call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
 [call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
 [call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
@@ -38,6 +40,7 @@
 [glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="偽COする"  x="300"  y="125"  width="150"  height=""  _clickable_img=""  target="*fCO"  ]
 *lie
 
+[glink  color="btn_07_red"  storage="debate.ks"  size="20"  text="状況確認"  target="*check"  x="213"  y="369"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *kuro
 
@@ -83,3 +86,66 @@
 
 [glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
 [s  ]
+*check
+
+[iscript]
+f.vote_disp1="";
+f.vote_disp2="";
+f.vote_disp3="";
+f.vote_disp4="";
+f.vote_disp5="";
+[endscript]
+
+[iscript]
+var names=["真経津","獅子神","村雨","叶","天堂"];
+var aliveArr=String(f.alive).split(",");
+var aliveNames=[];
+for(var i=0;i<5;i++){
+if(aliveArr[i]==="1")aliveNames.push(names[i]);
+}
+f.vote_disp1=aliveNames.join("、");
+[endscript]
+
+[iscript]
+var charNames=["真経津","獅子神","村雨","叶","天堂"];
+var resultNames=["人間","人狼"];
+var coArr=String(f.co).split(",");
+var claim=String(f.claim).split(",");
+var claim2=String(f.claim2).split(",");
+var aliveArr=String(f.alive).split(",");
+var disps=[];
+for(var i=1;i<=5;i++){
+if(coArr[i-1]==="0")continue;
+var c1t=parseInt(claim[(i-1)*2]);
+var c1r=parseInt(claim[(i-1)*2+1]);
+if(c1t>0){
+disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]);
+}
+if(aliveArr[i-1]==="1"){
+var c2t=parseInt(claim2[(i-1)*2]);
+var c2r=parseInt(claim2[(i-1)*2+1]);
+if(c2t>0){
+disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]);
+}
+}
+}
+f.vote_disp2=disps.length>0?disps[0]:"";
+f.vote_disp3=disps.length>1?disps[1]:"";
+f.vote_disp4=disps.length>2?disps[2]:"";
+f.vote_disp5=disps.length>3?disps[3]:"";
+[endscript]
+
+[tb_start_text mode=1 ]
+#ガイド
+残りの生存者は[emb exp="f.vote_disp1"]です。[p]
+占い師の報告は[emb exp="f.vote_disp2"]、[emb exp="f.vote_disp3"]、[emb exp="f.vote_disp4"]、[emb exp="f.vote_disp5"]です。[p]
+
+
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="debate.ks"  target="*debate_top"  ]

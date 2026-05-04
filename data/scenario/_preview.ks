@@ -3,294 +3,151 @@
 [mask time=10]
 [mask_off time=10]
 [cm  ]
-[call  storage="system.ks"  target="*init"  ]
-[bg  time="1000"  method="crossfade"  storage="92690259_p0.png"  ]
-[call  storage="role.ks"  target="*test"  ]
+[mask  time="300"  effect="fadeIn"  color="0x000000"  ]
 [tb_show_message_window  ]
-[tb_start_text mode=1 ]
-#システム
-遊ぶ人数を選んでください(現在は5人モードのみ)。[p]
-[_tb_end_text]
-
-*member
-
-[glink  color="btn_05_green"  storage="role.ks"  size="20"  text="5人で遊ぶ(人狼1人)"  target="*5"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_05_yellow"  storage="role.ks"  size="20"  text="9人で遊ぶ(人狼2人)"  target="*none"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-*none
-
-[tb_start_text mode=1 ]
-#ガイド
-他のギャンブラーの実装をお待ちください。(次回実装予定→牙頭＋漆原＋時雨＋山吹)[p]
-[_tb_end_text]
-
-[jump  storage="role.ks"  target="*member"  ]
-*5
-
-[tb_eval  exp="f.member=5"  name="member"  cmd="="  op="t"  val="5"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-5人モードを選択しました。選択可能キャラは真経津、獅子神、村雨、叶、天堂です。[p]
-[_tb_end_text]
-
-[tb_hide_message_window  ]
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara_260426kari.jpg"  ]
-[glink  color="btn_06_red"  storage="role.ks"  size="20"  text="真経津晨にする"  x="50"  y="530"  width=""  height=""  _clickable_img=""  target="*mafutsu"  ]
-[glink  color="btn_06_yellow"  storage="role.ks"  size="20"  text="獅子神敬一にする"  x="280"  y="530"  width=""  height=""  _clickable_img=""  target="*sisigami"  ]
-[glink  color="btn_06_blue"  storage="role.ks"  size="20"  text="村雨礼二にする"  x="550"  y="530"  width=""  height=""  _clickable_img=""  target="*murasame"  ]
-[glink  color="btn_06_purple"  storage="role.ks"  size="20"  text="叶黎明にする"  x="810"  y="530"  width=""  height=""  _clickable_img=""  target="*kano"  ]
-[glink  color="btn_06_black"  storage="role.ks"  size="20"  text="天堂弓彦にする"  x="1050"  y="530"  width=""  height=""  _clickable_img=""  target="*tendo"  ]
-[s  ]
-*choice
-
-[bg  time="1000"  method="crossfade"  storage="92690259_p0.png"  ]
-[tb_show_message_window  ]
-[return  ]
-*mafutsu
-
-[call  storage="role.ks"  target="*choice"  ]
-[tb_eval  exp="f.player=1"  name="player"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-真経津晨を選びました。[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show"  ]
-[jump  storage="role.ks"  target="*role"  ]
-*sisigami
-
-[call  storage="role.ks"  target="*choice"  ]
-[tb_eval  exp="f.player=2"  name="player"  cmd="="  op="t"  val="2"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-獅子神敬一を選びました。[p]
-[_tb_end_text]
-
-[call  storage="sisigami.ks"  target="*show"  ]
-[jump  storage="role.ks"  target="*role"  ]
-*murasame
-
-[call  storage="role.ks"  target="*choice"  ]
-[tb_eval  exp="f.player=3"  name="player"  cmd="="  op="t"  val="3"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-村雨礼二を選びました。[p]
-[_tb_end_text]
-
-[call  storage="murasame.ks"  target="*show"  ]
-[jump  storage="role.ks"  target="*role"  ]
-*kano
-
-[call  storage="role.ks"  target="*choice"  ]
-[tb_eval  exp="f.player=4"  name="player"  cmd="="  op="t"  val="4"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-叶黎明を選びました。[p]
-[_tb_end_text]
-
-[call  storage="kano.ks"  target="*show"  ]
-[jump  storage="role.ks"  target="*role"  ]
-*tendo
-
-[call  storage="role.ks"  target="*choice"  ]
-[tb_eval  exp="f.player=5"  name="player"  cmd="="  op="t"  val="5"  val_2="undefined"  ]
-[tb_start_text mode=1 ]
-#ガイド
-天堂弓彦を選びました。[p]
-[_tb_end_text]
-
-[call  storage="tendo.ks"  target="*show"  ]
-*role
-
-[tb_start_tyrano_code]
-; 1〜5の数字をランダムにシャッフルして変数に割り当てる（[iscript]でJavaScript実行）
-[iscript]
-; 配列を作成してシャッフル
-var nums = [1, 2, 3, 4, 5];
-nums.sort(function() { return Math.random() - 0.5; });
-
-// 変数に割り当て（f.はフラグ変数でセーブに残る）
-f.mafutsu = nums[0];
-f.sisigami = nums[1];
-f.murasame = nums[2];
-f.kano = nums[3];
-f.tendo = nums[4];
-
-// デバッグ用ログ（ブラウザのF12→Consoleで確認）
-console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisigami + ', murasame=' + f.murasame + ', kano=' + f.kano + ', tendo=' + f.tendo);
-[endscript]
-[_tb_end_tyrano_code]
-
-[call  storage="role.ks"  target="*test"  ]
-[tb_start_text mode=1 ]
-#ガイド
-最後に、役職はどうされますか？[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="role.ks"  size="20"  text="ランダムで！"  autopos="true"  target="*random"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="人狼で！"  target="*wolf"  autopos="true"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="狂人で！"  autopos="true"  target="*lunatic"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="占い師で！"  autopos="true"  target="*prophet"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="村人で！"  autopos="true"  target="*human"  ]
-[s  ]
-*wolf
-
-[tb_eval  exp="f.role=1"  name="role"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
+[chara_hide_all  time="0"  wait="true"  ]
 [call  storage="UI.ks"  target="*myrole"  ]
-[tb_start_text mode=1 ]
-#ガイド
-あなたは《人狼》です。頑張って生き残りましょう。[p]
-[_tb_end_text]
+[bg  time="0"  method="crossfade"  storage="93853245_p0.png"  ]
+[mask_off  time="300"  effect="fadeOut"  ]
+[call  storage="uranai.ks"  target="*uranai_randam"  ]
+*top2
 
-[jump  storage="role.ks"  target="*role_setting"  ]
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="end.ks"  target="*turn_count"  ]
+*debate_top
+
+[jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
+[glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*kuro"  ]
+[glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
+[glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
+[jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
+[glink  color="btn_08_black"  storage="say_human.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
+*s_human
+
+[jump  storage="debate.ks"  target="*push_done"  cond="f.push==1"  ]
+[glink  color="btn_08_yellow"  storage="debate.ks"  size="20"  text="強く疑う"  x="100"  y="275"  width="150"  height=""  _clickable_img=""  target="*push"  ]
+*push_done
+
+[jump  storage="debate.ks"  target="*lie"  cond="f.co!='0,0,0,0,0'"  ]
+[glink  color="btn_08_purple"  storage="debate.ks"  size="20"  text="COを求める"  x="300"  y="200"  width="150"  height=""  _clickable_img=""  target="*plz_CO"  ]
+[jump  storage="debate.ks"  target="*prophet"  cond="f.role!=3"  ]
+[glink  color="btn_08_blue"  storage="CO.ks"  size="20"  text="COする"  x="300"  y="50"  width="150"  height=""  _clickable_img=""  target="*true_CO"  ]
 *prophet
 
-[tb_eval  exp="f.role=3"  name="role"  cmd="="  op="t"  val="3"  val_2="undefined"  ]
-[call  storage="UI.ks"  target="*myrole"  ]
-[tb_start_text mode=1 ]
-#ガイド
-あなたは《占い師》です。頑張って人間陣営を勝たせましょう。[p]
-[_tb_end_text]
+[jump  storage="debate.ks"  target="*lie"  cond="f.role>2"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="偽COする"  x="300"  y="125"  width="150"  height=""  _clickable_img=""  target="*fCO"  ]
+*lie
 
-[jump  storage="role.ks"  target="*role_setting"  ]
-*lunatic
-
-[tb_eval  exp="f.role=2"  name="role"  cmd="="  op="t"  val="2"  val_2="undefined"  ]
-[call  storage="UI.ks"  target="*myrole"  ]
-[tb_start_text mode=1 ]
-#ガイド
-あなたは《狂人》です。頑張って人狼を勝たせましょう。[p]
-[_tb_end_text]
-
-[jump  storage="role.ks"  target="*role_setting"  ]
-*human
-
-[tb_eval  exp="f.role=4"  name="role"  cmd="="  op="t"  val="4"  val_2="undefined"  ]
-[call  storage="UI.ks"  target="*myrole"  ]
-[tb_start_text mode=1 ]
-#ガイド
-あなたは《村人》です。頑張って人狼に勝ちましょう。[p]
-[_tb_end_text]
-
-[jump  storage="role.ks"  target="*role_setting"  ]
-*random
-
-[tb_eval  exp="f.role=Math.floor(Math.random()*(5-1+1)+1)"  name="role"  cmd="="  op="r"  val="1"  val_2="5"  ]
-[jump  storage="role.ks"  target="*wolf"  cond="f.role==1"  ]
-[jump  storage="role.ks"  target="*prophet"  cond="f.role==2"  ]
-[jump  storage="role.ks"  target="*lunatic"  cond="f.role==3"  ]
-[jump  storage="role.ks"  target="*human"  cond=""  ]
-*role_setting
-
-[jump  storage="role.ks"  target="*mafutsu_set01"  cond="f.player==1"  ]
-[jump  storage="role.ks"  target="*sisigami_set01"  cond="f.player==2"  ]
-[jump  storage="role.ks"  target="*murasame_set01"  cond="f.player==3"  ]
-[jump  storage="role.ks"  target="*kano_set01"  cond="f.player==4"  ]
-[jump  storage="role.ks"  target="*tendo_set01"  cond="f.player==5"  ]
-*mafutsu_set01
-
-[tb_eval  exp="f.role2=f.mafutsu"  name="role2"  cmd="="  op="h"  val="mafutsu"  val_2="undefined"  ]
-[tb_eval  exp="f.mafutsu=f.role"  name="mafutsu"  cmd="="  op="h"  val="role"  val_2="undefined"  ]
-[jump  storage="role.ks"  target="*role_change"  ]
-*sisigami_set01
-
-[tb_eval  exp="f.role2=f.sisigami"  name="role2"  cmd="="  op="h"  val="sisigami"  val_2="undefined"  ]
-[tb_eval  exp="f.sisigami=f.role"  name="sisigami"  cmd="="  op="h"  val="role"  val_2="undefined"  ]
-[jump  storage="role.ks"  target="*role_change"  ]
-*murasame_set01
-
-[tb_eval  exp="f.role2=f.murasame"  name="role2"  cmd="="  op="h"  val="murasame"  val_2="undefined"  ]
-[tb_eval  exp="f.murasame=f.role"  name="murasame"  cmd="="  op="h"  val="role"  val_2="undefined"  ]
-[jump  storage="role.ks"  target="*role_change"  ]
-*kano_set01
-
-[tb_eval  exp="f.role2=f.kano"  name="role2"  cmd="="  op="h"  val="kano"  val_2="undefined"  ]
-[tb_eval  exp="f.kano=f.role"  name="kano"  cmd="="  op="h"  val="role"  val_2="undefined"  ]
-[jump  storage="role.ks"  target="*role_change"  ]
-*tendo_set01
-
-[tb_eval  exp="f.role2=f.tendo"  name="role2"  cmd="="  op="h"  val="tendo"  val_2="undefined"  ]
-[tb_eval  exp="f.tendo=f.role"  name="tendo"  cmd="="  op="h"  val="role"  val_2="undefined"  ]
-*role_change
-
-[jump  storage="role.ks"  target="*mafutsu_set02"  cond="f.player==1"  ]
-[jump  storage="role.ks"  target="*mafutsu_set02"  cond="f.mafutsu!=f.role"  ]
-[tb_eval  exp="f.mafutsu=f.role2"  name="mafutsu"  cmd="="  op="h"  val="role2"  val_2="undefined"  ]
-*mafutsu_set02
-
-[jump  storage="role.ks"  target="*sisigami_set02"  cond="f.player==2"  ]
-[jump  storage="role.ks"  target="*sisigami_set02"  cond="f.sisigami!=f.role"  ]
-[tb_eval  exp="f.sisigami=f.role2"  name="sisigami"  cmd="="  op="h"  val="role2"  val_2="undefined"  ]
-*sisigami_set02
-
-[jump  storage="role.ks"  target="*murasame_set02"  cond="f.player==3"  ]
-[jump  storage="role.ks"  target="*murasame_set02"  cond="f.murasame!=f.role"  ]
-[tb_eval  exp="f.murasame=f.role2"  name="murasame"  cmd="="  op="h"  val="role2"  val_2="undefined"  ]
-*murasame_set02
-
-[jump  storage="role.ks"  target="*kano_set02"  cond="f.player==4"  ]
-[jump  storage="role.ks"  target="*kano_set02"  cond="f.kano!=f.role"  ]
-[tb_eval  exp="f.kano=f.role2"  name="kano"  cmd="="  op="h"  val="role2"  val_2="undefined"  ]
-*kano_set02
-
-[jump  storage="role.ks"  target="*tendo_set02"  cond="f.player==5"  ]
-[jump  storage="role.ks"  target="*tendo_set02"  cond="f.tendo!=f.role"  ]
-[tb_eval  exp="f.tendo=f.role2"  name="tendo"  cmd="="  op="h"  val="role2"  val_2="undefined"  ]
-*tendo_set02
-
-*role_end
-
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
-[call  storage="role.ks"  target="*test"  ]
-[tb_start_text mode=1 ]
-#周防
-「素敵なご選択ですね」[p]
-「それでは、あなたとギャンブラーに幸あらんことを」[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="scenario.ks"  size="20"  text="ゲーム開始"  target="*day01"  autopos="true"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="選びなおす"  target="*change"  autopos="true"  ]
+[glink  color="btn_07_red"  storage="debate.ks"  size="20"  text="状況確認"  target="*check"  x="213"  y="369"  width=""  height=""  _clickable_img=""  ]
 [s  ]
-*change
+*kuro
 
-[tb_image_hide  time="0"  ]
-[tb_ptext_hide  time="0"  ]
-[chara_hide_all  time="0"  wait="false"  ]
-[jump  storage="role.ks"  target="*member"  ]
-*test
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*doubt"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*doubt"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*doubt"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*doubt"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*doubt"  cond="f.player==5"  ]
+*shiro
 
-[return  ]
-[tb_start_tyrano_code]
-[free layer=2 name="mafutsu_test"]
-[free layer=2 name="sisigami_test"]
-[free layer=2 name="murasame_test"]
-[free layer=2 name="kano_test"]
-[free layer=2 name="tendo_test"]
-[free layer=2 name="role2_test"]
-[_tb_end_tyrano_code]
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*cover"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*cover"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*cover"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*cover"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*cover"  cond="f.player==5"  ]
+*say_human
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.mafutsu" x="100" y="75" size="40" color="orange" name="mafutsu_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[jump  storage="say_human.ks"  target="*say_human"  ]
+*plz_CO
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.sisigami" x="200" y="75" size="40" color="yellow" name="sisigami_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  ]
+[call  storage="mafutsu.ks"  target="*pCO"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*pCO"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*pCO"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*pCO"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*pCO"  cond="f.player==5"  ]
+[jump  storage="CO.ks"  target="*pCO_start"  ]
+*fCO
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.murasame" x="300" y="75" size="40" color=blue" name="murasame_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[jump  storage="CO.ks"  target="*player_fake_CO"  ]
+*push
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.kano" x="400" y="75" size="40" color="purple" name="kano_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
+[tb_eval  exp="f.push=1"  name="push"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*doubt"  ]
+*auto
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.tendo" x="500" y="75" size="40" color="black" name="tendo_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
+[s  ]
+*check
 
-[tb_start_tyrano_code]
-[ptext layer="2" text="&f.role2" x="100" y="200" size="40" color="black" name="role2_test" width="256" align="center" overwrite="true"]
-[_tb_end_tyrano_code]
+[iscript]
+f.vote_disp1="";
+f.vote_disp2="";
+f.vote_disp3="";
+f.vote_disp4="";
+f.vote_disp5="";
+[endscript]
 
-[return  ]
+[iscript]
+var names=["真経津","獅子神","村雨","叶","天堂"];
+var aliveArr=String(f.alive).split(",");
+var aliveNames=[];
+for(var i=0;i<5;i++){
+if(aliveArr[i]==="1")aliveNames.push(names[i]);
+}
+f.vote_disp1=aliveNames.join("、");
+[endscript]
+
+[iscript]
+var charNames=["真経津","獅子神","村雨","叶","天堂"];
+var resultNames=["人間","人狼"];
+var coArr=String(f.co).split(",");
+var claim=String(f.claim).split(",");
+var claim2=String(f.claim2).split(",");
+var aliveArr=String(f.alive).split(",");
+var disps=[];
+for(var i=1;i<=5;i++){
+if(coArr[i-1]==="0")continue;
+var c1t=parseInt(claim[(i-1)*2]);
+var c1r=parseInt(claim[(i-1)*2+1]);
+if(c1t>0){
+disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]);
+}
+if(aliveArr[i-1]==="1"){
+var c2t=parseInt(claim2[(i-1)*2]);
+var c2r=parseInt(claim2[(i-1)*2+1]);
+if(c2t>0){
+disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]);
+}
+}
+}
+f.vote_disp2=disps.length>0?disps[0]:"";
+f.vote_disp3=disps.length>1?disps[1]:"";
+f.vote_disp4=disps.length>2?disps[2]:"";
+f.vote_disp5=disps.length>3?disps[3]:"";
+[endscript]
+
+[tb_start_text mode=1 ]
+#ガイド
+残りの生存者は[emb exp="f.vote_disp1"]です。[p]
+占い師の報告は[emb exp="f.vote_disp2"]、[emb exp="f.vote_disp3"]、[emb exp="f.vote_disp4"]、[emb exp="f.vote_disp5"]です。[p]
+
+
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="debate.ks"  target="*debate_top"  ]

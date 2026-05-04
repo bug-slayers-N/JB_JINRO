@@ -28,6 +28,10 @@
 
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_insane.png"  ]
 [return  ]
+*show_jinro2
+
+[chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_insane2.png"  ]
+[return  ]
 *day01_01
 
 [call  storage="mafutsu.ks"  target="*show"  ]
@@ -52,10 +56,18 @@
 
 [call  storage="mafutsu.ks"  target="*debate_Top"  ]
 [call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
+[jump  storage="mafutsu.ks"  target="*first"  cond="f.turn!=0"  ]
+[tb_start_text mode=1 ]
+#真経津
+「昼の議論ターンだよ！」[p]
+[_tb_end_text]
+
+*first
+
 [tb_start_text mode=1 ]
 #真経津
 「どうしよっか？」[p]
-「初手は様子見が安牌かも」[p]
+「わからない時は様子見が安牌かも」[p]
 [_tb_end_text]
 
 [return  ]
@@ -135,6 +147,8 @@
 [return  ]
 *liar
 
+[call  storage="mafutsu.ks"  target="*show"  ]
+[call  storage="mafutsu.ks"  target="*show_jinro"  ]
 [tb_start_tyrano_code]
 #真経津
 (ボクわかっちゃった、[emb exp="f.name"]さんは嘘つきだ)[p]
@@ -288,6 +302,7 @@
 *human_win
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
 [tb_start_text mode=1 ]
 #真経津
 「ボク達人間の勝ち！村は平和になりました～！」[p]
