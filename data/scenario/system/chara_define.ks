@@ -10,7 +10,7 @@
 ;tendo
 [chara_new  name="tendo"  jname="tendo"  storage="chara/5/tendo_ai.png"  ]
 ;suo
-[chara_new  name="suo"  jname="suo"  storage="chara/6/suo.png"  ]
+[chara_new  name="suo"  jname="suo"  storage="chara/6/suo_egao.png"  ]
 
 ;=========変数宣言部分 
 [iscript] 

@@ -1,4 +1,6 @@
 [preload  storage="./data/bgimage/93853245_p0.png"  ]
+[preload  storage="./data/fgimage/chara/6/suo_normal.png"  ]
+[preload  storage="./data/fgimage/chara/6/suo_egao.png"  ]
 [preload  storage="./data/bgimage/BG_selectChara.png"  ]
 [preload  storage="./data/bgimage/無題158_20260429163000.jpg"  ]
 [preload  storage="./data/bgimage/スクリーンショット_2026-04-29_161945.png"  ]

@@ -28,7 +28,7 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
 [glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
 [jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
-[glink  color="btn_08_black"  storage="say_human.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
 *s_human
 
 [jump  storage="debate.ks"  target="*push_done"  cond="f.push==1"  ]
@@ -143,7 +143,7 @@ f.vote_disp5=disps.length>3?disps[3]:"";
 [tb_start_text mode=1 ]
 #ガイド
 残りの生存者は[emb exp="f.vote_disp1"]です。[p]
-占い師の報告は[emb exp="f.vote_disp2"]、[emb exp="f.vote_disp3"]、[emb exp="f.vote_disp4"]、[emb exp="f.vote_disp5"]です。[p]
+占い師の報告は[emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
 
 
 [_tb_end_text]

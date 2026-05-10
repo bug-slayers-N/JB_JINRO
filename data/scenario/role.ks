@@ -33,11 +33,11 @@
 
 [tb_hide_message_window  ]
 [bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
-[glink  color="btn_06_red"  storage="role.ks"  size="20"  text="真経津晨にする"  x="50"  y="530"  width=""  height=""  _clickable_img=""  target="*mafutsu"  ]
-[glink  color="btn_06_yellow"  storage="role.ks"  size="20"  text="獅子神敬一にする"  x="280"  y="530"  width=""  height=""  _clickable_img=""  target="*sisigami"  ]
-[glink  color="btn_06_blue"  storage="role.ks"  size="20"  text="村雨礼二にする"  x="550"  y="530"  width=""  height=""  _clickable_img=""  target="*murasame"  ]
-[glink  color="btn_06_purple"  storage="role.ks"  size="20"  text="叶黎明にする"  x="810"  y="530"  width=""  height=""  _clickable_img=""  target="*kano"  ]
-[glink  color="btn_06_black"  storage="role.ks"  size="20"  text="天堂弓彦にする"  x="1050"  y="530"  width=""  height=""  _clickable_img=""  target="*tendo"  ]
+[glink  color="btn_06_red"  storage="role.ks"  size="20"  text="真経津晨にする"  x="50"  y="550"  width=""  height=""  _clickable_img=""  target="*mafutsu"  ]
+[glink  color="btn_06_yellow"  storage="role.ks"  size="20"  text="獅子神敬一にする"  x="310"  y="550"  width=""  height=""  _clickable_img=""  target="*sisigami"  ]
+[glink  color="btn_06_blue"  storage="role.ks"  size="20"  text="村雨礼二にする"  x="550"  y="550"  width=""  height=""  _clickable_img=""  target="*murasame"  ]
+[glink  color="btn_06_purple"  storage="role.ks"  size="20"  text="叶黎明にする"  x="810"  y="550"  width=""  height=""  _clickable_img=""  target="*kano"  ]
+[glink  color="btn_06_black"  storage="role.ks"  size="20"  text="天堂弓彦にする"  x="1050"  y="550"  width=""  height=""  _clickable_img=""  target="*tendo"  ]
 [s  ]
 *choice
 
@@ -238,7 +238,7 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 
 *role_end
 
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_egao.png"  width="320"  height="720"  ]
 [call  storage="role.ks"  target="*test"  ]
 [tb_start_text mode=1 ]
 #周防
@@ -246,8 +246,8 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 「それでは、あなたとギャンブラーに幸あらんことを」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="scenario.ks"  size="20"  text="ゲーム開始"  target="*day01"  autopos="true"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="選びなおす"  target="*change"  autopos="true"  ]
+[glink  color="btn_05_red"  storage="scenario.ks"  size="20"  text="ゲーム開始"  target="*day01"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_white"  storage="role.ks"  size="20"  text="選びなおす"  target="*change"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *change
 

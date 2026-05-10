@@ -23,20 +23,29 @@
 *prologue
 
 [tb_show_message_window  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_egao.png"  width="320"  height="720&nbsp;"  ]
 [tb_start_text mode=1 ]
 #周防
 「VIPの皆様、大変長らくお待たせいたしました」[p]
 「より臨場感の高い、ギャンブラー視点でギャンブルを観戦したいという声にお応えしてご用意いたしましたエキシビション」[p]
 「ジャンケット人狼ゲームの開幕にございます」[p]
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
+[tb_start_text mode=1 ]
 「勿論、今回小間使いなのはギャンブラーの方にございます。選んだギャンブラーに指示を出し、人狼ゲームを攻略し、勝利に導いてくださいませ」[p]
 「おっと、意図的に敗北させても全く問題はございません」[p]
 「また役職やゲームの流れは遊ぶ度にランダムに展開されます」[p]
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
 「思うがままに我が銀行が誇るギャンブラー達の戦いを間近でごゆっくり楽しんでくださいませ」[p]
 [_tb_end_text]
 
 [mask  time="500"  effect="fadeIn"  color="0x000000"  ]
 [mask_off  time="500"  effect="fadeOut"  ]
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
 [tb_start_text mode=1 ]
 #周防
 「ここからはメタ発言になることをご了承くださいませ」[p]
@@ -67,13 +76,13 @@
 [tb_start_text mode=1 ]
 「キャラと役職が決まれば、ゲームが開始します」[p]
 「こちらがメイン画面です。画面左のコマンドボタンでゲームは進みます」[p]
-「《疑う》、シンプルに対象を疑います。対象の平常心を減らします」[p]
-「《かばう》、対象をかばいます。対象の平常心を回復させます」[p]
+「《疑う》、シンプルに対象を疑います。対象の平常心を減らします。対象からの好感度も減らします」[p]
+「《かばう》、対象をかばいます。対象の平常心を回復させます。対象からの好感度も上がります」[p]
 「《様子を見る》、プレイヤー以外のキャラが行動します。様子を見るの使用率が低いと少し悪いことが起きるそうです」[p]
 「《強く疑う》プレイヤーのみにある一度限りのコマンドです。通常より大ダメージを与える疑うを行います。特に大きなダメージを与えるには理由が必要なようです」[p]
 「《COする》《偽COする》、該当役職のみ活性化するコマンドです。自分は占い師だと宣言し、占い結果を報告します。それが偽だとしても」[p]
-「《COを促す》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
-「《人間と言え》、人間宣言させます。使用者は平常心を減らすかわりに、人狼と狂人の平常心も減らします。全体で一回のみのコマンドです」[p]
+「《COを求める》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
+「《人間と言え》、人間宣言させます。人狼と狂人の平常心を減らします。カウンターにより中止する・されることがあります。カウンターしたキャラとされたキャラの平常心が下がります。全体で一回のみのコマンドです」[p]
 [_tb_end_text]
 
 [bg  time="1000"  method="crossfade"  storage="BG_selectChara_noText_260429kari.png"  ]
@@ -87,12 +96,17 @@
 [_tb_end_text]
 
 [bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
 [tb_start_text mode=1 ]
 「正直、習うより慣れろというゲームです」[p]
 「細かいゲーム仕様はおまけページ内のよくありそうなQ＆Aにまとめてあります」[p]
 「特定条件で勝利を収めるとおまけページのおまけストーリーが解放されるそうです」[p]
 「お時間のあるVIPの方は是非に挑戦してみてください」[p]
+
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
 「それではゲーム説明を終了し、ゲームを開始させていただきます」[p]
 [_tb_end_text]
 

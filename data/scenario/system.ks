@@ -290,17 +290,15 @@ f.vote_disp1=aliveNames.join("、");
 [tb_eval  exp="f.action+=1"  name="action"  cmd="+="  op="t"  val="1"  val_2="undefined"  ]
 [iscript]
 if(f.day==1){
-if(f.turn>=5){
-if(f.action>=f.turn/2){
-f.result='noisy';
-}
-}
+  if(f.turn>=5){
+    if(f.action>=f.turn/2){
+      f.result='noisy';
+    }
+  }
 }else{
-if(f.turn>=3){
-if(f.action>=f.turn/2){
-f.result='noisy';
-}
-}
+  if(f.action>=3){
+    f.result='noisy';
+  }
 }
 [endscript]
 

@@ -353,3 +353,22 @@ if(nameMap[f.name2]!==undefined)f.name=nameMap[f.name2];
 [_tb_end_text]
 
 [return  ]
+*stop
+
+[call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#叶
+「そういうこと言う奴がむしろ怪しくない？」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="kano.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#叶
+「ふ～ん、人間って言ったら何か不都合があったんだな？」[p]
+[_tb_end_text]
+
+[return  ]

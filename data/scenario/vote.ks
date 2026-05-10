@@ -253,7 +253,7 @@ f.vote_disp5=lines[4]||"";
 [endscript]
 
 [tb_start_text mode=1 ]
-[emb exp="f.vote_disp1"]、[emb exp="f.vote_disp2"]、[emb exp="f.vote_disp3"]、[emb exp="f.vote_disp4"]、[emb exp="f.vote_disp5"][p]
+[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"][p]
 [_tb_end_text]
 
 [jump  storage="vote.ks"  target="*reset"  cond="f.revote==1"  ]

@@ -4,7 +4,7 @@
 
 [iscript]
 var ca=[f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm];
-var op=[40,30,50,60,45];
+var op=[70,60,80,85,70];
 var ro=[parseInt(f.mafutsu),parseInt(f.sisigami),parseInt(f.murasame),parseInt(f.kano),parseInt(f.tendo)];
 var al=String(f.alive).split(",");
 var lk=String(f.like).split(",");
@@ -16,7 +16,7 @@ function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i)
 for(var ob=1;ob<=5;ob++){
 if(al[ob-1]==="0")continue;
 var pw=op[ob-1];
-if(ob===4&&f.turn%3===0){pw=90;}
+if(ob===4&&parseInt(f.turn)%3===0&&parseInt(f.turn)!==0){pw=pw*1.5;}
 var pl=[];
 for(var t=1;t<=5;t++){
 if(t===ob)continue;
@@ -28,19 +28,17 @@ var pc=ca[t-1]+parseInt(lk[li]);
 pl.push({target:t,perceived:pc});
 }
 pl.sort(function(a,b){return a.perceived-b.perceived;});
-var ot=pl.slice(0, 2);
+var ot=pl.slice(0,2);
 var dt=false;
 for(var i=0;i<ot.length;i++){
 if(dt)break;
 var tg=ot[i].target;
-var tr=ro[tg-1];
 var li2=gi(ob,tg);
-if(tr===3||tr===4||tr===5){lk[li2]=parseInt(lk[li2])+10;continue;}
 var df=pw-ot[i].perceived;
 if(df<=0){lk[li2]=parseInt(lk[li2])+10;continue;}
-var rt;
-if(ob===4&&f.turn%3===0){rt=(df+45)/100;}else{rt=(df+pw/2)/100;}
-if(ob===3){rt*=1.5;}
+var tr=ro[tg-1];
+if(tr===3||tr===4||tr===5){lk[li2]=parseInt(lk[li2])+10;continue;}
+var rt=(df/2+pw/5)/100;
 if(Math.random()<rt){
 lr[gi(ob,tg)]="1";
 dt=true;

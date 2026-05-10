@@ -339,3 +339,22 @@ if(f.name==="叶")f.name="黎明";
 [_tb_end_text]
 
 [return  ]
+*stop
+
+[call  storage="tendo.ks"  target="*show2"  ]
+[call  storage="tendo.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#天堂
+「人の子は人の子であろう、今更宣言させる意味もない」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="tendo.ks"  target="*show_do"  ]
+[tb_start_text mode=1 ]
+#天堂
+「神に反抗するその姿勢こそ、咎人と言える」[p]
+[_tb_end_text]
+
+[return  ]

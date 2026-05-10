@@ -348,7 +348,7 @@ else if(actorNum===4){yusaburi=0.7;}
 else{yusaburi=0.8;}
 // ダメージ計算
 if(actorNum===3){var lv3=parseInt(lr[gi(actorNum,target)]);if(lv3===1||lv3===3||lv3===4){yusaburi=1.0;}}
-var damage=20*yusaburi;
+var damage=30*yusaburi;
 // 平常心減少
 function subCalm(num,val){
 if(num===1){f.mafutsu_calm=f.mafutsu_calm-val;}

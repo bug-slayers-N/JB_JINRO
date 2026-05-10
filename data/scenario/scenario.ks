@@ -8,8 +8,8 @@
 [chara_hide_all  time="0"  wait="true"  ]
 [tb_show_message_window  ]
 [mask_off  time="1000"  effect="fadeOut"  ]
-[glink  color="btn_01_white"  storage="scenario.ks"  size="20"  target="*day01_01"  text="シナリオを見る"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_01_red"  storage="scenario.ks"  size="20"  target="*day01_03"  text="シナリオをとばす"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_red"  storage="scenario.ks"  size="20"  target="*day01_03"  text="シナリオをとばす"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_white"  storage="scenario.ks"  size="20"  target="*day01_01"  text="シナリオを見る"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *day01_01
 
@@ -178,7 +178,7 @@ f.vote_disp5=disps[4];
 [endscript]
 
 [tb_start_text mode=1 ]
-[emb exp="f.vote_disp1"]、[emb exp="f.vote_disp2"]、[emb exp="f.vote_disp3"]、[emb exp="f.vote_disp4"]、[emb exp="f.vote_disp5"][p]
+[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"][p]
 [_tb_end_text]
 
 *nothing
@@ -279,21 +279,26 @@ else{f.win=1;}
 *game_end2
 
 [chara_hide_all  time="1000"  wait="true"  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo.png"  width="320"  height="720"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
 [tb_start_text mode=1 ]
 #周防
 「お疲れ様でした」[p]
 「ジャンケット人狼ゲーム、お楽しみいただけましたでしょうか？」[p]
 「特定条件を満たすと、おまけの彼らの様子が見れるようです」[p]
 「是非チャレンジしてみてくださいませ」[p]
-「それでは、またのお越しをお待ちしております。」[p]
+
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
+「それでは、またのお越しをお待ちしております」[p]
 [_tb_end_text]
 
 [chara_hide_all  time="1000"  wait="true"  ]
 [tb_hide_message_window  ]
-[glink  color="black"  storage="title_screen.ks"  size="20"  text="タイトルへ"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="連戦する"  ]
-[glink  color="black"  storage="scenario.ks"  size="20"  text="Xで結果を共有"  target="*X"  ]
+[glink  color="btn_05_white"  storage="title_screen.ks"  size="20"  text="・&nbsp;タイトルへ&nbsp;・"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_red"  storage="role.ks"  size="20"  text="・　連戦する　・"  x="94"  y="172"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_blue"  storage="scenario.ks"  size="20"  text="・Xで結果を共有・"  target="*X"  x="87"  y="246"  width=""  height=""  _clickable_img=""  autopos="true"  ]
 [s  ]
 [mask  time="1000"  effect="fadeIn"  color="0x000000"  ]
 *X

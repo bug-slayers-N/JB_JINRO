@@ -65,6 +65,7 @@ f.like=lk.join(",");
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
 var lk=String(f.like).split(",");
+var coArr=String(f.co).split(",");
 var claimArr=String(f.claim).split(",");
 var claimArr2=String(f.claim2).split(",");
 function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
@@ -77,15 +78,19 @@ return parseFloat(f.tendo_calm);
 }
 function getPC(actor,tgt){return getCalm(tgt)+parseInt(lk[gi(actor,tgt)]);}
 function isAlive(i){return aliveArr[i-1]==="1";}
-// reportedWolf: cがactorを人狼と申告しているか（claim1・claim2参照）
 function reportedWolf(actor,c){
 var idx=(c-1)*2;
 if(parseInt(claimArr[idx])===actor&&claimArr[idx+1]==="1")return true;
 if(parseInt(claimArr2[idx])===actor&&claimArr2[idx+1]==="1")return true;
 return false;
 }
+var actorCO=coArr[actorNum-1]!=="0";
 var candidates=[];
-for(var i=1;i<=5;i++){if(i===actorNum||!isAlive(i)||reportedWolf(actorNum,i))continue;candidates.push(i);}
+for(var i=1;i<=5;i++){
+if(i===actorNum||!isAlive(i)||reportedWolf(actorNum,i))continue;
+if(actorCO&&coArr[i-1]!=="0")continue;
+candidates.push(i);
+}
 candidates.sort(function(a,b){var d=getPC(actorNum,b)-getPC(actorNum,a);return d!==0?d:a-b;});
 var topN=Math.ceil(candidates.length*0.5);
 var pool=candidates.slice(0,topN);
@@ -100,19 +105,24 @@ f.target=pool.length>0?pool[Math.floor(Math.random()*pool.length)]:0;
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
+var coArr=String(f.co).split(",");
 var claimArr=String(f.claim).split(",");
 var claimArr2=String(f.claim2).split(",");
 function isAlive(i){return aliveArr[i-1]==="1";}
-// reportedWolf: cがactorを人狼と申告しているか（claim1・claim2参照）
 function reportedWolf(actor,c){
 var idx=(c-1)*2;
 if(parseInt(claimArr[idx])===actor&&claimArr[idx+1]==="1")return true;
 if(parseInt(claimArr2[idx])===actor&&claimArr2[idx+1]==="1")return true;
 return false;
 }
+var actorCO=coArr[actorNum-1]!=="0";
 if(Math.random()<0.5){
 var candidates=[];
-for(var i=1;i<=5;i++){if(i===actorNum||!isAlive(i)||reportedWolf(actorNum,i))continue;candidates.push(i);}
+for(var i=1;i<=5;i++){
+if(i===actorNum||!isAlive(i)||reportedWolf(actorNum,i))continue;
+if(actorCO&&coArr[i-1]!=="0")continue;
+candidates.push(i);
+}
 if(candidates.length>0){
 f.target=candidates[Math.floor(Math.random()*candidates.length)];
 f.ai_result=0;
@@ -142,15 +152,14 @@ var claimArr2=String(f.claim2).split(",");
 function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
 function isAlive(i){return aliveArr[i-1]==="1";}
 function hasCO(i){return coArr[i-1]!=="0";}
-// liar=1,3,4が嘘つきCO。liar=0が不明CO、liar=5が正直CO
 function isLiarFor(actor,tgt){var v=parseInt(lr[gi(actor,tgt)]);return v===1||v===3||v===4;}
-// reportedWolf: cがactorを人狼と申告しているか（claim1・claim2参照）
 function reportedWolf(actor,c){
 var idx=(c-1)*2;
 if(parseInt(claimArr[idx])===actor&&claimArr[idx+1]==="1")return true;
 if(parseInt(claimArr2[idx])===actor&&claimArr2[idx+1]==="1")return true;
 return false;
 }
+var actorCO=coArr[actorNum-1]!=="0";
 var sr1=String(f.seer_result1).split(",");
 var sr2=String(f.seer_result2).split(",");
 var humanResult=[];
@@ -158,10 +167,13 @@ var wolfResult=[];
 if(parseInt(sr1[0])>0){if(parseInt(sr1[1])===0)humanResult.push(parseInt(sr1[0]));else wolfResult.push(parseInt(sr1[0]));}
 if(parseInt(sr2[0])>0){if(parseInt(sr2[1])===0)humanResult.push(parseInt(sr2[0]));else wolfResult.push(parseInt(sr2[0]));}
 var target=0;
-var humanCands=humanResult.filter(function(c){return isAlive(c)&&c!==actorNum&&!reportedWolf(actorNum,c);});
+var humanCands=humanResult.filter(function(c){
+return isAlive(c)&&c!==actorNum&&!reportedWolf(actorNum,c)&&(!actorCO||!hasCO(c));
+});
 if(humanCands.length>0){target=humanCands[0];}
 if(target===0){
 var excluded=wolfResult;
+if(!actorCO){
 var coChars=[];
 for(var i=1;i<=5;i++){if(isAlive(i)&&i!==actorNum&&hasCO(i)&&!reportedWolf(actorNum,i))coChars.push(i);}
 if(coChars.length>=2){
@@ -169,9 +181,11 @@ var liarCO=coChars.filter(function(c){return isLiarFor(actorNum,c);});
 var honestCO=coChars.filter(function(c){return !isLiarFor(actorNum,c)&&excluded.indexOf(c)===-1;});
 if(liarCO.length>0&&honestCO.length>0){target=honestCO[0];}
 }
+}
 if(target===0){
 for(var i=1;i<=5;i++){
 if(i===actorNum||!isAlive(i)||excluded.indexOf(i)!==-1||reportedWolf(actorNum,i))continue;
+if(actorCO&&hasCO(i))continue;
 if(parseInt(lk[gi(actorNum,i)])>=30){target=i;break;}
 }
 }
@@ -179,6 +193,7 @@ if(target===0){
 var pool=[];
 for(var i=1;i<=5;i++){
 if(i===actorNum||!isAlive(i)||excluded.indexOf(i)!==-1||hasCO(i)||reportedWolf(actorNum,i))continue;
+if(actorCO&&hasCO(i))continue;
 if(parseInt(lk[gi(i,actorNum)])>=0)pool.push(i);
 }
 if(pool.length>0){
@@ -187,6 +202,7 @@ target=pool[Math.floor(Math.random()*pool.length)];
 var best=-999999,bestChar=-1;
 for(var i=1;i<=5;i++){
 if(i===actorNum||!isAlive(i)||excluded.indexOf(i)!==-1||reportedWolf(actorNum,i))continue;
+if(actorCO&&hasCO(i))continue;
 var v=parseInt(lk[gi(i,actorNum)]);
 if(v>best||(v===best&&i<bestChar)){best=v;bestChar=i;}
 }
@@ -212,9 +228,7 @@ var claimArr2=String(f.claim2).split(",");
 function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
 function isAlive(i){return aliveArr[i-1]==="1";}
 function hasCO(i){return coArr[i-1]!=="0";}
-// liar=1,3,4が嘘つきCO。liar=0が不明CO、liar=5が正直CO
 function isLiarFor(actor,tgt){var v=parseInt(lr[gi(actor,tgt)]);return v===1||v===3||v===4;}
-// reportedWolf: cがactorを人狼と申告しているか（claim1・claim2参照）
 function reportedWolf(actor,c){
 var idx=(c-1)*2;
 if(parseInt(claimArr[idx])===actor&&claimArr[idx+1]==="1")return true;

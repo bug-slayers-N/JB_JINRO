@@ -159,7 +159,7 @@ f.result=(parseInt(f.player)===t||aliveArr[t-1]==="0")?1:0;
 [return  ]
 *back
 
-[glink  color="black"  storage="debate.ks"  size="20"  text="戻る"  target="*debate_top"  ]
+[glink  color="black"  storage="UI.ks"  size="20"  text="戻る"  target="*back_top"  ]
 [return  ]
 *jump
 
@@ -169,3 +169,7 @@ f.result=(parseInt(f.player)===t||aliveArr[t-1]==="0")?1:0;
 [jump  storage="vote.ks"  target="*player_vote_back"  cond="f.jump=='vote'"  ]
 [jump  storage="uranai.ks"  target="*uranai_back"  cond="f.jump=='uranai'"  ]
 [jump  storage="night.ks"  target="*wolf_end"  cond="f.jump=='wolf'"  ]
+*back_top
+
+[tb_eval  exp="f.action-=1"  name="action"  cmd="-="  op="t"  val="1"  val_2="undefined"  ]
+[jump  storage="debate.ks"  target="*debate_top"  ]

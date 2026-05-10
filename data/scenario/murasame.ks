@@ -39,7 +39,7 @@
 [tb_start_text mode=1 ]
 #村雨
 「VIP共の小間使いとしてゲームに参加しろと？」[p]
-「マヌケに巻き込まれて敗北するくらいなら、この試合は下りさせてもらう」[p]
+「マヌケに巻き込まれて敗北するくらいなら、この試合は降りさせてもらう」[p]
 「…」[p]
 [_tb_end_text]
 
@@ -331,6 +331,24 @@
 「仕方あるまい、私には決定権がなかったのだ」[p]
 「どれだけの名医でも、言うことの聞かない患者に出来ることはない」[p]
 「私は帰らせてもらう」[p]
+[_tb_end_text]
+
+[return  ]
+*stop
+
+[call  storage="murasame.ks"  target="*show2"  ]
+[tb_start_text mode=1 ]
+#村雨
+「声をかける側は人間宣言しないのであろう？ならばむしろ怪しい」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="murasame.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#村雨
+「不都合があったから止めたとも見えること忘れるな」[p]
 [_tb_end_text]
 
 [return  ]

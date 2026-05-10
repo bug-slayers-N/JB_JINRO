@@ -53,6 +53,7 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [tb_start_text mode=1 ]
 「あ、今日は御手洗君じゃなくてVIPの人だった」[p]
 「つまんな～い！」[p]
+「…」[p]
 [_tb_end_text]
 
 [call  storage="mafutsu.ks"  target="*show_raku"  ]
@@ -76,3 +77,29 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [chara_hide_all  time="1000"  wait="true"  ]
 [tb_hide_message_window  ]
 [jump  storage="omake.ks"  target="*story"  ]
+*s02
+
+[call  storage="mafutsu.ks"  target="*show"  ]
+[tb_start_text mode=1 ]
+#真経津
+「ボクが本物占い師だよ～！」[p]
+[_tb_end_text]
+
+[call  storage="tendo.ks"  target="*show2"  ]
+[tb_start_text mode=1 ]
+#天堂
+「神は当然わかっていたがな」[p]
+[_tb_end_text]
+
+[call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#叶
+「ホントか～？ユミピコ～」[p]
+[_tb_end_text]
+
+[chara_hide_all  time="1000"  wait="true"  ]
+[tb_start_text mode=1 ]
+
+[_tb_end_text]
+

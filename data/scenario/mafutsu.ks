@@ -334,3 +334,21 @@
 [_tb_end_text]
 
 [return  ]
+*stop
+
+[call  storage="mafutsu.ks"  target="*show2"  cond=""  ]
+[tb_start_text mode=1 ]
+#真経津
+「案外そういうこと言う人が怪しかったりするよね～」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
+[tb_start_text mode=1 ]
+#真経津
+「むしろ言わされると困っちゃうから止めたっても考えられるよね」[p]
+[_tb_end_text]
+
+[return  ]

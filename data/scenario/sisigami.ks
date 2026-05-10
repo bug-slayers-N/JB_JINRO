@@ -17,12 +17,13 @@
 
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_ki.png"  ]
 [return  ]
-*show_do
-
-[return  ]
 *show_ai
 
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_aseri.png"  ]
+[return  ]
+*show_gimon
+
+[chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_gimon.png"  ]
 [return  ]
 *show_jinro
 
@@ -326,6 +327,24 @@
 「負けた、か」[p]
 「やっぱりツェーな、あいつら」[p]
 「今度こそリベンジしてやるから、また見に来いよ。じゃあな」[p]
+[_tb_end_text]
+
+[return  ]
+*stop
+
+[call  storage="sisigami.ks"  target="*show2"  ]
+[tb_start_text mode=1 ]
+#獅子神
+「他人に人間宣言を要求される前に自分で言おうって算段か？」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
+[tb_start_text mode=1 ]
+#獅子神
+「止めたオメーだって怪しいことを忘れんなよ」[p]
 [_tb_end_text]
 
 [return  ]
