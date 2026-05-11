@@ -71,7 +71,7 @@ var votable=getVotable(actor),target=-1;
 for(var i=0;i<votable.length;i++){
 var t=votable[i];
 var ok=true;
-for(var v=1;v<=5;v++){if(isAlive(v)&&v!==t&&getLiar(v,t)!==1){ok=false;break;}}
+for(var v=1;v<=5;v++){if(isAlive(v)&&v!==t&&v!==actor&&getLiar(v,t)!==1){ok=false;break;}}
 if(ok){target=t;break;}
 }
 if(target===-1){
@@ -154,9 +154,12 @@ var pn=parseInt(f.player);
 for(var actor=1;actor<=5;actor++){
 if(actor===pn||!isAlive(actor)||getRole(actor)!==3)continue;
 var votable=getVotable(actor),target=-1;
+var wolves=[];
+for(var i=0;i<votable.length;i++){if(getLiar(actor,votable[i])===3)wolves.push(votable[i]);}
+if(wolves.length>0)target=pickLowest(actor,wolves);
 var liars=[];
 for(var i=0;i<votable.length;i++){if(getLiar(actor,votable[i])===1)liars.push(votable[i]);}
-if(liars.length>0)target=pickLowest(actor,liars);
+if(target===-1&&liars.length>0)target=pickLowest(actor,liars);
 if(target===-1)target=pickLowest(actor,votable);
 f.votes=si(f.votes,actor-1,target);
 }
@@ -184,9 +187,12 @@ var pn=parseInt(f.player);
 for(var actor=1;actor<=5;actor++){
 if(actor===pn||!isAlive(actor)||(getRole(actor)!==4&&getRole(actor)!==5))continue;
 var votable=getVotable(actor),target=-1;
+var wolves=[];
+for(var i=0;i<votable.length;i++){if(getLiar(actor,votable[i])===3)wolves.push(votable[i]);}
+if(wolves.length>0)target=pickLowest(actor,wolves);
 var liars=[];
 for(var i=0;i<votable.length;i++){if(getLiar(actor,votable[i])===1)liars.push(votable[i]);}
-if(liars.length>0)target=pickLowest(actor,liars);
+if(target===-1&&liars.length>0)target=pickLowest(actor,liars);
 if(target===-1)target=pickLowest(actor,votable);
 f.votes=si(f.votes,actor-1,target);
 }

@@ -23,7 +23,7 @@
 *prologue
 
 [tb_show_message_window  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_egao.png"  width="320"  height="720&nbsp;"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_egao.png"  width="320"  height="720"  ]
 [tb_start_text mode=1 ]
 #周防
 「VIPの皆様、大変長らくお待たせいたしました」[p]

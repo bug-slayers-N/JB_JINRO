@@ -31,20 +31,20 @@ var c=pool[i];
 var role=getRole(c);
 var prob=0;
 if(c===1){
-prob=0.15;
+prob=0.25;
 }else if(c===2){
-if(role===2) prob=0.50;
+if(role===2) prob=0.60;
 else if(role===1) prob=0;
-else prob=0.10;
+else prob=0.20;
 }else if(c===3){
-prob=0.08;
+prob=0.12;
 }else if(c===4){
-if(role===2) prob=0.30;
-else if(role===1) prob=0.08;
-else prob=0.15;
+if(role===2) prob=0.40;
+else if(role===1) prob=0.15;
+else prob=0.20;
 }else if(c===5){
 if(role===2) prob=0.40;
-else prob=0.10;
+else prob=0.15;
 }
 if(Math.random()<prob){f.target=c;f.result='stop';break;}
 }
@@ -138,7 +138,7 @@ f.result = aliveArr[c-1] === "0" ? c : 0;
 [endscript]
 
 [jump  storage="say_human.ks"  target="*ma"  cond="f.result==1"  ]
-[jump  storage="say_human.ks"  target="*si"  cond="f.result==1"  ]
+[jump  storage="say_human.ks"  target="*si"  cond="f.result==2"  ]
 [jump  storage="say_human.ks"  target="*mu"  cond="f.result==3"  ]
 [jump  storage="say_human.ks"  target="*ka"  cond="f.result==4"  ]
 [jump  storage="say_human.ks"  target="*te"  cond="f.result==5"  ]

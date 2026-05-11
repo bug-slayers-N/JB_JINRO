@@ -252,6 +252,7 @@ if(roles[i-1]===5){f.target=i;break;}
 [call  storage="tendo.ks"  target="*human_win"  cond="f.target==5"  ]
 *game_end
 
+[jump  storage="tutorial.ks"  target="*text3"  cond="f.tutorial==1"  ]
 *win
 
 [iscript]
@@ -310,7 +311,7 @@ var charName = charNames[parseInt(f.player)-1];
 var roleName = roleNames[parseInt(f.role)];
 var isWin = parseInt(f.win)===0;
 var result = isWin ? "勝利" : "敗北";
-var text = "【非公式】"+charName+"("+roleName+")で"+result+"しました。フレンズ達でAI人狼ゲームをしよう！→https://bug-slayers-N.github.io/JB_JINRO/";
+var text = "【非公式】"+charName+"("+roleName+")で"+result+"しました。フレンズ達の人狼ゲームで嘘つきを見破ろう！→https://bug-slayers-N.github.io/JB_JINRO/";
 window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(text));
 [endscript]
 

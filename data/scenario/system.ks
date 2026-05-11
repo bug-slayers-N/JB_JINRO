@@ -28,14 +28,15 @@ f.vote_disp5=0;
 f.revote=0;
 f.say_human=0;
 f.player_death=0;
-f.mafutsu_calm=110;
+f.mafutsu_calm=100;
 f.sisigami_calm=80;
 f.murasame_calm=110;
 f.kano_calm=100;
-f.tendo_calm=130;
+f.tendo_calm=120;
 f.action=0;
 f.push=0;
 f.win=0;
+f.tutorial=0;
 [endscript]
 
 [return  ]
@@ -287,18 +288,21 @@ f.vote_disp1=aliveNames.join("、");
 [return  ]
 *action
 
+[tb_eval  exp="f.result=0"  name="result"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
 [tb_eval  exp="f.action+=1"  name="action"  cmd="+="  op="t"  val="1"  val_2="undefined"  ]
 [iscript]
-if(f.day==1){
-  if(f.turn>=5){
-    if(f.action>=f.turn/2){
-      f.result='noisy';
-    }
-  }
+if(parseInt(f.day)===1){
+if(parseInt(f.turn)>=5){
+if(parseInt(f.action)/parseInt(f.turn)<0.2){
+f.result='quiet';
+}
+}
 }else{
-  if(f.action>=3){
-    f.result='noisy';
-  }
+if(parseInt(f.turn)>=4){
+if(parseInt(f.action)===0){
+f.result='quiet';
+}
+}
 }
 [endscript]
 
@@ -328,3 +332,35 @@ f.name=names[parseInt(f.player)-1];
 [call  storage="kano.ks"  target="*noisy"  cond="f.target==4"  ]
 [call  storage="tendo.ks"  target="*noisy"  cond="f.target==5"  ]
 [jump  storage="observe.ks"  target="*observe"  ]
+*quiet
+
+[tb_eval  exp="f.result=0"  name="result"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[iscript]
+if(parseInt(f.day)===1){
+if(parseInt(f.turn)>=5){
+if(parseInt(f.action)/parseInt(f.turn)<0.2){
+f.result='quiet';
+}
+}
+}else{
+if(parseInt(f.turn)>=4){
+if(parseInt(f.action)===0){
+f.result='quiet';
+}
+}
+}
+[endscript]
+
+[jump  storage="system.ks"  target="*q_damege"  cond="f.result=='quiet'"  ]
+[return  ]
+*q_damege
+
+[iscript]
+if(f.player==1)f.mafutsu_calm=parseFloat(f.mafutsu_calm)-20;
+else if(f.player==2)f.sisigami_calm=parseFloat(f.sisigami_calm)-20;
+else if(f.player==3)f.murasame_calm=parseFloat(f.murasame_calm)-20;
+else if(f.player==4)f.kano_calm=parseFloat(f.kano_calm)-20;
+else f.tendo_calm=parseFloat(f.tendo_calm)-20;
+[endscript]
+
+[return  ]

@@ -60,8 +60,8 @@ if(getRole(i)!==role) continue;
 var prob=0;
 if(role===2){
 if(isLowestCalm(i)){ prob=0; }
-else if(coCount===1){ prob=1.0; }
-else{ prob=isAggressive(i)?0.70:0.50; }
+else if(coCount===1){ prob=(i===1||i===4)?1.0:(i===2||i===5)?0.75:0.50; }
+else{ prob=(i===1||i===4)?0.70:(i===5)?0.50:0.30; }
 } else if(role===3){
 prob=isPassive(i)?0.80:1.0;
 } else if(role===1){
@@ -240,8 +240,8 @@ if(getRole(i)!==role) continue;
 var prob=0;
 if(role===2){
 if(isLowestCalm(i)){ prob=0; }
-else if(coCount===1){ prob=1.0; }
-else{ prob=isAggressive(i)?0.70:0.50; }
+else if(coCount===1){ prob=(i===1||i===4)?1.0:(i===2||i===5)?0.75:0.50; }
+else{ prob=(i===1||i===4)?0.70:(i===5)?0.50:0.30; }
 } else if(role===3){
 prob=isPassive(i)?0.80:1.0;
 } else if(role===1){

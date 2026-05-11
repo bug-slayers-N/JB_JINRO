@@ -5,6 +5,7 @@
 [iscript]
 var roles=[parseInt(f.mafutsu),parseInt(f.sisigami),parseInt(f.murasame),parseInt(f.kano),parseInt(f.tendo)];
 var aliveArr=String(f.alive).split(",");
+var lr=String(f.liar).split(",");
 var sr1=String(f.seer_result1).split(",");
 var sr2=String(f.seer_result2).split(",");
 var seerNum=0;
@@ -12,14 +13,26 @@ for(var i=1;i<=5;i++){if(roles[i-1]===3){seerNum=i;break;}}
 var alreadyPicked=[];
 if(parseInt(sr1[0])>0) alreadyPicked.push(parseInt(sr1[0]));
 if(parseInt(sr2[0])>0) alreadyPicked.push(parseInt(sr2[0]));
-var candidates=[];
-for(var i=1;i<=5;i++){
-if(i===seerNum) continue;
-if(aliveArr[i-1]==="0") continue;
-if(alreadyPicked.indexOf(i)>=0) continue;
-candidates.push(i);
+function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function allLiar5(c){
+for(var j=1;j<=5;j++){
+if(j===c)continue;
+if(aliveArr[j-1]==="0")continue;
+if(lr[gi(j,c)]!=="5")return false;
 }
-f.target=candidates[Math.floor(Math.random()*candidates.length)];
+return true;
+}
+var candidates=[];
+var fallback=[];
+for(var i=1;i<=5;i++){
+if(i===seerNum)continue;
+if(aliveArr[i-1]==="0")continue;
+if(alreadyPicked.indexOf(i)>=0)continue;
+if(allLiar5(i)){fallback.push(i);}
+else{candidates.push(i);}
+}
+if(candidates.length===0) candidates=fallback;
+f.target=candidates.length>0?candidates[Math.floor(Math.random()*candidates.length)]:0;
 [endscript]
 
 *uranai

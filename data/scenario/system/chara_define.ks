@@ -63,4 +63,5 @@ f['day']=1;
 f['claim2']='0,0,0,0,0,0,0,0,0,0'; 
 f['seer_result2']='0,0'; 
 f['seer_result1']='0,0'; 
+f['tutorial']=0; 
 [endscript] 

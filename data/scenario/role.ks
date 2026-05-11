@@ -12,6 +12,7 @@
 
 *member
 
+[glink  color="btn_05_red"  storage="tutorial.ks"  size="20"  target="*init"  text="練習する"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
 [glink  color="btn_05_green"  storage="role.ks"  size="20"  text="5人で遊ぶ(人狼1人)"  target="*5"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [glink  color="btn_05_yellow"  storage="role.ks"  size="20"  text="9人で遊ぶ(人狼2人)"  target="*none"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]

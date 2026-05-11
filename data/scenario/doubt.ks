@@ -22,7 +22,7 @@ var liarIdx=gi(playerNum,targetNum);
 var lv=parseInt(liars[liarIdx]);
 var isLiar=lv===1||lv===3||lv===4;
 if(playerNum===3&&isLiar){yusaburi=1.0;}
-var damage=30*yusaburi;
+var damage=40*yusaburi;
 function subCalm(num,val){
 if(num===1){f.mafutsu_calm=f.mafutsu_calm-val;}
 else if(num===2){f.sisigami_calm=f.sisigami_calm-val;}
@@ -348,7 +348,7 @@ else if(actorNum===4){yusaburi=0.7;}
 else{yusaburi=0.8;}
 // ダメージ計算
 if(actorNum===3){var lv3=parseInt(lr[gi(actorNum,target)]);if(lv3===1||lv3===3||lv3===4){yusaburi=1.0;}}
-var damage=30*yusaburi;
+var damage=40*yusaburi;
 // 平常心減少
 function subCalm(num,val){
 if(num===1){f.mafutsu_calm=f.mafutsu_calm-val;}
@@ -372,6 +372,7 @@ f.like=lk.join(",");
 [jump  storage="tendo.ks"  target="*doubt2"  cond="f.ai_actor==5"  ]
 *push
 
+[tb_eval  exp="f.push=1"  name="push"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*push_mafutsu"  cond="f.player==1"  ]
 [jump  storage="doubt.ks"  target="*push_sisigami"  cond="f.player==2"  ]
 [jump  storage="doubt.ks"  target="*push_murasame"  cond="f.player==3"  ]

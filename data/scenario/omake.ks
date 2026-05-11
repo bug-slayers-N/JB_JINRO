@@ -3,16 +3,16 @@
 *omake_top
 
 [cm  ]
-[bg  time="500"  method="fadeIn"  storage="bg_base.png"  ]
+[bg  time="500"  method="fadeIn"  storage="credits.png"  ]
 [mask_off  time="1000"  effect="fadeOut"  ]
-[glink  color="btn_01_black"  storage="omake.ks"  size="20"  target="*QA"  text="よくありそうなQ＆A"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="black"  storage="omake.ks"  size="20"  text="おまけストーリー"  target="*story"  ]
-[glink  color="btn_01_purple"  storage="omake.ks"  size="20"  autopos="true"  text="クレジット"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*credit"  ]
-[glink  color="btn_01_white"  storage="title_screen.ks"  size="20"  text="タイトルに戻る"  autopos="true"  target=""  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_red"  storage="omake.ks"  size="20"  text="おまけストーリー"  target="*story"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_purple"  storage="omake.ks"  size="20"  target="*QA"  text="よくありそうなQ＆A"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_lime"  storage="omake.ks"  size="20"  autopos="true"  text="クレジット"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*credit"  ]
+[glink  color="btn_05_white"  storage="title_screen.ks"  size="20"  text="タイトルに戻る"  autopos="true"  target=""  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *credit
 
-[bg  time="1000"  method="fadeIn"  storage="bg_base.png"  ]
+[bg  time="1000"  method="fadeIn"  storage="credit.png"  ]
 [glink  color="btn_01_purple"  storage="omake.ks"  size="20"  text="おまけ画面に戻る"  target="*omake_top"  x="1020"  y="542"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *QA

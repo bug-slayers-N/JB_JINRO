@@ -26,7 +26,7 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
 [glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*kuro"  ]
 [glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
-[glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
+[glink  color="btn_08_lime"  storage="debate.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*watch"  ]
 [jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
 [glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
 *s_human
@@ -85,8 +85,11 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 
 [call  storage="system.ks"  target="*action"  ]
 [tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
-[tb_eval  exp="f.push=1"  name="push"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*doubt"  ]
+*watch
+
+[call  storage="system.ks"  target="*quiet"  ]
+[jump  storage="AI.ks"  target="*randam_ai"  ]
 *auto
 
 [glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
@@ -108,7 +111,7 @@ var aliveNames=[];
 for(var i=0;i<5;i++){
 if(aliveArr[i]==="1")aliveNames.push(names[i]);
 }
-f.vote_disp1=aliveNames.join("、");
+f.result=aliveNames.join("、");
 [endscript]
 
 [iscript]
@@ -134,20 +137,22 @@ disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]);
 }
 }
 }
-f.vote_disp2=disps.length>0?disps[0]:"";
-f.vote_disp3=disps.length>1?disps[1]:"";
-f.vote_disp4=disps.length>2?disps[2]:"";
-f.vote_disp5=disps.length>3?disps[3]:"";
+f.vote_disp1=disps.length>0?disps[0]:"";
+f.vote_disp2=disps.length>1?disps[1]:"";
+f.vote_disp3=disps.length>2?disps[2]:"";
+f.vote_disp4=disps.length>3?disps[3]:"";
+f.vote_disp5=disps.length>4?disps[4]:"";
 [endscript]
 
 [tb_start_text mode=1 ]
 #ガイド
-残りの生存者は[emb exp="f.vote_disp1"]です。[p]
-占い師の報告は[emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
+残りの生存者は[emb exp="f.result"]です。[p]
+占い師の報告は[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
 
 
 [_tb_end_text]
 
+[jump  storage="tutorial.ks"  target="*text"  cond="f.tutorial==1"  ]
 [call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
 [call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
 [call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]

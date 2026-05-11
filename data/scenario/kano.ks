@@ -168,6 +168,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 (あ～あ、[emb exp="f.name"]は嘘つきだな)[p]
 [_tb_end_tyrano_code]
 
+[jump  storage="tutorial.ks"  target="*text2"  cond="f.tutorial==1"  ]
 [return  ]
 *cover
 
@@ -298,7 +299,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [call  storage="kano.ks"  target="*show2"  ]
 [iscript]
 var nameMap={"真経津":"晨君","獅子神":"敬一君","村雨":"礼二君","天堂":"ユミピコ"};
-if(nameMap[f.name2]!==undefined)f.name=nameMap[f.name2];
+if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 [endscript]
 
 [tb_start_tyrano_code]
