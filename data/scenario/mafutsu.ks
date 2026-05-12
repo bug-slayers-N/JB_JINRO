@@ -312,6 +312,7 @@
 *win
 
 [call  storage="mafutsu.ks"  target="*show"  ]
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
 [tb_start_text mode=1 ]
 #真経津
 「VIPの人もおつかれ～！勝ててよかったね」[p]
@@ -329,6 +330,11 @@
 #真経津
 「負けちゃったね…」[p]
 「みんな強いもんね！だからボクの友達なんだ」[p]
+
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[tb_start_text mode=1 ]
 「それとも、もしかしてわざとなのかな？」[p]
 「なんでもいいや、それじゃ、またね」[p]
 [_tb_end_text]

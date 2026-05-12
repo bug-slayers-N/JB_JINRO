@@ -267,9 +267,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *s_human
 
 [call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #叶
-「ねぇねぇ、みんな自分は村人陣営ですって言ってみて！」[p]
+「村人って言ってみてくれよ、それで嘘つきを探すからさ！」[p]
 [_tb_end_text]
 
 [return  ]
@@ -333,10 +334,16 @@ if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 *win
 
 [call  storage="kano.ks"  target="*show"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #叶
 「オレが勝つとこ、きちんと観測してたか？」[p]
 「特等席で見られて良かったな」[p]
+
+[_tb_end_text]
+
+[call  storage="kano.ks"  target="*show_nomal"  ]
+[tb_start_text mode=1 ]
 「だが、指図を受けんのは二度とゴメンだ。晨君達がいなかったら即帰ってたぞ。じゃあな」[p]
 [_tb_end_text]
 

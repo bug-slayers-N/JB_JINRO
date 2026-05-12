@@ -42,6 +42,11 @@
 「VIPと協力して人狼ゲーム？カラス銀行は経営難か？」[p]
 「オレはあくまでVIPの傀儡としてしか戦えないってふざけてんのかよ」[p]
 「対戦相手は真経津達！？」[p]
+
+[_tb_end_text]
+
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
+[tb_start_text mode=1 ]
 「…」[p]
 [_tb_end_text]
 
@@ -165,7 +170,7 @@
 
 [chara_hide_all  time="0"  wait="true"  ]
 [call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 #獅子神
@@ -239,7 +244,7 @@
 *pCO
 
 [call  storage="sisigami.ks"  target="*show2"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「占い師が出てくれると助かるんだけどよ」[p]
@@ -302,7 +307,7 @@
 [call  storage="sisigami.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #獅子神
-「おっし、村陣営の勝利だ。やったな」[p]
+「おっし、村人陣営の勝利だ。やったな」[p]
 [_tb_end_text]
 
 [return  ]
@@ -333,6 +338,7 @@
 *stop
 
 [call  storage="sisigami.ks"  target="*show2"  ]
+[call  storage="sisigami.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「他人に人間宣言を要求される前に自分で言おうって算段か？」[p]
@@ -341,7 +347,7 @@
 [return  ]
 *stop2
 
-[call  storage="sisigami.ks"  target="*show_gimon"  ]
+[call  storage="sisigami.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「止めたオメーだって怪しいことを忘れんなよ」[p]

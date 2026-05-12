@@ -32,13 +32,14 @@ var lowest=true;
 for(var i=1;i<=5;i++){if(!isAlive(i)||i===playerNum)continue;if(getCalm(i)<actorCalm){lowest=false;break;}}
 var lk=String(f.like).split(",");
 var idx=gi(targetNum,playerNum);
+var murasame=playerNum===3;
 if(lowest){
 f.result="low";
 lk[idx]=parseInt(lk[idx])-10;
 }else{
 f.result=0;
-addCalm(targetNum,20);
-lk[idx]=parseInt(lk[idx])+20;
+addCalm(targetNum,murasame?30:20);
+lk[idx]=parseInt(lk[idx])+(murasame?30:20);
 }
 f.like=lk.join(",");
 [endscript]
@@ -299,13 +300,14 @@ var actorCalm=getCalm(actorNum);
 var lowest=true;
 for(var i=1;i<=5;i++){if(!isAlive(i)||i===actorNum)continue;if(getCalm(i)<actorCalm){lowest=false;break;}}
 var idx=gi(targetNum,actorNum);
+var murasame=actorNum===3;
 if(lowest){
 f.result="low";
 lk[idx]=parseInt(lk[idx])-10;
 }else{
 f.result=0;
-addCalm(targetNum,20);
-lk[idx]=parseInt(lk[idx])+20;
+addCalm(targetNum,murasame?30:20);
+lk[idx]=parseInt(lk[idx])+(murasame?30:20);
 }
 f.like=lk.join(",");
 [endscript]

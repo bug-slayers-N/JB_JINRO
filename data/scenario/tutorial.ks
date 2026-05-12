@@ -22,7 +22,7 @@ f.action = 0;
 // 平常心
 f.mafutsu_calm = 100;
 f.sisigami_calm = 80;
-f.murasame_calm = 30;
+f.murasame_calm = -30;
 f.kano_calm = 100;
 f.tendo_calm = 130;
 // like（初期値）

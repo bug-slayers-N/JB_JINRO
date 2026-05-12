@@ -8,8 +8,8 @@
 [chara_hide_all  time="0"  wait="true"  ]
 [tb_show_message_window  ]
 [mask_off  time="1000"  effect="fadeOut"  ]
-[glink  color="btn_05_red"  storage="scenario.ks"  size="20"  target="*day01_03"  text="シナリオをとばす"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_05_white"  storage="scenario.ks"  size="20"  target="*day01_01"  text="シナリオを見る"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_red"  storage="scenario.ks"  size="20"  target="*day01_01"  text="シナリオを見る"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_white"  storage="scenario.ks"  size="20"  target="*day01_03"  text="シナリオをとばす"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *day01_01
 
@@ -52,6 +52,7 @@
 [_tb_end_text]
 
 [call  storage="tendo.ks"  target="*show2"  ]
+[call  storage="tendo.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #天堂
 「どんな条件であれ、私が勝つということに変わりはない」[p]
@@ -65,7 +66,7 @@
 [_tb_end_text]
 
 [call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_ai"  ]
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「そもそも村人陣営と人狼陣営の勝負なんだから、チーム戦じゃねぇのか…？」[p]

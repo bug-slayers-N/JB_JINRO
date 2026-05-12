@@ -248,6 +248,7 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 [_tb_end_text]
 
 [glink  color="btn_05_red"  storage="scenario.ks"  size="20"  text="ゲーム開始"  target="*day01"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_yellow"  storage="scenario.ks"  size="20"  text="議論から開始"  x="112"  y="202"  width=""  height=""  _clickable_img=""  autopos="true"  target="*day01_03"  ]
 [glink  color="btn_05_white"  storage="role.ks"  size="20"  text="選びなおす"  target="*change"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *change

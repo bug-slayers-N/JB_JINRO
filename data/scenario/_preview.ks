@@ -2,107 +2,131 @@
 
 [mask time=10]
 [mask_off time=10]
-*omake_top
-
 [cm  ]
-[bg  time="500"  method="fadeIn"  storage="credits.png"  ]
-[mask_off  time="1000"  effect="fadeOut"  ]
-[glink  color="btn_05_red"  storage="omake.ks"  size="20"  text="おまけストーリー"  target="*story"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_purple"  storage="omake.ks"  size="20"  target="*QA"  text="よくありそうなQ＆A"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_lime"  storage="omake.ks"  size="20"  autopos="true"  text="クレジット"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*credit"  ]
-[glink  color="btn_05_white"  storage="title_screen.ks"  size="20"  text="タイトルに戻る"  autopos="true"  target=""  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-*credit
-
-[bg  time="1000"  method="fadeIn"  storage="credit.png"  ]
-[glink  color="btn_01_purple"  storage="omake.ks"  size="20"  text="おまけ画面に戻る"  target="*omake_top"  x="1020"  y="542"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-*QA
-
+[bg  storage="93853245_p0.png"  time="1000"  ]
+[jump  storage="scene1.ks"  target="*attention"  cond="sf.attention==1"  ]
 [tb_show_message_window  ]
 [tb_start_text mode=1 ]
-#システム
-Q.うるさいの条件は何？何か悪いこと起こってる？[p]
-A.全ターンの内半分が経過後、プレイヤーによるコマンド率が50％を越えると"うるさい"されます。プレイヤーの平常心が下がります。[p]
-Q.強く疑うで突っ込まれないためには？[p]
-A.一番目の選択肢は突っ込まれません。二番目は嘘つきを見つけていない状態で使うと突っ込まれます。三番目は人狼を見つけていないと突っ込まれます、正直占い師じゃないと使いどころないです。[p]
-Q.バグを見つけた。[p]
-A.メニューよりタイトルに戻るで緊急回避してください。出来れば報告してくれるとウレシイ…[p]
-Q.これ作ったヤツ、正気？[p]
-A.正気な訳ありません。ゲームが面白かったら、正気に戻さないようにプレイ報告して欲しいです！配信はわかりやすいところに非公式ってかいたらOKです。[p]
+#初回注意事項
+このゲームはファン活動の一環として作られた【非公式】のゲームです。原作者様ならびに各権利者様とは一切関係がございません。[p]
+公式に問い合わせたり、二次創作に理解のない方に向けて再配布することはご遠慮ください。[p]
+個人制作のフリーゲーム故に小さな不具合等の粗がございます。ご容赦ください。[p]
+特に人狼ロジックの抜け漏れは確実にあります。本当にご容赦ください。(報告もらったら対応します)[p]
+問題があった場合は即座に公開・配布を停止致しますので、クレジットよりご連絡お願いします。[p]
 [_tb_end_text]
 
 [tb_hide_message_window  ]
-[jump  storage="omake.ks"  target="*omake_top"  ]
-*story
+[tb_eval  exp="sf.attention=1"  name="attention"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
+*attention
 
-[bg  time="1000"  method="crossfade"  storage="omake_story.png"  ]
-[glink  color="black"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_01_red"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="1105"  y="30"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_red"  storage="role.ks"  size="20"  text="・&nbsp;　ゲーム開始&nbsp;　・"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
+[glink  color="btn_05_white"  storage="scene1.ks"  size="20"  text="・プロローグを見る・"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*prologue"  ]
 [s  ]
-*s01
+*prologue
+
+[tb_show_message_window  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
+[tb_start_text mode=1 ]
+#周防
+「VIPの皆様、大変長らくお待たせいたしました」[p]
+「より臨場感の高い、ギャンブラー視点でギャンブルを観戦したいという声にお応えしてご用意いたしましたエキシビション」[p]
+
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
+「ジャンケット人狼ゲームの開幕にございます」[p]
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
+[tb_start_text mode=1 ]
+「勿論、今回小間使いなのはギャンブラーの方にございます。選んだギャンブラーに指示を出し、人狼ゲームを攻略し、勝利に導いてくださいませ」[p]
+
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
+「おっと、意図的に敗北させても全く問題はございません」[p]
+
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
+[tb_start_text mode=1 ]
+「また役職やゲームの流れは遊ぶ度にランダムに展開されます」[p]
+[_tb_end_text]
+
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[tb_start_text mode=1 ]
+「思うがままに我が銀行が誇るギャンブラー達の戦いを間近でごゆっくり楽しんでくださいませ」[p]
+[_tb_end_text]
+
+[mask  time="500"  effect="fadeIn"  color="0x000000"  ]
+[mask_off  time="500"  effect="fadeOut"  ]
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
+[tb_start_text mode=1 ]
+#周防
+「ここからはメタ発言になることをご了承くださいませ」[p]
+「右上の三本線のメニューボタンよりフルスクリーンモードが使えます」[p]
+「本作をスマートフォンで遊ばれる場合は、横持ちのフルスクリーンモードを推奨しておりますのでご活用ください」[p]
+「それでは肝心のゲームの内容の説明に移らせていただきます」[p]
+[_tb_end_text]
+
+[chara_hide_all  time="1000"  wait="true"  ]
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
+[tb_start_text mode=1 ]
+#周防
+「まずはじめに、主人公としてプレイしたいギャンブラーをお選びください」[p]
+「選んだギャンブラーで難易度が前後します。自信のない方は真経津晨をお選びください。"主人公補正"がかかっております」[p]
+「高難易度がお望みの方は獅子神敬一を。またキャラクターは随時追加されていきますので、製作者のXをご確認ください」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="BG_tutorial_1.png"  ]
+[tb_start_text mode=1 ]
+#周防
+「次に人狼における役職をお選びください」[p]
+「《人狼》は毎晩1人人間を襲撃し、現在生存している人狼の数≧村人の数になることを目指します。また嘘がつけます」[p]
+「《狂人》は人間でありながら《人狼》に味方し、人狼勝利時に同時に勝利します。こちらも嘘がつけます」[p]
+「《占い師》はゲーム開始時と毎晩、占いにより1人の人間か？人狼か？の情報を得ます。人狼を全て処刑で勝利です」[p]
+「《村人》は特殊な能力は持ちません。人狼を全て処刑で勝利です」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="スクリーンショット_2026-04-29_161945.png"  ]
+[tb_start_text mode=1 ]
+「キャラと役職が決まれば、ゲームが開始します」[p]
+「こちらがメイン画面です。画面左のコマンドボタンでゲームは進みます」[p]
+「《疑う》、シンプルに対象を疑います。対象の平常心を減らします。対象からの好感度も減らします」[p]
+「《かばう》、対象をかばいます。対象の平常心を回復させます。対象からの好感度も上がります」[p]
+「《様子を見る》、プレイヤー以外のキャラが行動します。プレイヤーの行動数が多過ぎても少なすぎても悪いことが起こるようです」[p]
+「《強く疑う》プレイヤーのみにある一度限りのコマンドです。通常より大ダメージを与える疑うを行います。特に大きなダメージを与えるには理由が必要なようです」[p]
+「《COする》《偽COする》、該当役職のみ活性化するコマンドです。自分は占い師だと宣言し、占い結果を報告します。それが偽だとしても」[p]
+「《COを求める》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
+「《人間と言え》、人間宣言させ、人狼と狂人の平常心を減らします。カウンターにより中止する・されることがあります。カウンターしたキャラとされたキャラの平常心が下がります。全体で一回のみのコマンドです」[p]
+[_tb_end_text]
+
+[bg  time="1000"  method="crossfade"  storage="BG_selectChara_noText_260429kari.png"  ]
+[tb_start_text mode=1 ]
+「規定ターンを経過すると投票フェーズに入ります」[p]
+「対象キャラに投票して、処刑されるキャラを決めましょう」[p]
+「人狼が処刑されるとゲーム終了し、村陣営の勝利となります」[p]
+「人狼が生き残っている限り、二日目に移行します」[p]
+「人狼は投票後、襲撃フェーズをはさみ、任意の対象を襲撃して死亡させます」[p]
+「勝利条件を達成するまでこれを繰り返します」[p]
+[_tb_end_text]
 
 [bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
-[tb_show_message_window  ]
-[call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
+[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
 [tb_start_text mode=1 ]
-#真経津
-「この村は人狼に食べつくされちゃいました～！」[p]
-「なんてね、御手洗君」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_ai"  ]
-[tb_start_text mode=1 ]
-「あ、今日は御手洗君じゃなくてVIPの人だった」[p]
-「つまんな～い！」[p]
-「…」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-「ねぇ、今日は楽しかった？」[p]
-「強い人達とやるゲーム、楽しいよね」[p]
+「正直、習うより慣れろというゲームです」[p]
+「細かいゲーム仕様はおまけページ内のよくありそうなQ＆Aにまとめてあります」[p]
+「特定条件で勝利を収めるとおまけページのおまけストーリーが解放されるそうです」[p]
+「お時間のあるVIPの方は是非に挑戦してみてください」[p]
 
 [_tb_end_text]
 
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
+[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
 [tb_start_text mode=1 ]
-「画面の中の方がもっと楽しいよ」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-「ボク達はいつでもこっちで待ってるからね」[p]
-「ばいばーい！」[p]
+「それではゲーム説明を終了し、ゲームを開始させていただきます」[p]
 [_tb_end_text]
 
 [chara_hide_all  time="1000"  wait="true"  ]
-[tb_hide_message_window  ]
-[jump  storage="omake.ks"  target="*story"  ]
-*s02
-
-[call  storage="mafutsu.ks"  target="*show"  ]
-[tb_start_text mode=1 ]
-#真経津
-「ボクが本物占い師だよ～！」[p]
-[_tb_end_text]
-
-[call  storage="tendo.ks"  target="*show2"  ]
-[tb_start_text mode=1 ]
-#天堂
-「神は当然わかっていたがな」[p]
-[_tb_end_text]
-
-[call  storage="kano.ks"  target="*show2"  ]
-[call  storage="kano.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
-#叶
-「ホントか～？ユミピコ～」[p]
-[_tb_end_text]
-
-[chara_hide_all  time="1000"  wait="true"  ]
-[tb_start_text mode=1 ]
-
-[_tb_end_text]
-
+[jump  storage="role.ks"  target=""  ]
