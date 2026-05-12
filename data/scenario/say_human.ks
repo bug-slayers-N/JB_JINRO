@@ -108,9 +108,11 @@ else if(c===5) f.tendo_calm = parseFloat(f.tendo_calm)-25;
 *p_stop
 
 [jump  storage="say_human.ks"  target="*ai_stop"  cond="f.ai_actor==0"  ]
-[glink  color="black"  storage="say_human.ks"  size="20"  text="止める"  autopos="true"  target="*p_stop"  ]
+[glink  color="black"  storage="say_human.ks"  size="20"  text="止める"  autopos="true"  target="*p_stop2"  ]
 [glink  color="black"  storage="say_human.ks"  size="20"  text="止めない"  autopos="true"  target="*human"  ]
 [s  ]
+*p_stop2
+
 [tb_eval  exp="f.target=f.player"  name="target"  cmd="="  op="h"  val="player"  val_2="undefined"  ]
 *stop_list
 
@@ -128,6 +130,12 @@ if(parseInt(f.ai_actor)===0){f.ai_actor=f.player;}
 [call  storage="murasame.ks"  target="*stop2"  cond="f.ai_actor==3"  ]
 [call  storage="kano.ks"  target="*stop2"  cond="f.ai_actor==4"  ]
 [call  storage="tendo.ks"  target="*stop2"  cond="f.ai_actor==5"  ]
+[iscript]
+function addCalm(i,val){if(i===1)f.mafutsu_calm=parseFloat(f.mafutsu_calm)+val;else if(i===2)f.sisigami_calm=parseFloat(f.sisigami_calm)+val;else if(i===3)f.murasame_calm=parseFloat(f.murasame_calm)+val;else if(i===4)f.kano_calm=parseFloat(f.kano_calm)+val;else f.tendo_calm=parseFloat(f.tendo_calm)+val;}
+addCalm(parseInt(f.target),-15);
+addCalm(parseInt(f.ai_actor),-15);
+[endscript]
+
 [jump  storage="observe.ks"  target="*observe"  ]
 *alive
 

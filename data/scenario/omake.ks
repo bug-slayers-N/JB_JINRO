@@ -34,8 +34,9 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [jump  storage="omake.ks"  target="*omake_top"  ]
 *story
 
-[glink  color="black"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  ]
-[glink  color="black"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  ]
+[bg  time="1000"  method="crossfade"  storage="omake_story.png"  ]
+[glink  color="black"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_01_red"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="1105"  y="30"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *s01
 
