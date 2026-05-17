@@ -19,7 +19,12 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show_nomal
 
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<50"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_normal.png"  ]
+[return  ]
+*show_normal2
+
+[chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_normal_2.png"  ]
 [return  ]
 *show_ki
 
@@ -27,6 +32,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show_do
 
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<50"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_do.png"  ]
 [return  ]
 *show_ai
@@ -86,6 +92,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *debate_Top
 
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="kano.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #叶
 [_tb_end_text]
@@ -202,6 +209,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
+[tb_eval  exp="f.kano_calm=100"  name="kano_calm"  cmd="="  op="t"  val="100"  val_2="undefined"  ]
 [call  storage="kano.ks"  target="*show"  ]
 [call  storage="kano.ks"  target="*show_do"  ]
 [tb_start_text mode=1 ]
@@ -277,6 +285,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *human
 
 [call  storage="kano.ks"  target="*show"  ]
+[call  storage="kano.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #叶
 「村人に決まってんじゃーん」[p]

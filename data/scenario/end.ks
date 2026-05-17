@@ -69,6 +69,14 @@ f.vote_disp5=lines[4];
 
 [_tb_end_text]
 
+[iscript]
+f.mafutsu_calm=100;
+f.sisigami_calm=80;
+f.murasame_calm=110;
+f.kano_calm=100;
+f.tendo_calm=120;
+[endscript]
+
 [jump  storage="scenario.ks"  target="*jinro_win"  cond="f.win==2"  ]
 [jump  storage="scenario.ks"  target="*human_win"  cond="f.win==1"  ]
 *player_death

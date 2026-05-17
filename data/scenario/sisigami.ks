@@ -11,7 +11,12 @@
 [return  ]
 *show_nomal
 
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<40"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_normal.png"  ]
+[return  ]
+*show_normal2
+
+[chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_normal_2.png"  ]
 [return  ]
 *show_ki
 
@@ -19,6 +24,7 @@
 [return  ]
 *show_ai
 
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<40"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_aseri.png"  ]
 [return  ]
 *show_gimon
@@ -78,6 +84,7 @@
 *debate_Top
 
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="sisigami.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 [_tb_end_text]
@@ -190,6 +197,7 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
+[tb_eval  exp="f.sisigami_calm=80"  name="sisigami_calm"  cmd="="  op="t"  val="80"  val_2="undefined"  ]
 [call  storage="sisigami.ks"  target="*show"  ]
 [call  storage="sisigami.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
@@ -263,6 +271,7 @@
 *human
 
 [call  storage="sisigami.ks"  target="*show"  ]
+[call  storage="sisigami.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「あ？勿論、村人だよ」[p]

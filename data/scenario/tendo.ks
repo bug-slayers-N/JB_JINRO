@@ -18,7 +18,12 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_nomal
 
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<60"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_normal.png"  ]
+[return  ]
+*show_normal2
+
+[chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_normal_2.png"  ]
 [return  ]
 *show_ki
 
@@ -26,6 +31,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_do
 
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<60"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_do.png"  ]
 [return  ]
 *show_ai
@@ -267,6 +273,7 @@ if(f.name==="叶")f.name="黎明";
 *human
 
 [call  storage="tendo.ks"  target="*show"  ]
+[call  storage="tendo.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #天堂
 「神は当然村人陣営に味方をしている」[p]

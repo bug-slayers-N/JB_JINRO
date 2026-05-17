@@ -11,7 +11,12 @@
 [return  ]
 *show_nomal
 
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<55"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_normal.png"  ]
+[return  ]
+*show_normal2
+
+[chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_normal_2.png"  ]
 [return  ]
 *show_ki
 
@@ -19,6 +24,7 @@
 [return  ]
 *show_do
 
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<55"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_do.png"  ]
 [return  ]
 *show_ai
@@ -77,6 +83,7 @@
 *debate_Top
 
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="murasame.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #村雨
 [_tb_end_text]
@@ -189,6 +196,7 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
+[tb_eval  exp="f.murasame_calm=110"  name="murasame_calm"  cmd="="  op="t"  val="110"  val_2="undefined"  ]
 [call  storage="murasame.ks"  target="*show"  ]
 [call  storage="murasame.ks"  target="*show_do"  ]
 [tb_start_text mode=1 ]
@@ -263,6 +271,7 @@
 *human
 
 [call  storage="murasame.ks"  target="*show"  ]
+[call  storage="murasame.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「当然、村人陣営だ」[p]

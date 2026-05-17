@@ -11,7 +11,12 @@
 [return  ]
 *show_nomal
 
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<50"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_normal.png"  ]
+[return  ]
+*show_normal2
+
+[chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_normal_2.png"  ]
 [return  ]
 *show_raku
 
@@ -22,6 +27,7 @@
 [return  ]
 *show_ai
 
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<50"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_ai.png"  ]
 [return  ]
 *show_jinro
@@ -74,6 +80,7 @@
 *debate_Top
 
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="mafutsu.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #真経津
 [_tb_end_text]
@@ -186,6 +193,7 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
+[tb_eval  exp="f.mafutsu_calm=100"  name="mafutsu_calm"  cmd="="  op="t"  val="100"  val_2="undefined"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
 [call  storage="mafutsu.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
@@ -261,7 +269,7 @@
 *human
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
+[call  storage="mafutsu.ks"  target="*show_nomal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「もちろんボクは村人！」[p]

@@ -19,6 +19,7 @@
 
 *player_vote_end
 
+[mask_off  time="1000"  effect="fadeOut"  ]
 [jump  storage="vote.ks"  target="*like_boost"  cond="f.revote==1"  ]
 *vote_ai
 

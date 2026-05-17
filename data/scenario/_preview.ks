@@ -3,130 +3,161 @@
 [mask time=10]
 [mask_off time=10]
 [cm  ]
-[bg  storage="93853245_p0.png"  time="1000"  ]
-[jump  storage="scene1.ks"  target="*attention"  cond="sf.attention==1"  ]
+[mask  time="300"  effect="fadeIn"  color="0x000000"  ]
 [tb_show_message_window  ]
-[tb_start_text mode=1 ]
-#初回注意事項
-このゲームはファン活動の一環として作られた【非公式】のゲームです。原作者様ならびに各権利者様とは一切関係がございません。[p]
-公式に問い合わせたり、二次創作に理解のない方に向けて再配布することはご遠慮ください。[p]
-個人制作のフリーゲーム故に小さな不具合等の粗がございます。ご容赦ください。[p]
-特に人狼ロジックの抜け漏れは確実にあります。本当にご容赦ください。(報告もらったら対応します)[p]
-問題があった場合は即座に公開・配布を停止致しますので、クレジットよりご連絡お願いします。[p]
-[_tb_end_text]
+[chara_hide_all  time="0"  wait="true"  ]
+[call  storage="UI.ks"  target="*myrole"  ]
+[bg  time="0"  method="crossfade"  storage="93853245_p0.png"  ]
+[mask_off  time="300"  effect="fadeOut"  ]
+[call  storage="uranai.ks"  target="*uranai_randam"  ]
+*top2
 
-[tb_hide_message_window  ]
-[tb_eval  exp="sf.attention=1"  name="attention"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
-*attention
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="end.ks"  target="*turn_count"  ]
+*debate_top
 
-[glink  color="btn_05_red"  storage="role.ks"  size="20"  text="・&nbsp;　ゲーム開始&nbsp;　・"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_white"  storage="scene1.ks"  size="20"  text="・プロローグを見る・"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*prologue"  ]
+[iscript]
+var aliveArr = String(f.alive).split(",");
+if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
+[endscript]
+
+[jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
+[glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*kuro"  ]
+[glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
+[glink  color="btn_08_lime"  storage="debate.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*watch"  ]
+[jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
+*s_human
+
+[jump  storage="debate.ks"  target="*push_done"  cond="f.push==1"  ]
+[glink  color="btn_08_yellow"  storage="debate.ks"  size="20"  text="強く疑う"  x="100"  y="275"  width="150"  height=""  _clickable_img=""  target="*push"  ]
+*push_done
+
+[jump  storage="debate.ks"  target="*lie"  cond="f.co!='0,0,0,0,0'"  ]
+[glink  color="btn_08_purple"  storage="debate.ks"  size="20"  text="COを求める"  x="300"  y="200"  width="150"  height=""  _clickable_img=""  target="*plz_CO"  ]
+[jump  storage="debate.ks"  target="*prophet"  cond="f.role!=3"  ]
+[glink  color="btn_08_blue"  storage="CO.ks"  size="20"  text="COする"  x="300"  y="50"  width="150"  height=""  _clickable_img=""  target="*true_CO"  ]
+*prophet
+
+[jump  storage="debate.ks"  target="*lie"  cond="f.role>2"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="偽COする"  x="300"  y="125"  width="150"  height=""  _clickable_img=""  target="*fCO"  ]
+*lie
+
+[glink  color="btn_07_red"  storage="debate.ks"  size="20"  text="状況確認"  target="*check"  x="213"  y="369"  width=""  height=""  _clickable_img=""  ]
 [s  ]
-*prologue
+*kuro
 
-[tb_show_message_window  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*doubt"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*doubt"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*doubt"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*doubt"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*doubt"  cond="f.player==5"  ]
+*shiro
+
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*cover"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*cover"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*cover"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*cover"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*cover"  cond="f.player==5"  ]
+*say_human
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[jump  storage="say_human.ks"  target="*say_human"  ]
+*plz_CO
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  ]
+[call  storage="mafutsu.ks"  target="*pCO"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*pCO"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*pCO"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*pCO"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*pCO"  cond="f.player==5"  ]
+[jump  storage="CO.ks"  target="*pCO_start"  ]
+*fCO
+
+[jump  storage="CO.ks"  target="*player_fake_CO"  ]
+*push
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*doubt"  ]
+*watch
+
+[call  storage="system.ks"  target="*quiet"  ]
+[jump  storage="AI.ks"  target="*randam_ai"  ]
+*auto
+
+[glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
+[s  ]
+*check
+
+[iscript]
+f.vote_disp1="";
+f.vote_disp2="";
+f.vote_disp3="";
+f.vote_disp4="";
+f.vote_disp5="";
+[endscript]
+
+[iscript]
+var names=["真経津","獅子神","村雨","叶","天堂"];
+var aliveArr=String(f.alive).split(",");
+var aliveNames=[];
+for(var i=0;i<5;i++){
+if(aliveArr[i]==="1")aliveNames.push(names[i]);
+}
+f.result=aliveNames.join("、");
+[endscript]
+
+[iscript]
+var charNames=["真経津","獅子神","村雨","叶","天堂"];
+var resultNames=["人間","人狼"];
+var coArr=String(f.co).split(",");
+var claim=String(f.claim).split(",");
+var claim2=String(f.claim2).split(",");
+var aliveArr=String(f.alive).split(",");
+var disps=[];
+for(var i=1;i<=5;i++){
+if(coArr[i-1]==="0")continue;
+var c1t=parseInt(claim[(i-1)*2]);
+var c1r=parseInt(claim[(i-1)*2+1]);
+if(c1t>0){
+disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]);
+}
+if(aliveArr[i-1]==="1"){
+var c2t=parseInt(claim2[(i-1)*2]);
+var c2r=parseInt(claim2[(i-1)*2+1]);
+if(c2t>0){
+disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]);
+}
+}
+}
+f.vote_disp1=disps.length>0?disps[0]:"";
+f.vote_disp2=disps.length>1?disps[1]:"";
+f.vote_disp3=disps.length>2?disps[2]:"";
+f.vote_disp4=disps.length>3?disps[3]:"";
+f.vote_disp5=disps.length>4?disps[4]:"";
+[endscript]
+
 [tb_start_text mode=1 ]
-#周防
-「VIPの皆様、大変長らくお待たせいたしました」[p]
-「より臨場感の高い、ギャンブラー視点でギャンブルを観戦したいという声にお応えしてご用意いたしましたエキシビション」[p]
+#ガイド
+残りの生存者は[emb exp="f.result"]です。[p]
+占い師の報告は[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
+
 
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
-[tb_start_text mode=1 ]
-「ジャンケット人狼ゲームの開幕にございます」[p]
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
-[tb_start_text mode=1 ]
-「勿論、今回小間使いなのはギャンブラーの方にございます。選んだギャンブラーに指示を出し、人狼ゲームを攻略し、勝利に導いてくださいませ」[p]
-
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
-[tb_start_text mode=1 ]
-「おっと、意図的に敗北させても全く問題はございません」[p]
-
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
-[tb_start_text mode=1 ]
-「また役職やゲームの流れは遊ぶ度にランダムに展開されます」[p]
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
-[tb_start_text mode=1 ]
-「思うがままに我が銀行が誇るギャンブラー達の戦いを間近でごゆっくり楽しんでくださいませ」[p]
-[_tb_end_text]
-
-[mask  time="500"  effect="fadeIn"  color="0x000000"  ]
-[mask_off  time="500"  effect="fadeOut"  ]
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
-[tb_start_text mode=1 ]
-#周防
-「ここからはメタ発言になることをご了承くださいませ」[p]
-「右上の三本線のメニューボタンよりフルスクリーンモードが使えます」[p]
-「本作をスマートフォンで遊ばれる場合は、横持ちのフルスクリーンモードを推奨しておりますのでご活用ください」[p]
-「それでは肝心のゲームの内容の説明に移らせていただきます」[p]
-[_tb_end_text]
-
-[chara_hide_all  time="1000"  wait="true"  ]
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
-[tb_start_text mode=1 ]
-#周防
-「まずはじめに、主人公としてプレイしたいギャンブラーをお選びください」[p]
-「選んだギャンブラーで難易度が前後します。自信のない方は真経津晨をお選びください。"主人公補正"がかかっております」[p]
-「高難易度がお望みの方は獅子神敬一を。またキャラクターは随時追加されていきますので、製作者のXをご確認ください」[p]
-[_tb_end_text]
-
-[bg  time="1000"  method="crossfade"  storage="BG_tutorial_1.png"  ]
-[tb_start_text mode=1 ]
-#周防
-「次に人狼における役職をお選びください」[p]
-「《人狼》は毎晩1人人間を襲撃し、現在生存している人狼の数≧村人の数になることを目指します。また嘘がつけます」[p]
-「《狂人》は人間でありながら《人狼》に味方し、人狼勝利時に同時に勝利します。こちらも嘘がつけます」[p]
-「《占い師》はゲーム開始時と毎晩、占いにより1人の人間か？人狼か？の情報を得ます。人狼を全て処刑で勝利です」[p]
-「《村人》は特殊な能力は持ちません。人狼を全て処刑で勝利です」[p]
-[_tb_end_text]
-
-[bg  time="1000"  method="crossfade"  storage="スクリーンショット_2026-04-29_161945.png"  ]
-[tb_start_text mode=1 ]
-「キャラと役職が決まれば、ゲームが開始します」[p]
-「こちらがメイン画面です。画面左のコマンドボタンでゲームは進みます」[p]
-「《疑う》、シンプルに対象を疑います。対象の平常心を減らします。対象からの好感度も減らします」[p]
-「《かばう》、対象をかばいます。対象の平常心を回復させます。対象からの好感度も上がります」[p]
-「《様子を見る》、プレイヤー以外のキャラが行動します。プレイヤーの行動数が多過ぎても少なすぎても悪いことが起こるようです」[p]
-「《強く疑う》プレイヤーのみにある一度限りのコマンドです。通常より大ダメージを与える疑うを行います。特に大きなダメージを与えるには理由が必要なようです」[p]
-「《COする》《偽COする》、該当役職のみ活性化するコマンドです。自分は占い師だと宣言し、占い結果を報告します。それが偽だとしても」[p]
-「《COを求める》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
-「《人間と言え》、人間宣言させ、人狼と狂人の平常心を減らします。カウンターにより中止する・されることがあります。カウンターしたキャラとされたキャラの平常心が下がります。全体で一回のみのコマンドです」[p]
-[_tb_end_text]
-
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara_noText_260429kari.png"  ]
-[tb_start_text mode=1 ]
-「規定ターンを経過すると投票フェーズに入ります」[p]
-「対象キャラに投票して、処刑されるキャラを決めましょう」[p]
-「人狼が処刑されるとゲーム終了し、村陣営の勝利となります」[p]
-「人狼が生き残っている限り、二日目に移行します」[p]
-「人狼は投票後、襲撃フェーズをはさみ、任意の対象を襲撃して死亡させます」[p]
-「勝利条件を達成するまでこれを繰り返します」[p]
-[_tb_end_text]
-
-[bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
-[tb_start_text mode=1 ]
-「正直、習うより慣れろというゲームです」[p]
-「細かいゲーム仕様はおまけページ内のよくありそうなQ＆Aにまとめてあります」[p]
-「特定条件で勝利を収めるとおまけページのおまけストーリーが解放されるそうです」[p]
-「お時間のあるVIPの方は是非に挑戦してみてください」[p]
-
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
-[tb_start_text mode=1 ]
-「それではゲーム説明を終了し、ゲームを開始させていただきます」[p]
-[_tb_end_text]
-
-[chara_hide_all  time="1000"  wait="true"  ]
-[jump  storage="role.ks"  target=""  ]
+[jump  storage="tutorial.ks"  target="*text"  cond="f.tutorial==1"  ]
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="debate.ks"  target="*debate_top"  ]
