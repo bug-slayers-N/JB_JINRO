@@ -1,3 +1,6 @@
-[eval exp="f._system_preview_ks='debate.ks'"] 
+[eval exp="f._system_preview_ks='omake.ks'"] 
+[preload  storage="./data/bgimage/credits.png"  ]
+[preload  storage="./data/bgimage/credit.png"  ]
+[preload  storage="./data/bgimage/omake_story.png"  ]
 [preload  storage="./data/bgimage/93853245_p0.png"  ]
 [return] 

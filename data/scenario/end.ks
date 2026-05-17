@@ -38,6 +38,7 @@ else if(day>=2&&turn>=5){f.result="vote";}
 [jump  storage="debate.ks"  target="*debate_top"  ]
 *game_set
 
+[call  storage="end.ks"  target="*omake"  ]
 [iscript]
 f.vote_disp2=f.win===1?"村人陣営の勝利です。":"人狼陣営の勝利です。";
 [endscript]
@@ -102,3 +103,22 @@ f.tendo_calm=120;
 
 [bg  time="1000"  method="crossfade"  storage="92690259_p0.png"  ]
 [jump  storage="scenario.ks"  target="*lose"  ]
+*omake
+
+[iscript]
+var playerIsMafutsu = parseInt(f.player) === 1;
+var coArr = String(f.co).split(",");
+var playerCO = coArr[parseInt(f.player)-1] === "1";
+
+if(playerIsMafutsu && parseInt(f.role) === 1 && parseInt(f.win) === 2){
+  sf.ma_s01 = 1;
+}
+if(playerIsMafutsu && parseInt(f.role) >= 3 && parseInt(f.day) === 1 && parseInt(f.win) === 1){
+  sf.ma_s02 = 1;
+}
+if(playerIsMafutsu && parseInt(f.role) === 1 && playerCO && parseInt(f.win) === 2){
+  sf.ma_s03 = 1;
+}
+[endscript]
+
+[return  ]

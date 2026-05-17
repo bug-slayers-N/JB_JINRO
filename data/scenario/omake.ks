@@ -35,13 +35,28 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 *story
 
 [bg  time="1000"  method="crossfade"  storage="omake_story.png"  ]
-[glink  color="black"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
+[jump  storage="omake.ks"  target="*ma_s01"  cond="sf.ma_s01!=1"  ]
+[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
+*ma_s01
+
+[jump  storage="omake.ks"  target="*ma_s02"  cond="sf.ma_s01!=1"  ]
+[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー02"  target="*s02"  x="57"  y="483"  width=""  height=""  _clickable_img=""  ]
+*ma_s02
+
+[jump  storage="omake.ks"  target="*ma_s03"  cond="sf.ma_s01!=1"  ]
+[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー03"  target="*s03"  x="57"  y="552"  width=""  height=""  _clickable_img=""  ]
+*ma_s03
+
 [glink  color="btn_01_red"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="1105"  y="30"  width=""  height=""  _clickable_img=""  ]
 [s  ]
-*s01
+*story_start
 
 [bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
 [tb_show_message_window  ]
+[return  ]
+*s01
+
+[call  storage="omake.ks"  target="*story_start"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
 [call  storage="mafutsu.ks"  target="*show_jinro"  ]
 [tb_start_text mode=1 ]
@@ -54,7 +69,7 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [tb_start_text mode=1 ]
 「あ、今日は御手洗君じゃなくてVIPの人だった」[p]
 「つまんな～い！」[p]
-「…」[p]
+「……」[p]
 [_tb_end_text]
 
 [call  storage="mafutsu.ks"  target="*show_raku"  ]
@@ -75,21 +90,26 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 「ばいばーい！」[p]
 [_tb_end_text]
 
+*story_end
+
 [chara_hide_all  time="1000"  wait="true"  ]
 [tb_hide_message_window  ]
 [jump  storage="omake.ks"  target="*story"  ]
 *s02
 
+[call  storage="omake.ks"  target="*story_start"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
 [tb_start_text mode=1 ]
 #真経津
-「ボクが本物占い師だよ～！」[p]
+「村人の完全勝利だ！」[p]
+「VIPの人も慣れてきたのかな？」[p]
 [_tb_end_text]
 
 [call  storage="tendo.ks"  target="*show2"  ]
 [tb_start_text mode=1 ]
 #天堂
-「神は当然わかっていたがな」[p]
+「神はこうなることも当然わかっていたがな」[p]
 [_tb_end_text]
 
 [call  storage="kano.ks"  target="*show2"  ]
@@ -99,8 +119,78 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 「ホントか～？ユミピコ～」[p]
 [_tb_end_text]
 
-[chara_hide_all  time="1000"  wait="true"  ]
+[call  storage="sisigami.ks"  target="*show"  ]
+[call  storage="sisigami.ks"  target="*show_gimon"  ]
 [tb_start_text mode=1 ]
-
+#獅子神
+「後ろにVIPがいると、こう、やりにくいというか」[p]
+「オメーらもたまにトチった行動しててカオスな結果になるよな」[p]
 [_tb_end_text]
 
+[call  storage="murasame.ks"  target="*show2"  ]
+[call  storage="murasame.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#村雨
+「LiAの時の私の立場が少しでもわかったか？獅子神」[p]
+[_tb_end_text]
+
+[call  storage="sisigami.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#獅子神
+「言うなって…それ…」[p]
+[_tb_end_text]
+
+[call  storage="kano.ks"  target="*show"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#叶
+「敬一君みたいに、VIPも覚醒して魅せてくれたらいいのに」[p]
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*show"  ]
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
+[tb_start_text mode=1 ]
+#真経津
+「それはVIPの人次第かもね」[p]
+「でも、ボクは待ってるよ」[p]
+「遊び相手は多い方がいいに決まってるからね」[p]
+[_tb_end_text]
+
+[jump  storage="omake.ks"  target="*story_end"  ]
+*s03
+
+[call  storage="omake.ks"  target="*story_start"  ]
+[call  storage="mafutsu.ks"  target="*show"  ]
+[call  storage="mafutsu.ks"  target="*show_jinro"  ]
+[tb_start_text mode=1 ]
+#真経津
+「ボクがニセモノの占い師の人狼だよ～！」[p]
+「みーんな騙されちゃった？」[p]
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*show_raku"  ]
+[tb_start_text mode=1 ]
+#真経津
+「VIPの人もだいぶ手慣れたね！」[p]
+「もうフォーリンクくらいには来れるんじゃない？」[p]
+「このスピードで成長してるなら、期待株だよ！」[p]
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#真経津
+「え、あくまで見る専門で自分は参加するつもりはない？」[p]
+「画面を隔てた安全圏から見る試合こそ、落ち着いて楽しめる？」[p]
+「……」[p]
+「つまんな～い！」[p]
+「折角お友達が増えるかなって思ったのに」[p]
+[_tb_end_text]
+
+[call  storage="mafutsu.ks"  target="*show_jinro"  ]
+[tb_start_text mode=1 ]
+「ま、いいよ」[p]
+「本当にボクのお友達なら、いずれまた賭場で会えるから」[p]
+「またね！」[p]
+[_tb_end_text]
+
+[jump  storage="omake.ks"  target="*story_end"  ]

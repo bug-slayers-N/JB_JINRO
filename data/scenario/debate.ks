@@ -127,13 +127,13 @@ if(coArr[i-1]==="0")continue;
 var c1t=parseInt(claim[(i-1)*2]);
 var c1r=parseInt(claim[(i-1)*2+1]);
 if(c1t>0){
-disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]);
+disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]+"、");
 }
 if(aliveArr[i-1]==="1"){
 var c2t=parseInt(claim2[(i-1)*2]);
 var c2r=parseInt(claim2[(i-1)*2+1]);
 if(c2t>0){
-disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]);
+disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]+"、");
 }
 }
 }
@@ -147,10 +147,17 @@ f.vote_disp5=disps.length>4?disps[4]:"";
 [tb_start_text mode=1 ]
 #ガイド
 残りの生存者は[emb exp="f.result"]です。[p]
-占い師の報告は[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
 
 
 [_tb_end_text]
+
+[jump  storage="debate.ks"  target="*0CO"  cond="f.co=='0,0,0,0,0'"  ]
+[tb_start_text mode=1 ]
+占い師の報告は[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
+
+[_tb_end_text]
+
+*0CO
 
 [jump  storage="tutorial.ks"  target="*text"  cond="f.tutorial==1"  ]
 [call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]

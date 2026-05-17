@@ -54,77 +54,39 @@ var actor = parseInt(f.ai_actor);
 var role = parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][actor-1]);
 var coUsed = String(f.co).indexOf("1") !== -1;
 var sayUsed = parseInt(f.say_human) === 1;
-var personality = [2,0,0,2,1][actor-1];
+var p = [2,0,0,2,1][actor-1];
+
+// [疑う, かばう, 人間と言え, CO系, COを求める]
+var weightTable = {
+  1: { 2:[5,2,15,2,10], 1:[5,2,10,2,8], 0:[6,4,7,1,10] },
+  2: { 2:[5,2,2,15,2],  1:[5,2,2,8,5],  0:[7,4,1,5,2]  },
+  3: { 0:[5,2,7,15,7],  1:[5,2,3,15,8], 2:[5,2,3,15,8] },
+  4: [5,2,10,0,15],
+  5: [5,2,10,0,15]
+};
+
+var w = (role <= 3) ? weightTable[role][p] : weightTable[role];
+
 var cmds = [];
-if(role === 1){
-if(personality === 2){
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,15]);
-if(!coUsed)  cmds.push([6,2]);
-if(!coUsed)  cmds.push([3,10]);
-} else if(personality === 1){
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,10]);
-if(!coUsed)  cmds.push([6,2]);
-if(!coUsed)  cmds.push([3,8]);
-} else {
-cmds.push([1,6]);
-cmds.push([2,4]);
-if(!sayUsed) cmds.push([4,7]);
-if(!coUsed)  cmds.push([6,1]);
-if(!coUsed)  cmds.push([3,10]);
+cmds.push([1, w[0]]);
+cmds.push([2, w[1]]);
+if(!sayUsed)              cmds.push([4, w[2]]);
+if(!coUsed && role <= 2)  cmds.push([6, w[3]]);
+if(!coUsed && role === 3) cmds.push([5, w[3]]);
+if(!coUsed)               cmds.push([3, w[4]]);
+
+function pickCmd(cmds){
+  var total = 0;
+  for(var j=0;j<cmds.length;j++) total += cmds[j][1];
+  var r = Math.random()*total, cum = 0;
+  for(var k=0;k<cmds.length;k++){
+    cum += cmds[k][1];
+    if(r < cum) return cmds[k][0];
+  }
+  return cmds[cmds.length-1][0];
 }
-} else if(role === 2){
-if(personality === 2){
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,2]);
-if(!coUsed)  cmds.push([6,15]);
-if(!coUsed)  cmds.push([3,2]);
-} else if(personality === 1){
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,2]);
-if(!coUsed)  cmds.push([6,8]);
-if(!coUsed)  cmds.push([3,5]);
-} else {
-cmds.push([1,7]);
-cmds.push([2,4]);
-if(!sayUsed) cmds.push([4,1]);
-if(!coUsed)  cmds.push([6,5]);
-if(!coUsed)  cmds.push([3,2]);
-}
-} else if(role === 3){
-if(personality === 0){
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,7]);
-if(!coUsed)  cmds.push([5,15]);
-if(!coUsed)  cmds.push([3,7]);
-} else {
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,3]);
-if(!coUsed)  cmds.push([5,15]);
-if(!coUsed)  cmds.push([3,8]);
-}
-} else {
-cmds.push([1,5]);
-cmds.push([2,2]);
-if(!sayUsed) cmds.push([4,5]);
-if(!coUsed)  cmds.push([3,15]);
-}
-var totalW = 0;
-for(var j = 0; j < cmds.length; j++) totalW += cmds[j][1];
-var r = Math.random() * totalW;
-var cum = 0;
-f.jump = cmds[cmds.length-1][0];
-for(var k = 0; k < cmds.length; k++){
-cum += cmds[k][1];
-if(r < cum){ f.jump = cmds[k][0]; break; }
-}
+
+f.jump = pickCmd(cmds);
 [endscript]
 
 [jump  storage="doubt.ks"  target="*doubt_ai"  cond="f.jump==1"  ]

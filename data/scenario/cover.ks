@@ -109,31 +109,33 @@ var aliveArr=String(f.alive).split(",");
 var coArr=String(f.co).split(",");
 var claimArr=String(f.claim).split(",");
 var claimArr2=String(f.claim2).split(",");
+var actorCO=coArr[actorNum-1]!=="0";
 function isAlive(i){return aliveArr[i-1]==="1";}
-function reportedWolf(actor,c){
-var idx=(c-1)*2;
-if(parseInt(claimArr[idx])===actor&&claimArr[idx+1]==="1")return true;
-if(parseInt(claimArr2[idx])===actor&&claimArr2[idx+1]==="1")return true;
+function reportedWolf(seer,target){
+var idx=(seer-1)*2;
+if(parseInt(claimArr[idx])===target&&claimArr[idx+1]==="1")return true;
+if(parseInt(claimArr2[idx])===target&&claimArr2[idx+1]==="1")return true;
 return false;
 }
-var actorCO=coArr[actorNum-1]!=="0";
-if(Math.random()<0.5){
+function isExcluded(i){
+if(i===actorNum||!isAlive(i))return true;
+if(reportedWolf(i,actorNum)||reportedWolf(actorNum,i))return true;
+if(actorCO&&coArr[i-1]!=="0")return true;
+return false;
+}
+if(Math.random()>=0.5){
+f.target=0;f.ai_result=1;
+}else{
 var candidates=[];
 for(var i=1;i<=5;i++){
-if(i===actorNum||!isAlive(i)||reportedWolf(actorNum,i))continue;
-if(actorCO&&coArr[i-1]!=="0")continue;
-candidates.push(i);
+if(!isExcluded(i))candidates.push(i);
 }
 if(candidates.length>0){
 f.target=candidates[Math.floor(Math.random()*candidates.length)];
 f.ai_result=0;
 }else{
-f.target=0;
-f.ai_result=1;
+f.target=0;f.ai_result=1;
 }
-}else{
-f.target=0;
-f.ai_result=1;
 }
 [endscript]
 

@@ -19,7 +19,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show_nomal
 
-[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<50"  ]
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<33"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_normal.png"  ]
 [return  ]
 *show_normal2
@@ -32,7 +32,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show_do
 
-[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<50"  ]
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<33"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_do.png"  ]
 [return  ]
 *show_ai

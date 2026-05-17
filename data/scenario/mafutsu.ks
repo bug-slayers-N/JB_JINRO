@@ -11,7 +11,7 @@
 [return  ]
 *show_nomal
 
-[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<50"  ]
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<33"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_normal.png"  ]
 [return  ]
 *show_normal2
@@ -27,7 +27,7 @@
 [return  ]
 *show_ai
 
-[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<50"  ]
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<33"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_ai.png"  ]
 [return  ]
 *show_jinro
