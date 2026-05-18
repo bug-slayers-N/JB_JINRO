@@ -39,11 +39,11 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
 *ma_s01
 
-[jump  storage="omake.ks"  target="*ma_s02"  cond="sf.ma_s01!=1"  ]
+[jump  storage="omake.ks"  target="*ma_s02"  cond="sf.ma_s02!=1"  ]
 [glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー02"  target="*s02"  x="57"  y="483"  width=""  height=""  _clickable_img=""  ]
 *ma_s02
 
-[jump  storage="omake.ks"  target="*ma_s03"  cond="sf.ma_s01!=1"  ]
+[jump  storage="omake.ks"  target="*ma_s03"  cond="sf.ma_s03!=1"  ]
 [glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー03"  target="*s03"  x="57"  y="552"  width=""  height=""  _clickable_img=""  ]
 *ma_s03
 

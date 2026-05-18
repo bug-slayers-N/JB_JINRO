@@ -18,7 +18,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_nomal
 
-[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<40"  ]
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<30"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_normal.png"  ]
 [return  ]
 *show_normal2
@@ -31,7 +31,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_do
 
-[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<40"  ]
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<30"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_do.png"  ]
 [return  ]
 *show_ai

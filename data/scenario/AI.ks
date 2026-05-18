@@ -33,7 +33,7 @@ var weights = [];
 for(var j = 0; j < cands.length; j++){
 var c = cands[j];
 var mult = 1;
-if(c === pinchId) mult = Math.max(mult, 5);
+if(c === pinchId) mult = Math.max(mult, 3);
 if(coPromote && getRole(c) <= 3) mult = Math.max(mult, 3);
 weights.push(baseW[c] * mult);
 totalW += baseW[c] * mult;
@@ -55,18 +55,15 @@ var role = parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][actor-1]);
 var coUsed = String(f.co).indexOf("1") !== -1;
 var sayUsed = parseInt(f.say_human) === 1;
 var p = [2,0,0,2,1][actor-1];
-
 // [疑う, かばう, 人間と言え, CO系, COを求める]
 var weightTable = {
-  1: { 2:[5,2,15,2,10], 1:[5,2,10,2,8], 0:[6,4,7,1,10] },
-  2: { 2:[5,2,2,15,2],  1:[5,2,2,8,5],  0:[7,4,1,5,2]  },
-  3: { 0:[5,2,7,15,7],  1:[5,2,3,15,8], 2:[5,2,3,15,8] },
-  4: [5,2,10,0,15],
-  5: [5,2,10,0,15]
+1: { 2:[5,2,15,2,10], 1:[5,2,10,2,8], 0:[6,4,7,1,10] },
+2: { 2:[5,2,2,15,2],  1:[5,2,2,8,5],  0:[7,4,1,5,2]  },
+3: { 0:[5,2,7,15,7],  1:[5,2,3,15,8], 2:[5,2,3,15,8] },
+4: [5,2,10,0,15],
+5: [5,2,10,0,15]
 };
-
 var w = (role <= 3) ? weightTable[role][p] : weightTable[role];
-
 var cmds = [];
 cmds.push([1, w[0]]);
 cmds.push([2, w[1]]);
@@ -74,18 +71,16 @@ if(!sayUsed)              cmds.push([4, w[2]]);
 if(!coUsed && role <= 2)  cmds.push([6, w[3]]);
 if(!coUsed && role === 3) cmds.push([5, w[3]]);
 if(!coUsed)               cmds.push([3, w[4]]);
-
 function pickCmd(cmds){
-  var total = 0;
-  for(var j=0;j<cmds.length;j++) total += cmds[j][1];
-  var r = Math.random()*total, cum = 0;
-  for(var k=0;k<cmds.length;k++){
-    cum += cmds[k][1];
-    if(r < cum) return cmds[k][0];
-  }
-  return cmds[cmds.length-1][0];
+var total = 0;
+for(var j=0;j<cmds.length;j++) total += cmds[j][1];
+var r = Math.random()*total, cum = 0;
+for(var k=0;k<cmds.length;k++){
+cum += cmds[k][1];
+if(r < cum) return cmds[k][0];
 }
-
+return cmds[cmds.length-1][0];
+}
 f.jump = pickCmd(cmds);
 [endscript]
 

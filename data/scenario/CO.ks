@@ -112,6 +112,7 @@ if(getRole(i)===1){ f.ai_actor=i; f.jump=1; break; }
 [tb_eval  exp="f.result=1"  name="result"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
 *player_fake_CO_end
 
+[jump  storage="night.ks"  target="*fake"  cond="f.name2=='fake'"  ]
 [iscript]
 var actorNum = parseInt(f.player);
 var claim = String(f.claim).split(",");
@@ -150,17 +151,13 @@ var claim = String(f.claim).split(",");
 var target = parseInt(claim[idx]);
 var result = parseInt(claim[idx+1]);
 var lk = String(f.like).split(',');
-
 // COしたキャラの平常心ダメージ
 addCalm(actorNum, -10);
-
 // 報告されたキャラの平常心：人間報告+15、人狼報告-15
 addCalm(target, result===1 ? -15 : 15);
-
 // 被報告者→報告者の好感度：人間報告+20、人狼報告-20
 var targetToActor = gi(target, actorNum);
 lk[targetToActor] = parseInt(lk[targetToActor]) + (result===1 ? -20 : 20);
-
 f.like = lk.join(',');
 f.name = ["真経津","獅子神","村雨","叶","天堂"][target-1];
 f.name2 = result===1?"人狼":"人間";

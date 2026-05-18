@@ -11,7 +11,7 @@
 [return  ]
 *show_nomal
 
-[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<27"  ]
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<20"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_normal.png"  ]
 [return  ]
 *show_normal2
@@ -24,7 +24,7 @@
 [return  ]
 *show_ai
 
-[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<27"  ]
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<20"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_aseri.png"  ]
 [return  ]
 *show_gimon

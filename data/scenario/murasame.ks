@@ -11,7 +11,7 @@
 [return  ]
 *show_nomal
 
-[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<35"  ]
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<27"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_normal.png"  ]
 [return  ]
 *show_normal2
@@ -24,7 +24,7 @@
 [return  ]
 *show_do
 
-[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<35"  ]
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<27"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_do.png"  ]
 [return  ]
 *show_ai

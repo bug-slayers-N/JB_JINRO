@@ -9,6 +9,31 @@
 
 [jump  storage="night.ks"  target="*player_death"  cond="f.player_death==1"  ]
 [jump  storage="uranai.ks"  target="*uranai_night"  cond="f.role==3"  ]
+[iscript]
+var coArr = String(f.co).split(",");
+var playerCO = coArr[parseInt(f.player)-1] === "1";
+var role = parseInt(f.role);
+if(playerCO && (role === 1 || role === 2)){
+f.result = "fake";
+}
+[endscript]
+
+[jump  storage="night.ks"  target="*fake_end"  cond="f.result!='fake'"  ]
+[tb_eval  exp="f.name2='fake'"  name="name2"  cmd="="  op="t"  val="fake"  val_2="undefined"  ]
+[jump  storage="CO.ks"  target="*player_fake_CO"  ]
+*fake
+
+[iscript]
+var actorNum = parseInt(f.player);
+var claim2 = String(f.claim2).split(",");
+var idx = (actorNum-1)*2;
+claim2[idx] = parseInt(f.target);
+claim2[idx+1] = parseInt(f.result);
+f.claim2 = claim2.join(",");
+[endscript]
+
+*fake_end
+
 *player_death
 
 [call  storage="uranai.ks"  target="*uranai_randam"  ]
