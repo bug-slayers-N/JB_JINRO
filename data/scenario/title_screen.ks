@@ -22,7 +22,7 @@
 ;タイトル表示
 
 
-[bg  storage="BG_title_260429kari.png"  ]
+[bg  storage="BG_title.png"  ]
 *title
 
 [glink  color="btn_05_red"  text="・はじめから・"  x="330"  y="550"  size="20"  target="*start"  width=""  height=""  _clickable_img=""  ]

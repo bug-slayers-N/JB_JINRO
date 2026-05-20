@@ -129,7 +129,7 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 [glink  color="black"  storage="role.ks"  size="20"  text="ランダムで！"  autopos="true"  target="*random"  ]
 [glink  color="black"  storage="role.ks"  size="20"  text="人狼で！"  target="*wolf"  autopos="true"  ]
 [glink  color="black"  storage="role.ks"  size="20"  text="狂人で！"  autopos="true"  target="*lunatic"  ]
-[glink  color="black"  storage="role.ks"  size="20"  text="占い師で！"  autopos="true"  target="*prophet"  ]
+[glink  color="black"  storage="role.ks"  size="20"  text="占い師で！"  autopos="true"  target="*seer"  ]
 [glink  color="black"  storage="role.ks"  size="20"  text="村人で！"  autopos="true"  target="*human"  ]
 [s  ]
 *wolf
@@ -142,7 +142,7 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 [_tb_end_text]
 
 [jump  storage="role.ks"  target="*role_setting"  ]
-*prophet
+*seer
 
 [tb_eval  exp="f.role=3"  name="role"  cmd="="  op="t"  val="3"  val_2="undefined"  ]
 [call  storage="UI.ks"  target="*myrole"  ]
@@ -176,8 +176,8 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 
 [tb_eval  exp="f.role=Math.floor(Math.random()*(5-1+1)+1)"  name="role"  cmd="="  op="r"  val="1"  val_2="5"  ]
 [jump  storage="role.ks"  target="*wolf"  cond="f.role==1"  ]
-[jump  storage="role.ks"  target="*prophet"  cond="f.role==2"  ]
-[jump  storage="role.ks"  target="*lunatic"  cond="f.role==3"  ]
+[jump  storage="role.ks"  target="*lunatic"  cond="f.role==2"  ]
+[jump  storage="role.ks"  target="*seer"  cond="f.role==3"  ]
 [jump  storage="role.ks"  target="*human"  cond=""  ]
 *role_setting
 
@@ -278,7 +278,7 @@ console.log('割り当て結果: mafutsu=' + f.mafutsu + ', sisigami=' + f.sisig
 [_tb_end_tyrano_code]
 
 [tb_start_tyrano_code]
-[ptext layer="2" text="&f.murasame" x="300" y="75" size="40" color=blue" name="murasame_test" width="256" align="center" overwrite="true"]
+[ptext layer="2" text="&f.murasame" x="300" y="75" size="40" color="blue" name="murasame_test" width="256" align="center" overwrite="true"]
 [_tb_end_tyrano_code]
 
 [tb_start_tyrano_code]

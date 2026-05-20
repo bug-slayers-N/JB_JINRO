@@ -59,9 +59,14 @@ f.like=lk.join(",");
 [jump  storage="observe.ks"  target="*observe"  ]
 *cover_ai
 
+[iscript]
+// actorの役職を取得してf.resultに格納（分岐判定用）
+f.result=parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][parseInt(f.ai_actor)-1]);
+[endscript]
+
 *ai_jinro
 
-[jump  storage="cover.ks"  target="*ai_mad"  cond="f.target!=1"  ]
+[jump  storage="cover.ks"  target="*ai_mad"  cond="f.result!=1"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
@@ -102,7 +107,7 @@ f.target=pool.length>0?pool[Math.floor(Math.random()*pool.length)]:0;
 [jump  storage="cover.ks"  target="*ai_calc"  ]
 *ai_mad
 
-[jump  storage="cover.ks"  target="*ai_seer"  cond="f.target!=2"  ]
+[jump  storage="cover.ks"  target="*ai_seer"  cond="f.result!=2"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
@@ -143,7 +148,7 @@ f.target=0;f.ai_result=1;
 [jump  storage="cover.ks"  target="*back"  ]
 *ai_seer
 
-[jump  storage="cover.ks"  target="*ai_vill"  cond="f.target!=3"  ]
+[jump  storage="cover.ks"  target="*ai_vill"  cond="f.result!=3"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");

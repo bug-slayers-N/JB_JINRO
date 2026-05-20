@@ -34,29 +34,29 @@ f.votes="0,0,0,0,0";
 *like_boost
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,val){var arr=String(a).split(',');arr[b]=String(val);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 if(isAlive(1)){
 var idxs=[4,8,12,16];
-for(var i=0;i<idxs.length;i++){f.like=si(f.like,idxs[i],gi(f.like,idxs[i])+20);}
+for(var i=0;i<idxs.length;i++){f.like=si(f.like,idxs[i],getEl(f.like,idxs[i])+20);}
 }
 [endscript]
 
 *ai_wolf
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,v){var arr=String(a).split(',');arr[b]=String(v);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 function hasCO(i){return parseInt(String(f.co).split(',')[i-1])===1;}
 function getRole(i){return parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][i-1]);}
 function getCalm(i){return parseFloat([f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm][i-1]);}
 function pairIdx(a,b){return (a-1)*4+(b<a?b-1:b-2);}
-function getLiar(a,b){return gi(f.liar,pairIdx(a,b));}
-function getPC(a,b){return getCalm(b)+gi(f.like,pairIdx(a,b));}
-function getClaim1(i){var b=(i-1)*2;return{target:gi(f.claim,b),result:gi(f.claim,b+1)};}
-function getClaim2(i){var b=(i-1)*2;return{target:gi(f.claim2,b),result:gi(f.claim2,b+1)};}
+function getLiar(a,b){return getEl(f.liar,pairIdx(a,b));}
+function getPC(a,b){return getCalm(b)+getEl(f.like,pairIdx(a,b));}
+function getClaim1(i){var b=(i-1)*2;return{target:getEl(f.claim,b),result:getEl(f.claim,b+1)};}
+function getClaim2(i){var b=(i-1)*2;return{target:getEl(f.claim2,b),result:getEl(f.claim2,b+1)};}
 function getVotable(a){
 var vt=String(f.vote_target).split(",");
 var t=[];
@@ -98,15 +98,15 @@ f.votes=si(f.votes,actor-1,target);
 *ai_mad
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,v){var arr=String(a).split(',');arr[b]=String(v);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 function hasCO(i){return parseInt(String(f.co).split(',')[i-1])===1;}
 function getRole(i){return parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][i-1]);}
 function getCalm(i){return parseFloat([f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm][i-1]);}
 function pairIdx(a,b){return (a-1)*4+(b<a?b-1:b-2);}
-function getLiar(a,b){return gi(f.liar,pairIdx(a,b));}
-function getPC(a,b){return getCalm(b)+gi(f.like,pairIdx(a,b));}
+function getLiar(a,b){return getEl(f.liar,pairIdx(a,b));}
+function getPC(a,b){return getCalm(b)+getEl(f.like,pairIdx(a,b));}
 function getVotable(a){
 var vt=String(f.vote_target).split(",");
 var t=[];
@@ -136,14 +136,14 @@ f.votes=si(f.votes,actor-1,target);
 *ai_seer
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,v){var arr=String(a).split(',');arr[b]=String(v);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 function getRole(i){return parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][i-1]);}
 function getCalm(i){return parseFloat([f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm][i-1]);}
 function pairIdx(a,b){return (a-1)*4+(b<a?b-1:b-2);}
-function getLiar(a,b){return gi(f.liar,pairIdx(a,b));}
-function getPC(a,b){return getCalm(b)+gi(f.like,pairIdx(a,b));}
+function getLiar(a,b){return getEl(f.liar,pairIdx(a,b));}
+function getPC(a,b){return getCalm(b)+getEl(f.like,pairIdx(a,b));}
 function getVotable(a){
 var vt=String(f.vote_target).split(",");
 var t=[];
@@ -169,14 +169,14 @@ f.votes=si(f.votes,actor-1,target);
 *ai_vill
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,v){var arr=String(a).split(',');arr[b]=String(v);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 function getRole(i){return parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][i-1]);}
 function getCalm(i){return parseFloat([f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm][i-1]);}
 function pairIdx(a,b){return (a-1)*4+(b<a?b-1:b-2);}
-function getLiar(a,b){return gi(f.liar,pairIdx(a,b));}
-function getPC(a,b){return getCalm(b)+gi(f.like,pairIdx(a,b));}
+function getLiar(a,b){return getEl(f.liar,pairIdx(a,b));}
+function getPC(a,b){return getCalm(b)+getEl(f.like,pairIdx(a,b));}
 function getVotable(a){
 var vt=String(f.vote_target).split(",");
 var t=[];
@@ -227,12 +227,12 @@ f.votes=votes.join(",");
 [endscript]
 
 [iscript]
-function gi(a,b){return parseInt(String(a).split(',')[b],10);}
+function getEl(a,b){return parseInt(String(a).split(',')[b],10);}
 function si(a,b,val){var arr=String(a).split(',');arr[b]=String(val);return arr.join(',');}
 function isAlive(i){return parseInt(String(f.alive).split(',')[i-1])===1;}
 if(isAlive(1)){
 var idxs=[4,8,12,16];
-for(var i=0;i<idxs.length;i++){f.like=si(f.like,idxs[i],gi(f.like,idxs[i])-20);}
+for(var i=0;i<idxs.length;i++){f.like=si(f.like,idxs[i],getEl(f.like,idxs[i])-20);}
 }
 [endscript]
 

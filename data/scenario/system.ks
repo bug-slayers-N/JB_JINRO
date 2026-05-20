@@ -239,15 +239,16 @@ f.player_death=parseInt(f.result)===parseInt(f.player)?1:0;
 
 [call  storage="end.ks"  target="*player_death"  cond="f.player_death==1"  ]
 [iscript]
-function pairIdx(a,b){return (a-1)*4+(b<a?b-1:b-2);}
+function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
 var dead=parseInt(f.result);
 var aliveArr=String(f.alive).split(",");
 aliveArr[dead-1]="0";
 f.alive=aliveArr.join(",");
 var liarArr=String(f.liar).split(',');
+// 死者を全生存者のliarで「確認済み人間(2)」に更新
 for(var v=1;v<=5;v++){
 if(v===dead)continue;
-liarArr[pairIdx(v,dead)]='2';
+liarArr[gi(v,dead)]='2';
 }
 f.liar=liarArr.join(',');
 [endscript]
@@ -292,17 +293,15 @@ f.vote_disp1=aliveNames.join("、");
 [tb_eval  exp="f.action+=1"  name="action"  cmd="+="  op="t"  val="1"  val_2="undefined"  ]
 [iscript]
 if(parseInt(f.day)===1){
-if(parseInt(f.turn)>=5){
-if(parseInt(f.action)/parseInt(f.turn)<0.2){
-f.result='quiet';
-}
-}
+  if(parseInt(f.turn)>=6){
+    if(parseInt(f.action)/parseInt(f.turn)>0.5){
+      f.result='noisy';
+    }
+  }
 }else{
-if(parseInt(f.turn)>=4){
-if(parseInt(f.action)===0){
-f.result='quiet';
-}
-}
+  if(parseInt(f.action)>=3){
+    f.result='noisy';
+  }
 }
 [endscript]
 
@@ -336,18 +335,12 @@ f.name=names[parseInt(f.player)-1];
 
 [tb_eval  exp="f.result=0"  name="result"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
 [iscript]
-if(parseInt(f.day)===1){
-if(parseInt(f.turn)>=5){
-if(parseInt(f.action)/parseInt(f.turn)<0.2){
-f.result='quiet';
-}
-}
+// quietチェックのみ（noisyチェックはしない）
+var day=parseInt(f.day),turn=parseInt(f.turn),action=parseInt(f.action);
+if(day===1){
+if(turn>=5&&action/turn<0.2)f.result='quiet';
 }else{
-if(parseInt(f.turn)>=4){
-if(parseInt(f.action)===0){
-f.result='quiet';
-}
-}
+if(turn>=4&&action===0)f.result='quiet';
 }
 [endscript]
 
@@ -356,11 +349,8 @@ f.result='quiet';
 *q_damege
 
 [iscript]
-if(f.player==1)f.mafutsu_calm=parseFloat(f.mafutsu_calm)-20;
-else if(f.player==2)f.sisigami_calm=parseFloat(f.sisigami_calm)-20;
-else if(f.player==3)f.murasame_calm=parseFloat(f.murasame_calm)-20;
-else if(f.player==4)f.kano_calm=parseFloat(f.kano_calm)-20;
-else f.tendo_calm=parseFloat(f.tendo_calm)-20;
+function addCalm(i,val){if(i===1)f.mafutsu_calm=parseFloat(f.mafutsu_calm)+val;else if(i===2)f.sisigami_calm=parseFloat(f.sisigami_calm)+val;else if(i===3)f.murasame_calm=parseFloat(f.murasame_calm)+val;else if(i===4)f.kano_calm=parseFloat(f.kano_calm)+val;else f.tendo_calm=parseFloat(f.tendo_calm)+val;}
+addCalm(parseInt(f.player),-20);
 [endscript]
 
 [return  ]

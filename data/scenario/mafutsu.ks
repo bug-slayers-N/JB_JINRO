@@ -9,7 +9,7 @@
 
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  ]
 [return  ]
-*show_nomal
+*show_normal
 
 [jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<25"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_normal.png"  ]
@@ -80,7 +80,7 @@
 *debate_Top
 
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 [_tb_end_text]
@@ -117,7 +117,7 @@
 *doubt2
 
 [call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 「ボク、[emb exp="f.name"]さんが怪しいと思うな～」[p]
@@ -166,7 +166,7 @@
 
 [tb_start_text mode=1 ]
 「誰なら信じれそう？」[p]
-「かばうとかばわれた人の全体信頼値とかばわれた人からボクへの好感度があがるよ。ただしボクの信頼値が低いと逆効果になることもあるよ」[p]
+「かばうとかばわれた人の平常心とかばわれた人からボクへの好感度があがるよ。ただしボクの平常心が低いと逆効果になることもあるよ」[p]
 [_tb_end_text]
 
 [jump  storage="cover.ks"  target="*cover"  ]
@@ -220,7 +220,7 @@
 [return  ]
 *CO2
 
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「ちょっと待ってよ！」[p]
@@ -248,7 +248,7 @@
 *pCO
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「そういえば占い師って誰なの～？」[p]
@@ -259,7 +259,7 @@
 *s_human
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「ねぇねぇ、みんな自分は村人陣営ですって言ってみて！」[p]
@@ -269,7 +269,7 @@
 *human
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「もちろんボクは村人！」[p]
@@ -341,7 +341,7 @@
 
 [_tb_end_text]
 
-[call  storage="mafutsu.ks"  target="*show_nomal"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 「それとも、もしかしてわざとなのかな？」[p]
 「なんでもいいや、それじゃ、またね」[p]

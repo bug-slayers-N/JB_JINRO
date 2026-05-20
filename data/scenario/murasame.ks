@@ -9,7 +9,7 @@
 
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  ]
 [return  ]
-*show_nomal
+*show_normal
 
 [jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<27"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_normal.png"  ]
@@ -49,7 +49,7 @@
 「…」[p]
 [_tb_end_text]
 
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 「…なんだ、対戦相手は獅子神達なのか」[p]
 「それなら問題ない、私が勝つ」[p]
@@ -83,7 +83,7 @@
 *debate_Top
 
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 [_tb_end_text]
@@ -119,7 +119,7 @@
 *doubt2
 
 [call  storage="murasame.ks"  target="*show"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 #村雨
@@ -176,7 +176,7 @@
 
 [chara_hide_all  time="0"  wait="true"  ]
 [call  storage="murasame.ks"  target="*show"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 #村雨
@@ -223,7 +223,7 @@
 [return  ]
 *CO2
 
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「待て」[p]
@@ -251,7 +251,7 @@
 *pCO
 
 [call  storage="murasame.ks"  target="*show2"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「占い師は名乗り出るべきではないか？」[p]
@@ -261,7 +261,7 @@
 *s_human
 
 [call  storage="murasame.ks"  target="*show2"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「情報に乏しい今、一度全員が村人だと宣言したらどうか？」[p]
@@ -271,7 +271,7 @@
 *human
 
 [call  storage="murasame.ks"  target="*show"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「当然、村人陣営だ」[p]
@@ -333,7 +333,7 @@
 *lose
 
 [call  storage="murasame.ks"  target="*show"  ]
-[call  storage="murasame.ks"  target="*show_nomal"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #村雨
 「負けたか」[p]

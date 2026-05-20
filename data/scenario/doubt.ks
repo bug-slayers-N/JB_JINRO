@@ -57,9 +57,14 @@ f.ai_result=isLiar?2:1;
 [jump  storage="observe.ks"  target="*observe"  ]
 *doubt_ai
 
+[iscript]
+// actorの役職を取得してf.resultに格納（分岐判定用）
+f.result=parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][parseInt(f.ai_actor)-1]);
+[endscript]
+
 *ai_jinro
 
-[jump  storage="doubt.ks"  target="*ai_mad"  cond="f.target!=1"  ]
+[jump  storage="doubt.ks"  target="*ai_mad"  cond="f.result!=1"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
@@ -141,7 +146,7 @@ f.target=target;
 [jump  storage="doubt.ks"  target="*ai_calc"  ]
 *ai_mad
 
-[jump  storage="doubt.ks"  target="*ai_seer"  cond="f.target!=2"  ]
+[jump  storage="doubt.ks"  target="*ai_seer"  cond="f.result!=2"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
@@ -195,7 +200,7 @@ f.target=target;
 [jump  storage="doubt.ks"  target="*ai_calc"  ]
 *ai_seer
 
-[jump  storage="doubt.ks"  target="*ai_vill"  cond="f.target!=3"  ]
+[jump  storage="doubt.ks"  target="*ai_vill"  cond="f.result!=3"  ]
 [iscript]
 var actorNum=parseInt(f.ai_actor);
 var aliveArr=String(f.alive).split(",");
@@ -386,7 +391,7 @@ f.like=lk.join(",");
 「間違ったこと言うとむしろ恥ずかしい思いをするよ」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="直感だけどね"  target="*damage01"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="直感だけどね"  target="*damage1"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="声のトーンが違うくない？"  target="*damage2"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="鏡の中に君を助ける答えはない"  target="*damage3"  ]
 [s  ]
@@ -397,7 +402,7 @@ f.like=lk.join(",");
 「強く推すところはなんだ？」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="正直、勘"  target="*damage01"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="正直、勘"  target="*damage1"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="オレですら怪しく思う"  target="*damage2"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="どう考えても人狼"  target="*damage3"  ]
 [s  ]
@@ -408,7 +413,7 @@ f.like=lk.join(",");
 「強く推すその理由は？」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="理論はない、感情"  target="*damage01"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="理論はない、感情"  target="*damage1"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="生体反応を見ろ"  target="*damage2"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="論理的に考えて人狼"  target="*damage3"  ]
 [s  ]
@@ -419,7 +424,7 @@ f.like=lk.join(",");
 「何を理由に強く推すんだ？」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="観測者の勘"  target="*damage01"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="観測者の勘"  target="*damage1"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="嘘をついている反応"  target="*damage2"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="誰の目に観ても人狼"  target="*damage3"  ]
 [s  ]
@@ -430,11 +435,11 @@ f.like=lk.join(",");
 「強く推すには理由がいる」[p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="神の直感"  target="*damage01"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="神の直感"  target="*damage1"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="神の目からは逃れられない"  target="*damage2"  ]
 [glink  color="black"  storage="doubt.ks"  size="20"  text="哀れな咎人に神罰を下そう"  target="*damage3"  ]
 [s  ]
-*damage01
+*damage1
 
 [tb_eval  exp="f.win='d1'"  name="win"  cmd="="  op="t"  val="d1"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*push_damage"  ]

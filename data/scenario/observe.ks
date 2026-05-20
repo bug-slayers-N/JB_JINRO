@@ -3,7 +3,7 @@
 *observe
 
 [iscript]
-var ca=[f.mafutsu_calm,f.sisigami_calm,f.murasame_calm,f.kano_calm,f.tendo_calm];
+var ca=[parseFloat(f.mafutsu_calm),parseFloat(f.sisigami_calm),parseFloat(f.murasame_calm),parseFloat(f.kano_calm),parseFloat(f.tendo_calm)];
 var op=[70,60,80,85,70];
 var ro=[parseInt(f.mafutsu),parseInt(f.sisigami),parseInt(f.murasame),parseInt(f.kano),parseInt(f.tendo)];
 var al=String(f.alive).split(",");
@@ -86,3 +86,4 @@ debugMsg+="target="+t+" role="+ro[t-1]+" calm="+ca[t-1]+" perceived="+perceived+
 debugMsg+="ai_result="+f.ai_result+" f.target="+f.target;
 alert(debugMsg);
 [endscript]
+

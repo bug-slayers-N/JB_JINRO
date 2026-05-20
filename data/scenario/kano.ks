@@ -17,7 +17,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  ]
 [return  ]
-*show_nomal
+*show_normal
 
 [jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<25"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_normal.png"  ]
@@ -64,7 +64,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 「晨君達の普段見れないような顔が観測出来そうだからな」[p]
 [_tb_end_text]
 
-[call  storage="kano.ks"  target="*show_nomal"  ]
+[call  storage="kano.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 「精々そこでオレだけを観測してろ」[p]
 「じゃあな、晨君達に会ってくるわ」[p]
@@ -92,7 +92,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *debate_Top
 
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
-[call  storage="kano.ks"  target="*show_nomal"  ]
+[call  storage="kano.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #叶
 [_tb_end_text]
@@ -237,7 +237,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *CO2
 
-[call  storage="kano.ks"  target="*show_nomal"  ]
+[call  storage="kano.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #叶
 「スト――ップ！」[p]
@@ -285,7 +285,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *human
 
 [call  storage="kano.ks"  target="*show"  ]
-[call  storage="kano.ks"  target="*show_nomal"  ]
+[call  storage="kano.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #叶
 「村人に決まってんじゃーん」[p]
@@ -351,7 +351,7 @@ if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 
 [_tb_end_text]
 
-[call  storage="kano.ks"  target="*show_nomal"  ]
+[call  storage="kano.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 「だが、指図を受けんのは二度とゴメンだ。晨君達がいなかったら即帰ってたぞ。じゃあな」[p]
 [_tb_end_text]

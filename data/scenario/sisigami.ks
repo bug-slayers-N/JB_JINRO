@@ -9,7 +9,7 @@
 
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  ]
 [return  ]
-*show_nomal
+*show_normal
 
 [jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<20"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_normal.png"  ]
@@ -84,7 +84,7 @@
 *debate_Top
 
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 [_tb_end_text]
@@ -120,7 +120,7 @@
 *doubt2
 
 [call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 #獅子神
@@ -224,7 +224,7 @@
 [return  ]
 *CO2
 
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「待てよ」[p]
@@ -234,7 +234,7 @@
 *CO3
 
 [call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「少なくとも誰かが嘘つきってか」[p]
@@ -271,7 +271,7 @@
 *human
 
 [call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「あ？勿論、村人だよ」[p]
@@ -347,7 +347,7 @@
 *stop
 
 [call  storage="sisigami.ks"  target="*show2"  ]
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「他人に人間宣言を要求される前に自分で言おうって算段か？」[p]
@@ -356,7 +356,7 @@
 [return  ]
 *stop2
 
-[call  storage="sisigami.ks"  target="*show_nomal"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
 「止めたオメーだって怪しいことを忘れんなよ」[p]

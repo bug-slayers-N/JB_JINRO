@@ -24,8 +24,8 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [endscript]
 
 [jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
-[glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*kuro"  ]
-[glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*shiro"  ]
+[glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*doubt"  ]
+[glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*cover"  ]
 [glink  color="btn_08_lime"  storage="debate.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*watch"  ]
 [jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
 [glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
@@ -37,9 +37,9 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 
 [jump  storage="debate.ks"  target="*lie"  cond="f.co!='0,0,0,0,0'"  ]
 [glink  color="btn_08_purple"  storage="debate.ks"  size="20"  text="COを求める"  x="300"  y="200"  width="150"  height=""  _clickable_img=""  target="*plz_CO"  ]
-[jump  storage="debate.ks"  target="*prophet"  cond="f.role!=3"  ]
-[glink  color="btn_08_blue"  storage="CO.ks"  size="20"  text="COする"  x="300"  y="50"  width="150"  height=""  _clickable_img=""  target="*true_CO"  ]
-*prophet
+[jump  storage="debate.ks"  target="*seer"  cond="f.role!=3"  ]
+[glink  color="btn_08_blue"  storage="debate.ks"  size="20"  text="COする"  x="300"  y="50"  width="150"  height=""  _clickable_img=""  target="*CO"  ]
+*seer
 
 [jump  storage="debate.ks"  target="*lie"  cond="f.role>2"  ]
 [glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="偽COする"  x="300"  y="125"  width="150"  height=""  _clickable_img=""  target="*fCO"  ]
@@ -47,7 +47,7 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 
 [glink  color="btn_07_red"  storage="debate.ks"  size="20"  text="状況確認"  target="*check"  x="213"  y="369"  width=""  height=""  _clickable_img=""  ]
 [s  ]
-*kuro
+*doubt
 
 [call  storage="system.ks"  target="*action"  ]
 [jump  storage="mafutsu.ks"  target="*doubt"  cond="f.player==1"  ]
@@ -55,7 +55,7 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [jump  storage="murasame.ks"  target="*doubt"  cond="f.player==3"  ]
 [jump  storage="kano.ks"  target="*doubt"  cond="f.player==4"  ]
 [jump  storage="tendo.ks"  target="*doubt"  cond="f.player==5"  ]
-*shiro
+*cover
 
 [call  storage="system.ks"  target="*action"  ]
 [jump  storage="mafutsu.ks"  target="*cover"  cond="f.player==1"  ]
@@ -63,11 +63,15 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [jump  storage="murasame.ks"  target="*cover"  cond="f.player==3"  ]
 [jump  storage="kano.ks"  target="*cover"  cond="f.player==4"  ]
 [jump  storage="tendo.ks"  target="*cover"  cond="f.player==5"  ]
-*say_human
+*watch
+
+[call  storage="system.ks"  target="*quiet"  ]
+[jump  storage="AI.ks"  target="*randam_ai"  ]
+*push
 
 [call  storage="system.ks"  target="*action"  ]
-[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
-[jump  storage="say_human.ks"  target="*say_human"  ]
+[tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*doubt"  ]
 *plz_CO
 
 [call  storage="system.ks"  target="*action"  ]
@@ -78,18 +82,19 @@ if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
 [call  storage="kano.ks"  target="*pCO"  cond="f.player==4"  ]
 [call  storage="tendo.ks"  target="*pCO"  cond="f.player==5"  ]
 [jump  storage="CO.ks"  target="*pCO_start"  ]
-*fCO
-
-[jump  storage="CO.ks"  target="*player_fake_CO"  ]
-*push
+*CO
 
 [call  storage="system.ks"  target="*action"  ]
-[tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
-[jump  storage="doubt.ks"  target="*doubt"  ]
-*watch
+[jump  storage="CO.ks"  target="*true_CO"  ]
+*fCO
 
-[call  storage="system.ks"  target="*quiet"  ]
-[jump  storage="AI.ks"  target="*randam_ai"  ]
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="CO.ks"  target="*player_fake_CO"  ]
+*say_human
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[jump  storage="say_human.ks"  target="*say_human"  ]
 *auto
 
 [glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]

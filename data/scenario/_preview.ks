@@ -2,197 +2,174 @@
 
 [mask time=10]
 [mask_off time=10]
-*omake_top
-
 [cm  ]
-[bg  time="500"  method="fadeIn"  storage="credits.png"  ]
-[mask_off  time="1000"  effect="fadeOut"  ]
-[glink  color="btn_05_red"  storage="omake.ks"  size="20"  text="おまけストーリー"  target="*story"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_purple"  storage="omake.ks"  size="20"  target="*QA"  text="よくありそうなQ＆A"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_lime"  storage="omake.ks"  size="20"  autopos="true"  text="クレジット"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*credit"  ]
-[glink  color="btn_05_white"  storage="title_screen.ks"  size="20"  text="タイトルに戻る"  autopos="true"  target=""  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-*credit
-
-[bg  time="1000"  method="fadeIn"  storage="credit.png"  ]
-[glink  color="btn_01_purple"  storage="omake.ks"  size="20"  text="おまけ画面に戻る"  target="*omake_top"  x="1020"  y="542"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-*QA
-
+[mask  time="300"  effect="fadeIn"  color="0x000000"  ]
 [tb_show_message_window  ]
-[tb_start_text mode=1 ]
-#システム
-Q.うるさいの条件は何？何か悪いこと起こってる？[p]
-A.全ターンの内半分が経過後、プレイヤーによるコマンド率が50％を越えると"うるさい"されます。プレイヤーの平常心が下がります。[p]
-Q.強く疑うで突っ込まれないためには？[p]
-A.一番目の選択肢は突っ込まれません。二番目は嘘つきを見つけていない状態で使うと突っ込まれます。三番目は人狼を見つけていないと突っ込まれます、正直占い師じゃないと使いどころないです。[p]
-Q.バグを見つけた。[p]
-A.メニューよりタイトルに戻るで緊急回避してください。出来れば報告してくれるとウレシイ…[p]
-Q.これ作ったヤツ、正気？[p]
-A.正気な訳ありません。ゲームが面白かったら、正気に戻さないようにプレイ報告して欲しいです！配信はわかりやすいところに非公式ってかいたらOKです。[p]
-[_tb_end_text]
+[chara_hide_all  time="0"  wait="true"  ]
+[call  storage="UI.ks"  target="*myrole"  ]
+[bg  time="0"  method="crossfade"  storage="93853245_p0.png"  ]
+[mask_off  time="300"  effect="fadeOut"  ]
+[call  storage="uranai.ks"  target="*uranai_randam"  ]
+*top2
 
-[tb_hide_message_window  ]
-[jump  storage="omake.ks"  target="*omake_top"  ]
-*story
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="end.ks"  target="*turn_count"  ]
+*debate_top
 
-[bg  time="1000"  method="crossfade"  storage="omake_story.png"  ]
-[jump  storage="omake.ks"  target="*ma_s01"  cond="sf.ma_s01!=1"  ]
-[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー01"  target="*s01"  x="59"  y="416"  width=""  height=""  _clickable_img=""  ]
-*ma_s01
+[iscript]
+var aliveArr = String(f.alive).split(",");
+if(aliveArr[parseInt(f.player)-1] === "0") f.player_death = 1;
+[endscript]
 
-[jump  storage="omake.ks"  target="*ma_s02"  cond="sf.ma_s01!=1"  ]
-[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー02"  target="*s02"  x="57"  y="483"  width=""  height=""  _clickable_img=""  ]
-*ma_s02
+[jump  storage="debate.ks"  target="*auto"  cond="f.player_death==1"  ]
+[glink  color="btn_08_red"  storage="debate.ks"  size="20"  text="疑う"  x="100"  y="50"  width="150"  height=""  _clickable_img=""  target="*doubt"  ]
+[glink  color="btn_08_white"  storage="debate.ks"  size="20"  text="かばう"  x="100"  y="125"  width="150"  height=""  _clickable_img=""  target="*cover"  ]
+[glink  color="btn_08_lime"  storage="debate.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*watch"  ]
+[jump  storage="debate.ks"  target="*s_human"  cond="f.say_human==1"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="人間と言え"  x="300"  y="275"  width="150"  height=""  _clickable_img=""  target="*say_human"  ]
+*s_human
 
-[jump  storage="omake.ks"  target="*ma_s03"  cond="sf.ma_s01!=1"  ]
-[glink  color="orange"  storage="omake.ks"  size="20"  text="ストーリー03"  target="*s03"  x="57"  y="552"  width=""  height=""  _clickable_img=""  ]
-*ma_s03
+[jump  storage="debate.ks"  target="*push_done"  cond="f.push==1"  ]
+[glink  color="btn_08_yellow"  storage="debate.ks"  size="20"  text="強く疑う"  x="100"  y="275"  width="150"  height=""  _clickable_img=""  target="*push"  ]
+*push_done
 
-[glink  color="btn_01_red"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="1105"  y="30"  width=""  height=""  _clickable_img=""  ]
+[jump  storage="debate.ks"  target="*lie"  cond="f.co!='0,0,0,0,0'"  ]
+[glink  color="btn_08_purple"  storage="debate.ks"  size="20"  text="COを求める"  x="300"  y="200"  width="150"  height=""  _clickable_img=""  target="*plz_CO"  ]
+[jump  storage="debate.ks"  target="*seer"  cond="f.role!=3"  ]
+[glink  color="btn_08_blue"  storage="debate.ks"  size="20"  text="COする"  x="300"  y="50"  width="150"  height=""  _clickable_img=""  target="*CO"  ]
+*seer
+
+[jump  storage="debate.ks"  target="*lie"  cond="f.role>2"  ]
+[glink  color="btn_08_black"  storage="debate.ks"  size="20"  text="偽COする"  x="300"  y="125"  width="150"  height=""  _clickable_img=""  target="*fCO"  ]
+*lie
+
+[glink  color="btn_07_red"  storage="debate.ks"  size="20"  text="状況確認"  target="*check"  x="213"  y="369"  width=""  height=""  _clickable_img=""  ]
 [s  ]
-*story_start
+*doubt
 
-[bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
-[tb_show_message_window  ]
-[return  ]
-*s01
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*doubt"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*doubt"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*doubt"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*doubt"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*doubt"  cond="f.player==5"  ]
+*cover
 
-[call  storage="omake.ks"  target="*story_start"  ]
-[call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="mafutsu.ks"  target="*cover"  cond="f.player==1"  ]
+[jump  storage="sisigami.ks"  target="*cover"  cond="f.player==2"  ]
+[jump  storage="murasame.ks"  target="*cover"  cond="f.player==3"  ]
+[jump  storage="kano.ks"  target="*cover"  cond="f.player==4"  ]
+[jump  storage="tendo.ks"  target="*cover"  cond="f.player==5"  ]
+*watch
+
+[call  storage="system.ks"  target="*quiet"  ]
+[jump  storage="AI.ks"  target="*randam_ai"  ]
+*push
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.win='push'"  name="win"  cmd="="  op="t"  val="push"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*doubt"  ]
+*plz_CO
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  ]
+[call  storage="mafutsu.ks"  target="*pCO"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*pCO"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*pCO"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*pCO"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*pCO"  cond="f.player==5"  ]
+[jump  storage="CO.ks"  target="*pCO_start"  ]
+*CO
+
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="CO.ks"  target="*true_CO"  ]
+*fCO
+
+[call  storage="system.ks"  target="*action"  ]
+[jump  storage="CO.ks"  target="*player_fake_CO"  ]
+*say_human
+
+[call  storage="system.ks"  target="*action"  ]
+[tb_eval  exp="f.ai_actor=0"  name="ai_actor"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[jump  storage="say_human.ks"  target="*say_human"  ]
+*auto
+
+[glink  color="btn_08_lime"  storage="AI.ks"  size="20"  text="様子を見る"  x="100"  y="200"  width="150"  height=""  _clickable_img=""  target="*randam_ai"  ]
+[s  ]
+*check
+
+[iscript]
+f.vote_disp1="";
+f.vote_disp2="";
+f.vote_disp3="";
+f.vote_disp4="";
+f.vote_disp5="";
+[endscript]
+
+[iscript]
+var names=["真経津","獅子神","村雨","叶","天堂"];
+var aliveArr=String(f.alive).split(",");
+var aliveNames=[];
+for(var i=0;i<5;i++){
+if(aliveArr[i]==="1")aliveNames.push(names[i]);
+}
+f.result=aliveNames.join("、");
+[endscript]
+
+[iscript]
+var charNames=["真経津","獅子神","村雨","叶","天堂"];
+var resultNames=["人間","人狼"];
+var coArr=String(f.co).split(",");
+var claim=String(f.claim).split(",");
+var claim2=String(f.claim2).split(",");
+var aliveArr=String(f.alive).split(",");
+var disps=[];
+for(var i=1;i<=5;i++){
+if(coArr[i-1]==="0")continue;
+var c1t=parseInt(claim[(i-1)*2]);
+var c1r=parseInt(claim[(i-1)*2+1]);
+if(c1t>0){
+disps.push(charNames[i-1]+" → "+charNames[c1t-1]+"："+resultNames[c1r]+"、");
+}
+if(aliveArr[i-1]==="1"){
+var c2t=parseInt(claim2[(i-1)*2]);
+var c2r=parseInt(claim2[(i-1)*2+1]);
+if(c2t>0){
+disps.push(charNames[i-1]+" → "+charNames[c2t-1]+"："+resultNames[c2r]+"、");
+}
+}
+}
+f.vote_disp1=disps.length>0?disps[0]:"";
+f.vote_disp2=disps.length>1?disps[1]:"";
+f.vote_disp3=disps.length>2?disps[2]:"";
+f.vote_disp4=disps.length>3?disps[3]:"";
+f.vote_disp5=disps.length>4?disps[4]:"";
+[endscript]
+
 [tb_start_text mode=1 ]
-#真経津
-「この村は人狼に食べつくされちゃいました～！」[p]
-「なんてね、御手洗君」[p]
+#ガイド
+残りの生存者は[emb exp="f.result"]です。[p]
+
+
 [_tb_end_text]
 
-[call  storage="mafutsu.ks"  target="*show_ai"  ]
+[jump  storage="debate.ks"  target="*0CO"  cond="f.co=='0,0,0,0,0'"  ]
 [tb_start_text mode=1 ]
-「あ、今日は御手洗君じゃなくてVIPの人だった」[p]
-「つまんな～い！」[p]
-「……」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-「ねぇ、今日は楽しかった？」[p]
-「強い人達とやるゲーム、楽しいよね」[p]
+占い師の報告は[emb exp="f.vote_disp1"]  [emb exp="f.vote_disp2"]  [emb exp="f.vote_disp3"]  [emb exp="f.vote_disp4"]  [emb exp="f.vote_disp5"]です。[p]
 
 [_tb_end_text]
 
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
-[tb_start_text mode=1 ]
-「画面の中の方がもっと楽しいよ」[p]
-[_tb_end_text]
+*0CO
 
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-「ボク達はいつでもこっちで待ってるからね」[p]
-「ばいばーい！」[p]
-[_tb_end_text]
-
-*story_end
-
-[chara_hide_all  time="1000"  wait="true"  ]
-[tb_hide_message_window  ]
-[jump  storage="omake.ks"  target="*story"  ]
-*s02
-
-[call  storage="omake.ks"  target="*story_start"  ]
-[call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-#真経津
-「村人の完全勝利だ！」[p]
-「VIPの人も慣れてきたのかな？」[p]
-[_tb_end_text]
-
-[call  storage="tendo.ks"  target="*show2"  ]
-[tb_start_text mode=1 ]
-#天堂
-「神はこうなることも当然わかっていたがな」[p]
-[_tb_end_text]
-
-[call  storage="kano.ks"  target="*show2"  ]
-[call  storage="kano.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
-#叶
-「ホントか～？ユミピコ～」[p]
-[_tb_end_text]
-
-[call  storage="sisigami.ks"  target="*show"  ]
-[call  storage="sisigami.ks"  target="*show_gimon"  ]
-[tb_start_text mode=1 ]
-#獅子神
-「後ろにVIPがいると、こう、やりにくいというか」[p]
-「オメーらもたまにトチった行動しててカオスな結果になるよな」[p]
-[_tb_end_text]
-
-[call  storage="murasame.ks"  target="*show2"  ]
-[call  storage="murasame.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
-#村雨
-「LiAの時の私の立場が少しでもわかったか？獅子神」[p]
-[_tb_end_text]
-
-[call  storage="sisigami.ks"  target="*show_ai"  ]
-[tb_start_text mode=1 ]
-#獅子神
-「言うなって…それ…」[p]
-[_tb_end_text]
-
-[call  storage="kano.ks"  target="*show"  ]
-[call  storage="kano.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
-#叶
-「敬一君みたいに、VIPも覚醒して魅せてくれたらいいのに」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-#真経津
-「それはVIPの人次第かもね」[p]
-「でも、ボクは待ってるよ」[p]
-「遊び相手は多い方がいいに決まってるからね」[p]
-[_tb_end_text]
-
-[jump  storage="omake.ks"  target="*story_end"  ]
-*s03
-
-[call  storage="omake.ks"  target="*story_start"  ]
-[call  storage="mafutsu.ks"  target="*show"  ]
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
-[tb_start_text mode=1 ]
-#真経津
-「ボクがニセモノの占い師の人狼だよ～！」[p]
-「みーんな騙されちゃった？」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_raku"  ]
-[tb_start_text mode=1 ]
-#真経津
-「VIPの人もだいぶ手慣れたね！」[p]
-「もうフォーリンクくらいには来れるんじゃない？」[p]
-「このスピードで成長してるなら、期待株だよ！」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_ai"  ]
-[tb_start_text mode=1 ]
-#真経津
-「え、あくまで見る専門で自分は参加するつもりはない？」[p]
-「画面を隔てた安全圏から見る試合こそ、落ち着いて楽しめる？」[p]
-「……」[p]
-「つまんな～い！」[p]
-「折角お友達が増えるかなって思ったのに」[p]
-[_tb_end_text]
-
-[call  storage="mafutsu.ks"  target="*show_jinro"  ]
-[tb_start_text mode=1 ]
-「ま、いいよ」[p]
-「本当にボクのお友達なら、いずれまた賭場で会えるから」[p]
-「またね！」[p]
-[_tb_end_text]
-
-[jump  storage="omake.ks"  target="*story_end"  ]
+[jump  storage="tutorial.ks"  target="*text"  cond="f.tutorial==1"  ]
+[call  storage="mafutsu.ks"  target="*debate01"  cond="f.player==1"  ]
+[call  storage="sisigami.ks"  target="*debate01"  cond="f.player==2"  ]
+[call  storage="murasame.ks"  target="*debate01"  cond="f.player==3"  ]
+[call  storage="kano.ks"  target="*debate01"  cond="f.player==4"  ]
+[call  storage="tendo.ks"  target="*debate01"  cond="f.player==5"  ]
+[jump  storage="debate.ks"  target="*debate_top"  ]

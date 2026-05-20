@@ -10,9 +10,9 @@
 [tb_ptext_show  x="1140"  y="240"  size="30"  color="0xa85714"  time="100"  text="人狼"  anim="false"  face="monospace"  edge="undefined"  shadow="undefined"  ]
 *jinro
 
-[jump  storage="UI.ks"  target="*prophet"  cond="f.role!=3"  ]
+[jump  storage="UI.ks"  target="*seer"  cond="f.role!=3"  ]
 [tb_ptext_show  x="1120"  y="240"  size="30"  color="0x6956e8"  time="100"  text="占い師"  anim="false"  face="monospace"  edge="undefined"  shadow="undefined"  ]
-*prophet
+*seer
 
 [jump  storage="UI.ks"  target="*lunatic"  cond="f.role!=2"  ]
 [tb_ptext_show  x="1140"  y="240"  size="30"  color="0xe84141"  time="100"  text="狂人"  anim="false"  face="monospace"  edge="undefined"  shadow="undefined"  ]

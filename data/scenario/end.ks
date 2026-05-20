@@ -106,20 +106,35 @@ f.tendo_calm=120;
 *omake
 
 [iscript]
-var playerIsMafutsu = parseInt(f.player) === 1;
-var coArr = String(f.co).split(",");
-var playerCO = coArr[parseInt(f.player)-1] === "1";
-var aliveArr = String(f.alive).split(",");
-var aliveCount = aliveArr.filter(function(v){ return v === "1"; }).length;
+function getRole(i){return parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][i-1]);}
+function isAlive(c){return String(f.alive).split(',')[c-1]==='1';}
+function isCO(c){return String(f.co).split(',')[c-1]==='1';}
+var p=parseInt(f.player),r=parseInt(f.role),w=parseInt(f.win);
+var ac=String(f.alive).split(',').filter(function(v){return v==='1';}).length;
+var pd=parseInt(f.player_death)===0;
 
-if(playerIsMafutsu && parseInt(f.role) === 1 && parseInt(f.win) === 2){
-  sf.ma_s01 = 1;
+if(p===1){
+  if(r===1&&w===2)sf.ma_s01=1;
+  if(r>=3&&ac===4&&w===1)sf.ma_s02=1;
+  if(r===1&&isCO(1)&&w===2)sf.ma_s03=1;
 }
-if(playerIsMafutsu && parseInt(f.role) >= 3 && aliveCount === 4 && parseInt(f.win) === 1){
-  sf.ma_s02 = 1;
+if(p===2&&(r===4||r===5)&&w===1){
+  sf.si_s01=1;
+  if(pd)sf.si_s02=1;
+  if(ac===4)sf.si_s03=1;
 }
-if(playerIsMafutsu && parseInt(f.role) === 1 && playerCO && parseInt(f.win) === 2){
-  sf.ma_s03 = 1;
+if(p===3){
+  if(r===3&&w===1){sf.mu_s01=1;if(pd)sf.mu_s02=1;}
+  if(r===1&&isAlive(3)){for(var i=1;i<=5;i++){if(getRole(i)===2&&isAlive(i)){sf.mu_s03=1;break;}}}
+}
+if(p===4){
+  if(r===2&&w===2){sf.ka_s01=1;if(pd)sf.ka_s02=1;}
+  if(r>=3&&r<=5&&ac===4&&parseInt(f.action)<3)sf.ka_s03=1;
+}
+if(p===5){
+  var wc=(r<=2&&w===2)||(r>=3&&w===1);
+  if(wc&&isCO(5)){sf.te_s01=1;if(pd)sf.te_s02=1;}
+  if(wc&&String(f.co).split(',').every(function(v){return v==='0';}))sf.te_s03=1;
 }
 [endscript]
 
