@@ -2,16 +2,24 @@
 
 *show
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[0])<25?1:0;
+[endscript]
+
 [chara_hide_all  time="0"  wait="true"  ]
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  top="0"  ]
 [return  ]
 *show2
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[0])<25?1:0;
+[endscript]
+
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show_normal
 
-[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<25"  ]
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_normal.png"  ]
 [return  ]
 *show_normal2
@@ -27,7 +35,7 @@
 [return  ]
 *show_ai
 
-[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.mafutsu_calm<25"  ]
+[jump  storage="mafutsu.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="mafutsu"  time="300"  cross="false"  storage="chara/1/mafutsu_ai.png"  ]
 [return  ]
 *show_jinro
@@ -62,7 +70,6 @@
 *debate01
 
 [call  storage="mafutsu.ks"  target="*debate_Top"  ]
-[call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
 [jump  storage="mafutsu.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
 #真経津
@@ -79,6 +86,10 @@
 
 [return  ]
 *debate_Top
+
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[0])<25?1:0;
+[endscript]
 
 [chara_show  name="mafutsu"  time="1000"  wait="true"  storage="chara/1/mafutsu_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
 [call  storage="mafutsu.ks"  target="*show_normal"  ]
@@ -117,16 +128,19 @@
 [jump  storage="doubt.ks"  target="*doubt"  ]
 *doubt2
 
+[jump  storage="mafutsu.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
+*doubt3
+
 [call  storage="mafutsu.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
 「ボク、[emb exp="f.name"]さんが怪しいと思うな～」[p]
 [_tb_end_tyrano_code]
 
-[call  storage="mafutsu.ks"  target="*push"  cond="f.win=='d1'"  ]
-[call  storage="mafutsu.ks"  target="*push2"  cond="f.win=='d2'"  ]
-[call  storage="mafutsu.ks"  target="*push3"  cond="f.win=='d3'"  ]
+[call  storage="mafutsu.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="mafutsu.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="mafutsu.ks"  target="*push3"  cond="f.judge=='d3'"  ]
 [jump  storage="doubt.ks"  target="*show"  ]
 *push
 
@@ -173,7 +187,10 @@
 [jump  storage="cover.ks"  target="*cover"  ]
 *cover2
 
+[jump  storage="mafutsu.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
+*cover3
+
 [call  storage="mafutsu.ks"  target="*show_raku"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
@@ -194,7 +211,6 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
-[tb_eval  exp="f.mafutsu_calm=100"  name="mafutsu_calm"  cmd="="  op="t"  val="100"  val_2="undefined"  ]
 [call  storage="mafutsu.ks"  target="*show"  ]
 [call  storage="mafutsu.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
@@ -207,16 +223,22 @@
 *CO
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
-[call  storage="mafutsu.ks"  target="*CO2"  cond="f.role2=='co'"  ]
+[call  storage="mafutsu.ks"  target="*CO2"  cond="f.judge=='co'"  ]
 [call  storage="mafutsu.ks"  target="*show_raku"  ]
+[jump  storage="mafutsu.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[tb_start_tyrano_code]
+#真経津
+「はいはーい！ボクが[emb exp="f.display09"]！」[p]
+「[emb exp="f.name"]さんは[emb exp="f.name2"]だったよ！」[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
 [tb_start_text mode=1 ]
 #真経津
-「はいはーい！ボクが占い師！」[p]
+「ボクが霊媒師！結果は明日のお楽しみだね」[p]
 [_tb_end_text]
-
-[tb_start_tyrano_code]
-[emb exp="f.name"]さんを占ったよ！結果は[emb exp="f.name2"]！[p]
-[_tb_end_tyrano_code]
 
 [return  ]
 *CO2
@@ -248,12 +270,12 @@
 [jump  storage="CO.ks"  target="*vsCO_back"  ]
 *pCO
 
-[call  storage="mafutsu.ks"  target="*show2"  ]
+[call  storage="mafutsu.ks"  target="*show"  ]
 [call  storage="mafutsu.ks"  target="*show_normal"  ]
-[tb_start_text mode=1 ]
+[tb_start_tyrano_code]
 #真経津
-「そういえば占い師って誰なの～？」[p]
-[_tb_end_text]
+「そういえばって[emb exp="f.display09"]って誰なの～？」[p]
+[_tb_end_tyrano_code]
 
 [chara_hide_all  time="0"  wait="true"  ]
 [return  ]
@@ -269,14 +291,14 @@
 [return  ]
 *human
 
-[call  storage="mafutsu.ks"  target="*show2"  ]
+[call  storage="mafutsu.ks"  target="*show"  ]
 [call  storage="mafutsu.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #真経津
 「もちろんボクは村人！」[p]
 [_tb_end_text]
 
-[return  ]
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
 *noisy
 
 [call  storage="mafutsu.ks"  target="*show2"  ]
@@ -372,7 +394,7 @@
 [return  ]
 *stop
 
-[call  storage="mafutsu.ks"  target="*show2"  cond=""  ]
+[call  storage="mafutsu.ks"  target="*show"  cond=""  ]
 [tb_start_text mode=1 ]
 #真経津
 「案外そういうこと言う人が怪しかったりするよね～」[p]
@@ -381,6 +403,7 @@
 [return  ]
 *stop2
 
+[call  storage="mafutsu.ks"  target="*show2"  ]
 [call  storage="mafutsu.ks"  target="*show_raku"  ]
 [tb_start_text mode=1 ]
 #真経津
@@ -388,3 +411,14 @@
 [_tb_end_text]
 
 [return  ]
+*add
+
+[call  storage="mafutsu.ks"  target="*show2"  ]
+[call  storage="mafutsu.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#真経津
+「自分もいいかな？」[p]
+[_tb_end_text]
+
+[jump  storage="mafutsu.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="mafutsu.ks"  target="*cover3"  ]

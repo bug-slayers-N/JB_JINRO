@@ -1,137 +1,406 @@
 [_tb_system_call storage=system/_preview.ks ]
 
 [mask time=10]
+[tb_show_message_window] 
+[chara_mod  name="urushibara"  time="10"  cross="false"  storage="chara/10/urushibara_insane.png"  ]
+[chara_show  name="urushibara"  time="10"  wait="true"  storage="chara/10/urushibara_insane2.png"  width="400"  height="900"  left="430"  top="-40"  reflect="false"  ]
 [mask_off time=10]
-[cm  ]
-[bg  storage="93853245_p0.png"  time="1000"  ]
-[jump  storage="scene1.ks"  target="*attention"  cond="sf.attention==1"  ]
-[tb_show_message_window  ]
+*day01_01
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
-#初回注意事項
-このゲームはファン活動の一環として作られた【非公式】のゲームです。原作者様ならびに各権利者様とは一切関係がございません。[p]
-公式に問い合わせたり、二次創作に理解のない方に向けて再配布することはご遠慮ください。[p]
-個人制作のフリーゲーム故に小さな不具合等の粗がございます。ご容赦ください。[p]
-特に人狼ロジックの抜け漏れは確実にあります。本当にご容赦ください。(報告もらったら対応します)[p]
-問題があった場合は即座に公開・配布を停止致しますので、クレジットよりご連絡お願いします。[p]
-[_tb_end_text]
-
-[tb_hide_message_window  ]
-[tb_eval  exp="sf.attention=1"  name="attention"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
-*attention
-
-[glink  color="btn_05_red"  storage="role.ks"  size="20"  text="・&nbsp;　ゲーム開始&nbsp;　・"  x="100"  y="100"  width=""  height=""  _clickable_img=""  autopos="true"  ]
-[glink  color="btn_05_white"  storage="scene1.ks"  size="20"  text="・プロローグを見る・"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  target="*prologue"  ]
-[s  ]
-*prologue
-
-[tb_show_message_window  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
-[tb_start_text mode=1 ]
-#周防
-「VIPの皆様、大変長らくお待たせいたしました」[p]
-「より臨場感の高い、ギャンブラー視点でギャンブルを観戦したいという声にお応えしてご用意いたしましたエキシビション」[p]
+#漆原
+「ギャンブルはもう辞めるってガッちゃんと決めたんだ」[p]
+「だから謹んで辞退させてもらうよ」[p]
 
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[call  storage="urushibara.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
-「ジャンケット人狼ゲームの開幕にございます」[p]
-[_tb_end_text]
-
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
-[tb_start_text mode=1 ]
-「勿論、今回小間使いなのはギャンブラーの方にございます。選んだギャンブラーに指示を出し、人狼ゲームを攻略し、勝利に導いてくださいませ」[p]
+「ギャンブルじゃなくてゲーム大会？」[p]
 
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
-「おっと、意図的に敗北させても全く問題はございません」[p]
-
+「ただのゲームか……何年やってないんだろうね」[p]
+「僕を誘うってことはガッちゃんも来るんだろう？」[p]
+「相手として久しぶりに本気で遊べるの、嬉しいな」[p]
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
+[return  ]
+*debate01
+
+[call  storage="urushibara.ks"  target="*debate_Top"  ]
+[jump  storage="urushibara.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
-「また役職やゲームの流れは遊ぶ度にランダムに展開されます」[p]
+#漆原
+「昼の議論ターンがはじまったね」[p]
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+*first
+
 [tb_start_text mode=1 ]
-「思うがままに我が銀行が誇るギャンブラー達の戦いを間近でごゆっくり楽しんでくださいませ」[p]
+#漆原
+「どうしようか？」[p]
 [_tb_end_text]
 
-[mask  time="500"  effect="fadeIn"  color="0x000000"  ]
+[return  ]
+*debate_Top
+
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[8])<28?1:0;
+[endscript]
+
+[chara_show  name="urushibara"  time="1000"  wait="true"  storage="chara/10/urushibara_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#漆原
+[_tb_end_text]
+
+[return  ]
+*kuro
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#漆原
+「それはあくまで憶測だろう？きちんと根拠を提示してほしいな」[p]
+[_tb_end_text]
+
+[return  ]
+*shiro
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#漆原
+「ありがとう。でも僕は感情だけでは判断しないからね」[p]
+[_tb_end_text]
+
+[return  ]
+*doubt
+
+[tb_start_text mode=1 ]
+「誰が怪しいだろうか？」[p]
+[_tb_end_text]
+
+[jump  storage="doubt.ks"  target="*doubt"  ]
+*doubt2
+
+[jump  storage="urushibara.ks"  target="*add"  cond="f.judge=='add'"  ]
+[call  storage="urushibara.ks"  target="*show"  ]
+*doubt3
+
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[call  storage="UI.ks"  target="*name_change"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+「私的な意見だけど、僕は[emb exp="f.name"]が怪しいなって考えてるよ」[p]
+[_tb_end_tyrano_code]
+
+[call  storage="urushibara.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="urushibara.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="urushibara.ks"  target="*push3"  cond="f.judge=='d3'"  ]
+[jump  storage="doubt.ks"  target="*show"  ]
+*push
+
+[tb_start_text mode=1 ]
+「申し訳ないけど、私的な直感かな。でも証拠は今から集めればいい」[p]
+[_tb_end_text]
+
+[return  ]
+*push2
+
+[tb_start_text mode=1 ]
+「嘘つきである証拠までは集まってるよ。狂人か人狼か、みんなの意見が聞きたいな」[p]
+[_tb_end_text]
+
+[jump  storage="doubt.ks"  target="*push_act"  cond="f.result==1"  ]
+[return  ]
+*push3
+
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_tyrano_code]
+「人狼である証拠が完全に集まったね」[p]
+「もう判決はみんなわかってると思うよ」[p]
+[_tb_end_tyrano_code]
+
+[jump  storage="doubt.ks"  target="*push_act"  cond="f.result==1"  ]
+[return  ]
+*liar
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_jinro"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+(あぁ、[emb exp="f.name"]は嘘つきみたいだ)[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*cover
+
+[tb_start_text mode=1 ]
+「誰を信じる？」[p]
+[_tb_end_text]
+
+[jump  storage="cover.ks"  target="*cover"  ]
+*cover2
+
+[jump  storage="urushibara.ks"  target="*add"  cond="f.judge=='add'"  ]
+[chara_hide_all  time="0"  wait="true"  ]
+[call  storage="urushibara.ks"  target="*show"  ]
+*cover3
+
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[call  storage="UI.ks"  target="*name_change"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+「僕は[emb exp="f.name"]はシロの可能性が高いとみてるよ」[p]
+[_tb_end_tyrano_code]
+
+[jump  storage="cover.ks"  target="*show"  ]
+*vote
+
 [mask_off  time="500"  effect="fadeOut"  ]
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_normal.png"  ]
 [tb_start_text mode=1 ]
-#周防
-「ここからはメタ発言になることをご了承くださいませ」[p]
-「右上の三本線のメニューボタンよりフルスクリーンモードが使えます」[p]
-「本作をスマートフォンで遊ばれる場合は、横持ちのフルスクリーンモードを推奨しておりますのでご活用ください」[p]
-「それでは肝心のゲームの内容の説明に移らせていただきます」[p]
+#漆原
+「投票の時間だね」[p]
+「誰に投票する？」[p]
+[_tb_end_text]
+
+[jump  storage="vote.ks"  target="*player_vote"  ]
+*death
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_ai"  ]
+[tb_start_text mode=1 ]
+#漆原
+「はぁ、まぁこれもくじびきだから仕方ない。味方は是非頑張って欲しいね」[p]
 [_tb_end_text]
 
 [chara_hide_all  time="1000"  wait="true"  ]
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara.png"  ]
+[jump  storage="system.ks"  target="*death"  ]
+*CO
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*CO2"  cond="f.judge=='co'"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[jump  storage="urushibara.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+「僕が[emb exp="f.display09"]みたい」[p]
+[_tb_end_tyrano_code]
+
+[tb_start_tyrano_code]
+[emb exp="f.name"]は[emb exp="f.name2"]らしいね。[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
 [tb_start_text mode=1 ]
-#周防
-「まずはじめに、主人公としてプレイしたいギャンブラーをお選びください」[p]
-「選んだギャンブラーで難易度が前後します。初回は真経津、推理が苦手な方は叶、高難易度で遊びたい方には獅子神がおすすめです」[p]
-「平常心が高い程嘘がバレにくく、観察力が高い程嘘を見破りやすく、ゆさぶり力が高い程疑う時に相手の平常心を大きく減らします」[p]
-「キャラクターは随時追加されていきますので、製作者のXをご確認ください」[p]
+#漆原
+「霊媒師は僕だけど、結果は明日になるまでわからないね」[p]
 [_tb_end_text]
 
-[bg  time="1000"  method="crossfade"  storage="BG_tutorial_1.png"  ]
+[return  ]
+*CO2
+
+[call  storage="urushibara.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
-#周防
-「次に人狼における役職をお選びください」[p]
-「《人狼》は毎晩1人人間を襲撃し、現在生存している人狼の数≧村人の数になることを目指します。また嘘がつけます」[p]
-「《狂人》は人間でありながら《人狼》に味方し、人狼勝利時に同時に勝利します。こちらも嘘がつけます」[p]
-「《占い師》はゲーム開始時と毎晩、占いにより1人の人間か？人狼か？の情報を得ます。人狼を全て処刑で勝利です」[p]
-「《村人》は特殊な能力は持ちません。人狼を全て処刑で勝利です」[p]
+#漆原
+「ちょっといいかな？」[p]
 [_tb_end_text]
 
-[bg  time="1000"  method="crossfade"  storage="SS.png"  ]
+[return  ]
+*CO3
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
-「キャラと役職が決まれば、ゲームが開始します」[p]
-「こちらがメイン画面です。画面左のコマンドボタンでゲームは進みます」[p]
-「《疑う》、シンプルに対象を疑います。対象の平常心を減らします。対象からの好感度も減らします」[p]
-「《かばう》、対象をかばいます。対象の平常心を回復させます。対象からの好感度も上がります」[p]
-「《様子を見る》、プレイヤー以外のキャラが行動します。プレイヤーの行動数が多過ぎても少なすぎても悪いことが起こるようです」[p]
-「《強く疑う》プレイヤーのみにある一度限りのコマンドです。通常より大ダメージを与える疑うを行います。特に大きなダメージを与えるには理由が必要なようです」[p]
-「《COする》《偽COする》、該当役職のみ活性化するコマンドです。自分は占い師だと宣言し、占い結果を報告します。それが偽だとしても」[p]
-「《COを求める》、役職持ちにCOを要求します。答えてくれるかは本人次第です」[p]
-「《人間と言え》、人間宣言させ、人狼と狂人の平常心を減らします。カウンターにより中止する・されることがあります。カウンターしたキャラとされたキャラの平常心が下がります。全体で一回のみのコマンドです」[p]
+#漆原
+「この中に嘘つきがいるのは確実だね」[p]
 [_tb_end_text]
 
-[bg  time="1000"  method="crossfade"  storage="BG_selectChara_noText_260429kari.png"  ]
+[return  ]
+*vsCO
+
 [tb_start_text mode=1 ]
-「1日目は10ターン、2日目以降は5ターンを経過すると投票フェーズに入ります」[p]
-「対象キャラに投票して、処刑されるキャラを決めましょう」[p]
-「人狼が処刑されるとゲーム終了し、村人陣営の勝利となります」[p]
-「人狼が生き残っている限り、二日目に移行します」[p]
-「人狼は投票後、襲撃フェーズをはさみ、任意の対象を襲撃して死亡させます」[p]
-「勝利条件を達成するまでこれを繰り返します」[p]
+#漆原
+「対抗しようか？」[p]
 [_tb_end_text]
 
-[bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
-[chara_show  name="suo"  time="1000"  wait="true"  storage="chara/6/suo_normal.png"  width="320"  height="720"  ]
+[return  ]
+*pCO
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_tyrano_code]
+#漆原
+「[emb exp="f.display09"]は名乗り出てくれたら嬉しいな」[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*s_human
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
-「正直、習うより慣れろというゲームです」[p]
-「細かいゲーム仕様はおまけページ内のよくありそうなQ＆Aにまとめてあります」[p]
-「真占い師の潜伏行動等、人狼慣れされてる方程必読でございます」[p]
-「また特定条件で勝利を収めるとおまけページのおまけストーリーが解放されるそうです」[p]
-「お時間のあるVIPの方は是非に挑戦してみてください」[p]
+#漆原
+「一度全員が村人だって言ってみるのもいいかもしれないね」[p]
+[_tb_end_text]
+
+[return  ]
+*human
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#漆原
+「うん、村人だよ」[p]
+[_tb_end_text]
+
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
+*noisy
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+「[emb exp="f.name"]、少しうるさいんじゃないかな？」[p]
+「そういうのは逆に怪しまれるよ」[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*push_act
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*name_change"  ]
+[tb_start_tyrano_code]
+#漆原
+「[emb exp="f.name2"]、それは違うんじゃないかな？」[p]
+「もう少し様子を見た方がいいと思うよ」[p]
+[_tb_end_tyrano_code]
+
+[jump  storage="observe.ks"  target="*observe"  ]
+*jinro_win
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_jinro"  ]
+[tb_start_text mode=1 ]
+#漆原
+「ごめんね、僕達が嘘つきだよ」[p]
+「たまにはこういうのも悪くないね」[p]
+[_tb_end_text]
+
+[return  ]
+*human_win
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#漆原
+「うん、村人陣営の勝利だ。僕がついているんだからね」[p]
+[_tb_end_text]
+
+[return  ]
+*win
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[tb_start_text mode=1 ]
+#漆原
+「言論で戦うゲームなら、やっぱり得意かも」[p]
+「村人陣営なら本職に近いし、人狼なら守りに入ればかたい」[p]
 
 [_tb_end_text]
 
-[chara_mod  name="suo"  time="300"  cross="false"  storage="chara/6/suo_egao.png"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
-「それではゲーム説明を終了し、ゲームを開始させていただきます」[p]
+「最も、攻撃を担当してくれる誰かがいてくれるのも大きいけどね」[p]
+「ギャンブルは辞めたけど、こういう遊びならまた来ようかな」[p]
+「それでは、お暇するね」[p]
 [_tb_end_text]
 
-[chara_hide_all  time="1000"  wait="true"  ]
-[glink  color="btn_05_red"  storage="tutorial.ks"  size="20"  text="練習試合で動きを確認する"  target="*init"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_05_white"  storage="role.ks"  size="20"  text="早速ゲームを開始する"  autopos="true"  x="100"  y="100"  width=""  height=""  _clickable_img=""  ]
-[s  ]
-[jump  storage="role.ks"  target=""  ]
+[return  ]
+*win2
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[tb_start_text mode=1 ]
+#漆原
+「言論で戦うゲームなら、やっぱり得意かも」[p]
+「村人陣営なら本職に近いし、人狼なら守りに入ればかたい」[p]
+
+[_tb_end_text]
+
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+「最も、攻撃を担当してくれる誰かがいてくれるのも大きいけどね」[p]
+[_tb_end_text]
+
+[mask  time="200"  effect="fadeIn"  color="0x000000"  ]
+[call  storage="urushibara.ks"  target="*show_jinro2"  ]
+[mask_off  time="200"  effect="fadeOut"  ]
+[tb_start_text mode=1 ]
+「あなたも、いい相方と一緒なら活躍出来そうだったよ」[p]
+[_tb_end_text]
+
+[return  ]
+*lose
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#漆原
+「負け、か」[p]
+
+[_tb_end_text]
+
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+「ゲームだとしても言論で負けるのは悔しいな」[p]
+
+[_tb_end_text]
+
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+「まぁ僕が選べないことも多かったし、くじびきに過度に入れ込むのはよくないね」[p]
+「それでは、お暇するね」[p]
+[_tb_end_text]
+
+[return  ]
+*stop
+
+[call  storage="urushibara.ks"  target="*show"  ]
+[tb_start_text mode=1 ]
+#漆原
+「確認なんだけど、声をかける側は人間宣言しないんだね？」[p]
+[_tb_end_text]
+
+[return  ]
+*stop2
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#漆原
+「反論の自由はあるけど、みんなの心証はどうだろうね」[p]
+[_tb_end_text]
+
+[return  ]
+*add
+
+[call  storage="urushibara.ks"  target="*show2"  ]
+[call  storage="urushibara.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#漆原
+「僕からも意見を挟もうかな」[p]
+[_tb_end_text]
+
+[jump  storage="urushibara.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="urushibara.ks"  target="*cover3"  ]

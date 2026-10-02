@@ -2,16 +2,24 @@
 
 *show
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[1])<20?1:0;
+[endscript]
+
 [chara_hide_all  time="500"  wait="true"  ]
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show2
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[1])<20?1:0;
+[endscript]
+
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show_normal
 
-[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<20"  ]
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_normal.png"  ]
 [return  ]
 *show_normal2
@@ -24,7 +32,7 @@
 [return  ]
 *show_ai
 
-[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.sisigami_calm<20"  ]
+[jump  storage="sisigami.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="sisigami"  time="300"  cross="false"  storage="chara/2/shishigami_aseri.png"  ]
 [return  ]
 *show_gimon
@@ -67,7 +75,6 @@
 *debate01
 
 [call  storage="sisigami.ks"  target="*debate_Top"  ]
-[call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
 [jump  storage="sisigami.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
 #獅子神
@@ -83,6 +90,10 @@
 
 [return  ]
 *debate_Top
+
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[1])<20?1:0;
+[endscript]
 
 [chara_show  name="sisigami"  time="1000"  wait="true"  storage="chara/2/shishigami_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
 [call  storage="sisigami.ks"  target="*show_normal"  ]
@@ -120,7 +131,10 @@
 [jump  storage="doubt.ks"  target="*doubt"  ]
 *doubt2
 
+[jump  storage="sisigami.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="sisigami.ks"  target="*show"  ]
+*doubt3
+
 [call  storage="sisigami.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
@@ -128,9 +142,9 @@
 「[emb exp="f.name"]が怪しいんだよなぁ」[p]
 [_tb_end_tyrano_code]
 
-[call  storage="sisigami.ks"  target="*push"  cond="f.win=='d1'"  ]
-[call  storage="sisigami.ks"  target="*push2"  cond="f.win=='d2'"  ]
-[call  storage="sisigami.ks"  target="*push3"  cond="f.win=='d3'"  ]
+[call  storage="sisigami.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="sisigami.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="sisigami.ks"  target="*push3"  cond="f.judge=='d3'"  ]
 [jump  storage="doubt.ks"  target="*show"  ]
 *push
 
@@ -176,8 +190,11 @@
 [jump  storage="cover.ks"  target="*cover"  ]
 *cover2
 
+[jump  storage="sisigami.ks"  target="*add"  cond="f.judge=='add'"  ]
 [chara_hide_all  time="0"  wait="true"  ]
 [call  storage="sisigami.ks"  target="*show"  ]
+*cover3
+
 [call  storage="sisigami.ks"  target="*show_gimon"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
@@ -198,7 +215,6 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
-[tb_eval  exp="f.sisigami_calm=80"  name="sisigami_calm"  cmd="="  op="t"  val="80"  val_2="undefined"  ]
 [call  storage="sisigami.ks"  target="*show"  ]
 [call  storage="sisigami.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
@@ -211,16 +227,25 @@
 *CO
 
 [call  storage="sisigami.ks"  target="*show2"  ]
-[call  storage="sisigami.ks"  target="*CO2"  cond="f.role2=='co'"  ]
+[call  storage="sisigami.ks"  target="*CO2"  cond="f.judge=='co'"  ]
 [call  storage="sisigami.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
+[jump  storage="sisigami.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[tb_start_tyrano_code]
 #獅子神
-「あー、オレが占い師なんだわ」[p]
-[_tb_end_text]
+「あー、オレが[emb exp="f.display09"]なんだわ」[p]
+[_tb_end_tyrano_code]
 
 [tb_start_tyrano_code]
-[emb exp="f.name"]を占った。結果は[emb exp="f.name2"]だ。[p]
+[emb exp="f.name"]は[emb exp="f.name2"]だってよ。[p]
 [_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
+[tb_start_text mode=1 ]
+#獅子神
+「霊媒師はオレだけどよ、結果は明日になってからだな」[p]
+[_tb_end_text]
 
 [return  ]
 *CO2
@@ -254,10 +279,10 @@
 
 [call  storage="sisigami.ks"  target="*show2"  ]
 [call  storage="sisigami.ks"  target="*show_gimon"  ]
-[tb_start_text mode=1 ]
+[tb_start_tyrano_code]
 #獅子神
-「占い師が出てくれると助かるんだけどよ」[p]
-[_tb_end_text]
+「[emb exp="f.display09"]が出てくれると助かるんだけどよ」[p]
+[_tb_end_tyrano_code]
 
 [return  ]
 *s_human
@@ -278,7 +303,7 @@
 「あ？勿論、村人だよ」[p]
 [_tb_end_text]
 
-[return  ]
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
 *noisy
 
 [call  storage="sisigami.ks"  target="*show2"  ]
@@ -365,7 +390,7 @@
 [return  ]
 *stop
 
-[call  storage="sisigami.ks"  target="*show2"  ]
+[call  storage="sisigami.ks"  target="*show"  ]
 [call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
@@ -375,6 +400,7 @@
 [return  ]
 *stop2
 
+[call  storage="sisigami.ks"  target="*show2"  ]
 [call  storage="sisigami.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #獅子神
@@ -382,3 +408,14 @@
 [_tb_end_text]
 
 [return  ]
+*add
+
+[call  storage="sisigami.ks"  target="*show2"  ]
+[call  storage="sisigami.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#獅子神
+「あ？オレも一枚噛ませろよ」[p]
+[_tb_end_text]
+
+[jump  storage="sisigami.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="sisigami.ks"  target="*cover3"  ]

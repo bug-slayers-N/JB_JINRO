@@ -9,16 +9,24 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[4])<30?1:0;
+[endscript]
+
 [chara_hide_all  time="500"  wait="true"  ]
 [chara_show  name="tendo"  time="1000"  wait="true"  storage="chara/5/tendo_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show2
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[4])<30?1:0;
+[endscript]
+
 [chara_show  name="tendo"  time="1000"  wait="true"  storage="chara/5/tendo_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show_normal
 
-[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<30"  ]
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_normal.png"  ]
 [return  ]
 *show_normal2
@@ -31,7 +39,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *show_do
 
-[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.tendo_calm<30"  ]
+[jump  storage="tendo.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="tendo"  time="300"  cross="false"  storage="chara/5/tendo_do.png"  ]
 [return  ]
 *show_ai
@@ -74,7 +82,6 @@ if(f.name==="叶")f.name="黎明";
 *debate01
 
 [call  storage="tendo.ks"  target="*debate_Top"  ]
-[call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
 [jump  storage="tendo.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
 #天堂
@@ -91,7 +98,12 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *debate_Top
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[4])<30?1:0;
+[endscript]
+
 [chara_show  name="tendo"  time="1000"  wait="true"  storage="chara/5/tendo_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
+[call  storage="tendo.ks"  target="*show_normal"  ]
 [tb_start_text mode=1 ]
 #天堂
 [_tb_end_text]
@@ -126,7 +138,10 @@ if(f.name==="叶")f.name="黎明";
 [jump  storage="doubt.ks"  target="*doubt"  ]
 *doubt2
 
+[jump  storage="tendo.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="tendo.ks"  target="*show"  ]
+*doubt3
+
 [call  storage="UI.ks"  target="*name_change"  ]
 [call  storage="tendo.ks"  target="*tendo_namechange"  ]
 [tb_start_tyrano_code]
@@ -134,9 +149,9 @@ if(f.name==="叶")f.name="黎明";
 「[emb exp="f.name"]が怪しく見える」[p]
 [_tb_end_tyrano_code]
 
-[call  storage="tendo.ks"  target="*push"  cond="f.win=='d1'"  ]
-[call  storage="tendo.ks"  target="*push2"  cond="f.win=='d2'"  ]
-[call  storage="tendo.ks"  target="*push3"  cond="f.win=='d3'"  ]
+[call  storage="tendo.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="tendo.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="tendo.ks"  target="*push3"  cond="f.judge=='d3'"  ]
 [jump  storage="doubt.ks"  target="*show"  ]
 *push
 
@@ -183,7 +198,10 @@ if(f.name==="叶")f.name="黎明";
 [jump  storage="cover.ks"  target="*cover"  ]
 *cover2
 
+[jump  storage="tendo.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="tendo.ks"  target="*show"  ]
+*cover3
+
 [call  storage="UI.ks"  target="*name_change"  ]
 [call  storage="tendo.ks"  target="*tendo_namechange"  ]
 [tb_start_tyrano_code]
@@ -216,16 +234,25 @@ if(f.name==="叶")f.name="黎明";
 *CO
 
 [call  storage="tendo.ks"  target="*show2"  ]
-[call  storage="tendo.ks"  target="*CO2"  cond="f.role2=='co'"  ]
+[call  storage="tendo.ks"  target="*CO2"  cond="f.judge=='co'"  ]
 [call  storage="tendo.ks"  target="*tendo_namechange"  ]
-[tb_start_text mode=1 ]
+[jump  storage="tendo.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[tb_start_tyrano_code]
 #天堂
-「私が占い師だ。神託を受けよ、人の子よ」[p]
-[_tb_end_text]
+「私が[emb exp="f.display09"]だ。神託を受けよ、人の子よ」[p]
+[_tb_end_tyrano_code]
 
 [tb_start_tyrano_code]
 [emb exp="f.name"]は[emb exp="f.name2"]だ。[p]
 [_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
+[tb_start_text mode=1 ]
+#天堂
+「霊媒師は私だ、しかし結果は明日になってからだがな」[p]
+[_tb_end_text]
 
 [return  ]
 *CO2
@@ -280,7 +307,7 @@ if(f.name==="叶")f.name="黎明";
 「神は当然村人陣営に味方をしている」[p]
 [_tb_end_text]
 
-[return  ]
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
 *noisy
 
 [call  storage="tendo.ks"  target="*show2"  ]
@@ -366,7 +393,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *stop
 
-[call  storage="tendo.ks"  target="*show2"  ]
+[call  storage="tendo.ks"  target="*show"  ]
 [call  storage="tendo.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
 #天堂
@@ -376,6 +403,7 @@ if(f.name==="叶")f.name="黎明";
 [return  ]
 *stop2
 
+[call  storage="tendo.ks"  target="*show2"  ]
 [call  storage="tendo.ks"  target="*show_do"  ]
 [tb_start_text mode=1 ]
 #天堂
@@ -383,3 +411,14 @@ if(f.name==="叶")f.name="黎明";
 [_tb_end_text]
 
 [return  ]
+*add
+
+[call  storage="tendo.ks"  target="*show2"  ]
+[call  storage="tendo.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#天堂
+「私からも神託を授けよう」[p]
+[_tb_end_text]
+
+[jump  storage="tendo.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="tendo.ks"  target="*cover3"  ]

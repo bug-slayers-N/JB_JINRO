@@ -10,6 +10,7 @@
 [iscript]
 var playerNum = parseInt(f.player);
 var targetNum = parseInt(f.target);
+function isAlive(c){return String(f.alive).split(',')[c-1]==='1';}
 // ゆさぶり力を設定
 var yusaburi;
 if (playerNum === 1) { yusaburi = 0.9; }
@@ -19,84 +20,83 @@ yusaburi = steps[Math.floor(Math.random() * steps.length)];
 }
 else if (playerNum === 3) { yusaburi = 0.6; }
 else if (playerNum === 4) { yusaburi = 0.7; }
-else { yusaburi = 0.8; }
-// ダメージ計算（基礎値36×ゆさぶり力）
-var damage = 40 * yusaburi;
-// 平常心減算ヘルパー
-function subCalm(num, val) {
-if (num === 1) { f.mafutsu_calm = f.mafutsu_calm - val; }
-else if (num === 2) { f.sisigami_calm = f.sisigami_calm - val; }
-else if (num === 3) { f.murasame_calm = f.murasame_calm - val; }
-else if (num === 4) { f.kano_calm = f.kano_calm - val; }
-else { f.tendo_calm = f.tendo_calm - val; }
-}
+else if (playerNum === 5) { yusaburi = 0.8; }
+else if (playerNum === 6) { yusaburi = 0.7; if(isAlive(7)) yusaburi *= 1.2; }
+else if (playerNum === 7) { yusaburi = 0.8; if(isAlive(6)) yusaburi *= 1.2; }
+else if (playerNum === 8) { yusaburi = 0.7; if(isAlive(9)) yusaburi *= 1.4; }
+else { yusaburi = 0.6; }
+// ダメージ計算（基礎値30×ゆさぶり力）
+var damage = 30 * yusaburi;
+// 平常心減算ヘルパー（獅子神=2は受けるダメージ1.1倍、gamemode9はさらに最終ダメージ1.2倍）
+function subCalm(num,val,actor){if(num===2){val*=1.1;}if(parseInt(f.gamemode)===9){val*=1.2;}var em=parseInt(f.Ezmode);if(em===2){val*=2;}else if(em===1&&parseInt(actor)!==parseInt(f.player)){val*=0.5;}var arr=String(f.calm).split(',');arr[num-1]=String(parseFloat(arr[num-1])-val);f.calm=arr.join(',');}
 // 対象の平常心をダメージ分減算
-subCalm(targetNum, damage);
+subCalm(targetNum, damage, playerNum);
 // 対象→プレイヤーへの好感度を-10
-function gi(a, b) {
-var o = (a - 1) * 4;
-var t = [];
-for (var i = 1; i <= 5; i++) { if (i !== a) t.push(i); }
-return o + t.indexOf(b);
-}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
 var likes = String(f.like).split(",");
 var likeIdx = gi(targetNum, playerNum);
 likes[likeIdx] = parseInt(likes[likeIdx]) - 10;
 f.like = likes.join(",");
 [endscript]
 
-[jump  storage="doubt.ks"  target="*push"  cond="f.win=='push'"  ]
+[jump  storage="doubt.ks"  target="*push"  cond="f.judge=='push'"  ]
 *push_back
 
-[jump  storage="mafutsu.ks"  target="*doubt2"  cond="f.player==1"  ]
-[jump  storage="sisigami.ks"  target="*doubt2"  cond="f.player==2"  ]
-[jump  storage="murasame.ks"  target="*doubt2"  cond="f.player==3"  ]
-[jump  storage="kano.ks"  target="*doubt2"  cond="f.player==4"  ]
-[jump  storage="tendo.ks"  target="*doubt2"  cond="f.player==5"  ]
+[tb_eval  exp="f.actor=f.player"  name="actor"  cmd="="  op="h"  val="player"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*dispatch_doubt2"  ]
 *show
 
+[tb_eval  exp="f.judge=0"  name="judge"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
+[jump  storage="doubt.ks"  target="*reaction_only"  cond="f.display07==1"  ]
+[jump  storage="addition.ks"  target="*addition"  ]
+*reaction_only
+
+[tb_eval  exp="f.display07=0"  name="display07"  cmd="="  op="t"  val="0"  val_2="undefined"  ]
 [call  storage="mafutsu.ks"  target="*kuro"  cond="f.target==1"  ]
 [call  storage="sisigami.ks"  target="*kuro"  cond="f.target==2"  ]
 [call  storage="murasame.ks"  target="*kuro"  cond="f.target==3"  ]
 [call  storage="kano.ks"  target="*kuro"  cond="f.target==4"  ]
 [call  storage="tendo.ks"  target="*kuro"  cond="f.target==5"  ]
+[call  storage="shigure.ks"  target="*kuro"  cond="f.target==6"  ]
+[call  storage="yamabuki.ks"  target="*kuro"  cond="f.target==7"  ]
+[call  storage="gato.ks"  target="*kuro"  cond="f.target==8"  ]
+[call  storage="urushibara.ks"  target="*kuro"  cond="f.target==9"  ]
 [jump  storage="observe.ks"  target="*observe"  ]
 *doubt_ai
 
+[tb_eval  exp="f.jump='doubt'"  name="jump"  cmd="="  op="t"  val="doubt"  val_2="undefined"  ]
 [iscript]
 // actorの役職を取得してf.resultに格納（分岐判定用）
-f.result=parseInt([f.mafutsu,f.sisigami,f.murasame,f.kano,f.tendo][parseInt(f.ai_actor)-1]);
+f.result=parseInt(String(f.character).split(',')[parseInt(f.actor)-1]);
 [endscript]
 
 *ai_jinro
 
-[jump  storage="doubt.ks"  target="*ai_mad"  cond="f.result!=1"  ]
+[jump  storage="doubt.ks"  target="*ai_mad"  cond="f.result>5"  ]
+*ai_jinro_block
+
 [iscript]
-var actorNum=parseInt(f.ai_actor);
+var actorNum=parseInt(f.actor);
 var aliveArr=String(f.alive).split(",");
 var lk=String(f.like).split(",");
 var lr=String(f.liar).split(",");
 var coArr=String(f.co).split(",");
-var claim=String(f.claim).split(",");
-var claim2=String(f.claim2).split(",");
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
-function getCalm(num){
-if(num===1)return parseFloat(f.mafutsu_calm);
-if(num===2)return parseFloat(f.sisigami_calm);
-if(num===3)return parseFloat(f.murasame_calm);
-if(num===4)return parseFloat(f.kano_calm);
-return parseFloat(f.tendo_calm);
-}
+function getClaimList(f_var){if(String(f_var)==="0")return [];var arr=String(f_var).split(',');var res=[];for(var i=0;i<arr.length;i+=4){res.push([parseInt(arr[i]),parseInt(arr[i+1]),parseInt(arr[i+2]),parseInt(arr[i+3])]);}return res;}
+function latestClaimBy(list,reporter){var found=null;for(var i=0;i<list.length;i++){if(list[i][1]===reporter)found=list[i];}return found;}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function getCalm(num){var v=parseFloat(String(f.calm).split(',')[num-1]);if(num===6&&aliveArr[6]==="1")v*=1.2;if(num===7&&aliveArr[5]==="1")v*=1.2;if(num===9&&aliveArr[7]==="1")v*=1.4;return v;}
 function getPC(actor,tgt){return getCalm(tgt)+parseInt(lk[gi(actor,tgt)]);}
 function hasCO(num){return coArr[num-1]!=="0";}
 function getTargets(actor){
+var n=parseInt(f.gamemode);
 var t=[];
-for(var i=1;i<=5;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
+for(var i=1;i<=n;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
 return t;
 }
 function selfDefenseTarget(actor){
+var n=parseInt(f.gamemode);
 var all=[];
-for(var i=1;i<=5;i++){
+for(var i=1;i<=n;i++){
 if(aliveArr[i-1]==="0")continue;
 var pc=(i===actor)?getCalm(actor):getPC(actor,i);
 all.push({num:i,pc:pc});
@@ -107,32 +107,37 @@ return 0;
 }
 var targets=getTargets(actorNum);
 var target=0;
-// ① 自分を人狼と申告したCOが存在すれば75%で抽選
+// ① 自分を人狼と申告したCOが存在すれば75%で抽選（f.sclaimのみ参照。f.pclaimは見ない）
 if(target===0){
 var accusers=targets.filter(function(t){
 if(coArr[t-1]==="0")return false;
-var c1t=parseInt(claim[(t-1)*2]),c1r=parseInt(claim[(t-1)*2+1]);
-var c2t=parseInt(claim2[(t-1)*2]),c2r=parseInt(claim2[(t-1)*2+1]);
-return (c1t===actorNum&&c1r===1)||(c2t===actorNum&&c2r===1);
+var sc=latestClaimBy(getClaimList(f.sclaim),t);
+return sc&&sc[2]===actorNum&&sc[3]===1;
 });
 if(accusers.length>0&&Math.random()<0.75){
 target=accusers[Math.floor(Math.random()*accusers.length)];
 }
 }
-// ② 全生存者視点でliar=1または4のキャラが当選
+// ② 自分視点でliar=4（囮）、または全生存者視点でliar=1/5/9のいずれかで統一されているキャラが当選
 if(target===0){
-var bustedAll=targets.filter(function(t){
-for(var obs=1;obs<=5;obs++){
+var decoyForActor=targets.filter(function(t){
+return parseInt(lr[gi(actorNum,t)])===4;
+});
+var unanimous159=targets.filter(function(t){
+for(var obs=1;obs<=parseInt(f.gamemode);obs++){
 if(obs===t)continue;
 if(aliveArr[obs-1]==="0")continue;
 var v=parseInt(lr[gi(obs,t)]);
-if(v!==1&&v!==4)return false;
+if(v!==1&&v!==5&&v!==9)return false;
 }
 return true;
 });
-if(bustedAll.length>0){
-bustedAll.sort(function(a,b){return getCalm(b)-getCalm(a);});
-target=bustedAll[0];
+var candSet=[];
+for(var i=0;i<decoyForActor.length;i++){if(candSet.indexOf(decoyForActor[i])===-1)candSet.push(decoyForActor[i]);}
+for(var j=0;j<unanimous159.length;j++){if(candSet.indexOf(unanimous159[j])===-1)candSet.push(unanimous159[j]);}
+if(candSet.length>0){
+candSet.sort(function(a,b){return getCalm(b)-getCalm(a);});
+target=candSet[0];
 }
 }
 // ③ 自己防衛
@@ -152,57 +157,66 @@ f.target=target;
 [jump  storage="doubt.ks"  target="*ai_calc"  ]
 *ai_mad
 
-[jump  storage="doubt.ks"  target="*ai_seer"  cond="f.result!=2"  ]
+[jump  storage="doubt.ks"  target="*ai_seer"  cond="f.result!=9"  ]
 [iscript]
-var actorNum=parseInt(f.ai_actor);
+var actorNum=parseInt(f.actor);
 var aliveArr=String(f.alive).split(",");
 var lk=String(f.like).split(",");
 var lr=String(f.liar).split(",");
 var coArr=String(f.co).split(",");
-var claimArr=String(f.claim).split(",");
-var claim2Arr=String(f.claim2).split(",");
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
-function getCalm(num){
-if(num===1)return parseFloat(f.mafutsu_calm);
-if(num===2)return parseFloat(f.sisigami_calm);
-if(num===3)return parseFloat(f.murasame_calm);
-if(num===4)return parseFloat(f.kano_calm);
-return parseFloat(f.tendo_calm);
-}
-function isWolfFor(actor,tgt){var v=parseInt(lr[gi(actor,tgt)]);return v===1||v===3;}
+function getClaimList(f_var){if(String(f_var)==="0")return [];var arr=String(f_var).split(',');var res=[];for(var i=0;i<arr.length;i+=4){res.push([parseInt(arr[i]),parseInt(arr[i+1]),parseInt(arr[i+2]),parseInt(arr[i+3])]);}return res;}
+function latestClaimBy(list,reporter){var found=null;for(var i=0;i<list.length;i++){if(list[i][1]===reporter)found=list[i];}return found;}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function getCalm(num){var v=parseFloat(String(f.calm).split(',')[num-1]);if(num===6&&aliveArr[6]==="1")v*=1.2;if(num===7&&aliveArr[5]==="1")v*=1.2;if(num===9&&aliveArr[7]==="1")v*=1.4;return v;}
+function getPC(actor,tgt){return getCalm(tgt)+parseInt(lk[gi(actor,tgt)]);}
+function isWolfFor(actor,tgt){var v=parseInt(lr[gi(actor,tgt)]);return v===1||v===5;}
 function hasCO(num){return coArr[num-1]!=="0";}
 function reportedHuman(actor,tgt){
-var i1=parseInt(claimArr[(actor-1)*2])===tgt&&claimArr[(actor-1)*2+1]==="0";
-var i2=parseInt(claim2Arr[(actor-1)*2])===tgt&&claim2Arr[(actor-1)*2+1]==="0";
+var sc=latestClaimBy(getClaimList(f.sclaim),actor);
+var pc=latestClaimBy(getClaimList(f.pclaim),actor);
+var i1=sc&&sc[2]===tgt&&sc[3]===0;
+var i2=pc&&pc[2]===tgt&&pc[3]===0;
 return i1||i2;
 }
 function getTargets(actor){
+var n=parseInt(f.gamemode);
 var t=[];
-for(var i=1;i<=5;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;if(reportedHuman(actor,i))continue;t.push(i);}
+for(var i=1;i<=n;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;if(reportedHuman(actor,i))continue;t.push(i);}
 return t;
 }
 var targets=getTargets(actorNum);
 var target=0;
+// ①自分視点でliar=4（囮）の相手がいれば最優先で疑う（人狼側*ai_jinroの②相当と同じ考え方）
+if(target===0){
+var decoyForActor=targets.filter(function(t){return parseInt(lr[gi(actorNum,t)])===4;});
+if(decoyForActor.length>0){
+decoyForActor.sort(function(a,b){return getPC(actorNum,b)-getPC(actorNum,a);});
+target=decoyForActor[0];
+}
+}
+// ②liar=1/5（味方保護のため回避）を踏まえた通常選定
+if(target===0){
 var wolfList=targets.filter(function(t){return isWolfFor(actorNum,t);});
 if(wolfList.length>0){
 var others=targets.filter(function(t){return wolfList.indexOf(t)===-1;});
 var coList=others.filter(function(t){return hasCO(t);});
 if(coList.length>0){
-coList.sort(function(a,b){return getCalm(b)-getCalm(a);});
+coList.sort(function(a,b){return getPC(actorNum,b)-getPC(actorNum,a);});
 target=coList[0];
 }else{
-others.sort(function(a,b){return getCalm(b)-getCalm(a);});
+others.sort(function(a,b){return getPC(actorNum,b)-getPC(actorNum,a);});
 if(others.length>0)target=others[0];
 }
 }else{
 var coList=targets.filter(function(t){return hasCO(t);});
 if(coList.length>0){
-coList.sort(function(a,b){return getCalm(b)-getCalm(a);});
+coList.sort(function(a,b){return getPC(actorNum,b)-getPC(actorNum,a);});
 target=coList[0];
 }else{
 var sorted=targets.slice();
-sorted.sort(function(a,b){return getCalm(b)-getCalm(a);});
+sorted.sort(function(a,b){return getPC(actorNum,b)-getPC(actorNum,a);});
 if(sorted.length>0)target=sorted[0];
+}
 }
 }
 f.target=target;
@@ -211,30 +225,26 @@ f.target=target;
 [jump  storage="doubt.ks"  target="*ai_calc"  ]
 *ai_seer
 
-[jump  storage="doubt.ks"  target="*ai_vill"  cond="f.result!=3"  ]
+[jump  storage="doubt.ks"  target="*ai_vill"  cond="f.result!=10"  ]
 [iscript]
-var actorNum=parseInt(f.ai_actor);
+var actorNum=parseInt(f.actor);
 var aliveArr=String(f.alive).split(",");
 var lk=String(f.like).split(",");
 var lr=String(f.liar).split(",");
 var coArr=String(f.co).split(",");
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
-function getCalm(num){
-if(num===1)return parseFloat(f.mafutsu_calm);
-if(num===2)return parseFloat(f.sisigami_calm);
-if(num===3)return parseFloat(f.murasame_calm);
-if(num===4)return parseFloat(f.kano_calm);
-return parseFloat(f.tendo_calm);
-}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function getCalm(num){var v=parseFloat(String(f.calm).split(',')[num-1]);if(num===6&&aliveArr[6]==="1")v*=1.2;if(num===7&&aliveArr[5]==="1")v*=1.2;if(num===9&&aliveArr[7]==="1")v*=1.4;return v;}
 function getPC(actor,tgt){return getCalm(tgt)+parseInt(lk[gi(actor,tgt)]);}
 function getTargets(actor){
+var n=parseInt(f.gamemode);
 var t=[];
-for(var i=1;i<=5;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
+for(var i=1;i<=n;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
 return t;
 }
 function selfDefenseTarget(actor){
+var n=parseInt(f.gamemode);
 var all=[];
-for(var i=1;i<=5;i++){
+for(var i=1;i<=n;i++){
 if(aliveArr[i-1]==="0")continue;
 var pc=(i===actor)?getCalm(actor):getPC(actor,i);
 all.push({num:i,pc:pc});
@@ -245,11 +255,11 @@ return 0;
 }
 var targets=getTargets(actorNum);
 var target=0;
-// ① liar=3（人狼確定）が当選
+// ① liar=5（人狼確定）が当選
 if(target===0){
-var wolf3=targets.filter(function(t){return parseInt(lr[gi(actorNum,t)])===3;});
-if(wolf3.length>0){
-target=wolf3[0];
+var wolf5=targets.filter(function(t){return parseInt(lr[gi(actorNum,t)])===5;});
+if(wolf5.length>0){
+target=wolf5[0];
 }
 }
 // ② liar=1（嘘つき確定）が当選、複数いたら平常心高い優先
@@ -278,29 +288,25 @@ f.target=target;
 *ai_vill
 
 [iscript]
-var actorNum=parseInt(f.ai_actor);
+var actorNum=parseInt(f.actor);
 var aliveArr=String(f.alive).split(",");
 var lk=String(f.like).split(",");
 var lr=String(f.liar).split(",");
 var coArr=String(f.co).split(",");
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
-function getCalm(num){
-if(num===1)return parseFloat(f.mafutsu_calm);
-if(num===2)return parseFloat(f.sisigami_calm);
-if(num===3)return parseFloat(f.murasame_calm);
-if(num===4)return parseFloat(f.kano_calm);
-return parseFloat(f.tendo_calm);
-}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function getCalm(num){var v=parseFloat(String(f.calm).split(',')[num-1]);if(num===6&&aliveArr[6]==="1")v*=1.2;if(num===7&&aliveArr[5]==="1")v*=1.2;if(num===9&&aliveArr[7]==="1")v*=1.4;return v;}
 function getPC(actor,tgt){return getCalm(tgt)+parseInt(lk[gi(actor,tgt)]);}
 function hasCO(num){return coArr[num-1]!=="0";}
 function getTargets(actor){
+var n=parseInt(f.gamemode);
 var t=[];
-for(var i=1;i<=5;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
+for(var i=1;i<=n;i++){if(i===actor)continue;if(aliveArr[i-1]==="0")continue;t.push(i);}
 return t;
 }
 function selfDefenseTarget(actor){
+var n=parseInt(f.gamemode);
 var all=[];
-for(var i=1;i<=5;i++){
+for(var i=1;i<=n;i++){
 if(aliveArr[i-1]==="0")continue;
 var pc=(i===actor)?getCalm(actor):getPC(actor,i);
 all.push({num:i,pc:pc});
@@ -310,12 +316,15 @@ if(all.length>=3&&(all[0].num===actor||all[1].num===actor)){return all[2].num;}
 return 0;
 }
 var targets=getTargets(actorNum);
+// 確定人間（liar=2 または 10以上）は疑わない。候補が全員確定人間の場合のみ元の候補を使う
+var notCleared=targets.filter(function(t){var v=parseInt(lr[gi(actorNum,t)]);return !(v===2||v>=10);});
+if(notCleared.length>0)targets=notCleared;
 var target=0;
-// ① liar=3（人狼確定）が当選
+// ① liar=5（人狼確定）が当選
 if(target===0){
-var wolf3=targets.filter(function(t){return parseInt(lr[gi(actorNum,t)])===3;});
-if(wolf3.length>0){
-target=wolf3[0];
+var wolf5=targets.filter(function(t){return parseInt(lr[gi(actorNum,t)])===5;});
+if(wolf5.length>0){
+target=wolf5[0];
 }
 }
 // ② liar=1（嘘つき確定）が当選、複数いたら平常心高い優先
@@ -337,7 +346,7 @@ target=coList[0];
 // ④ 自己防衛
 if(target===0){
 var defT=selfDefenseTarget(actorNum);
-if(defT)target=defT;
+if(defT&&targets.indexOf(defT)!==-1)target=defT;
 }
 // ⑤ ランダム
 if(target===0&&targets.length>0){
@@ -350,15 +359,11 @@ f.target=target;
 *ai_calc
 
 [iscript]
-var actorNum = parseInt(f.ai_actor);
+var actorNum = parseInt(f.actor);
 var target = parseInt(f.target);
 var lk = String(f.like).split(",");
-function gi(a, b) {
-var o = (a - 1) * 4;
-var t = [];
-for (var i = 1; i <= 5; i++) { if (i !== a) t.push(i); }
-return o + t.indexOf(b);
-}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function isAlive(c){return String(f.alive).split(',')[c-1]==='1';}
 // ゆさぶり力を設定
 var yusaburi;
 if (actorNum === 1) { yusaburi = 0.9; }
@@ -368,113 +373,99 @@ yusaburi = steps[Math.floor(Math.random() * steps.length)];
 }
 else if (actorNum === 3) { yusaburi = 0.6; }
 else if (actorNum === 4) { yusaburi = 0.7; }
-else { yusaburi = 0.8; }
+else if (actorNum === 5) { yusaburi = 0.8; }
+else if (actorNum === 6) { yusaburi = 0.7; if(isAlive(7)) yusaburi *= 1.2; }
+else if (actorNum === 7) { yusaburi = 0.8; if(isAlive(6)) yusaburi *= 1.2; }
+else if (actorNum === 8) { yusaburi = 0.7; if(isAlive(9)) yusaburi *= 1.4; }
+else { yusaburi = 0.6; }
 // 対象の平常心をダメージ分減算
-var damage = 40 * yusaburi;
-function subCalm(num, val) {
-if (num === 1) { f.mafutsu_calm = f.mafutsu_calm - val; }
-else if (num === 2) { f.sisigami_calm = f.sisigami_calm - val; }
-else if (num === 3) { f.murasame_calm = f.murasame_calm - val; }
-else if (num === 4) { f.kano_calm = f.kano_calm - val; }
-else { f.tendo_calm = f.tendo_calm - val; }
-}
-subCalm(target, damage);
+var damage = 30 * yusaburi;
+// 平常心減算ヘルパー（獅子神=2は受けるダメージ1.1倍、gamemode9はさらに最終ダメージ1.2倍）
+function subCalm(num,val,actor){if(num===2){val*=1.1;}if(parseInt(f.gamemode)===9){val*=1.2;}var em=parseInt(f.Ezmode);if(em===2){val*=2;}else if(em===1&&parseInt(actor)!==parseInt(f.player)){val*=0.5;}var arr=String(f.calm).split(',');arr[num-1]=String(parseFloat(arr[num-1])-val);f.calm=arr.join(',');}
+subCalm(target, damage, actorNum);
 // target→actorの好感度-10
 var likeIdx = gi(target, actorNum);
 lk[likeIdx] = parseInt(lk[likeIdx]) - 10;
 f.like = lk.join(",");
 [endscript]
 
-[jump  storage="mafutsu.ks"  target="*doubt2"  cond="f.ai_actor==1"  ]
-[jump  storage="sisigami.ks"  target="*doubt2"  cond="f.ai_actor==2"  ]
-[jump  storage="murasame.ks"  target="*doubt2"  cond="f.ai_actor==3"  ]
-[jump  storage="kano.ks"  target="*doubt2"  cond="f.ai_actor==4"  ]
-[jump  storage="tendo.ks"  target="*doubt2"  cond="f.ai_actor==5"  ]
+*dispatch_doubt2
+
+[jump  storage="mafutsu.ks"  target="*doubt2"  cond="f.actor==1"  ]
+[jump  storage="sisigami.ks"  target="*doubt2"  cond="f.actor==2"  ]
+[jump  storage="murasame.ks"  target="*doubt2"  cond="f.actor==3"  ]
+[jump  storage="kano.ks"  target="*doubt2"  cond="f.actor==4"  ]
+[jump  storage="tendo.ks"  target="*doubt2"  cond="f.actor==5"  ]
+[jump  storage="shigure.ks"  target="*doubt2"  cond="f.actor==6"  ]
+[jump  storage="yamabuki.ks"  target="*doubt2"  cond="f.actor==7"  ]
+[jump  storage="gato.ks"  target="*doubt2"  cond="f.actor==8"  ]
+[jump  storage="urushibara.ks"  target="*doubt2"  cond="f.actor==9"  ]
 *push
 
 [tb_eval  exp="f.push=1"  name="push"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
-[jump  storage="doubt.ks"  target="*push_mafutsu"  cond="f.player==1"  ]
-[jump  storage="doubt.ks"  target="*push_sisigami"  cond="f.player==2"  ]
-[jump  storage="doubt.ks"  target="*push_murasame"  cond="f.player==3"  ]
-[jump  storage="doubt.ks"  target="*push_kano"  cond="f.player==4"  ]
-[jump  storage="doubt.ks"  target="*push_tendo"  cond="f.player==5"  ]
-*push_mafutsu
+[jump  storage="doubt.ks"  target="*push_speech"  ]
+*push_speech
+
+[iscript]
+var p = parseInt(f.player);
+var names=["","真経津","獅子神","村雨","叶","天堂","時雨","山吹","牙頭","漆原"];
+var pushText={
+1:"「強く推すポイントは？間違ったこと言うとむしろ恥ずかしい思いをするよ」",
+2:"「強く推すところはなんだ？」",
+3:"「強く推すその理由は？」",
+4:"「何を理由に強く推すんだ？」",
+5:"「強く推すには理由がいる」",
+6:"「根拠は揃ってるんですか？」",
+7:"「あ～？理由はなんなんだよ」",
+8:"「さすがに理由はあった方がいい」",
+9:"「うん、しっかり根拠を示そうか」"
+};
+var pushChoice={
+1:["直感だけどね","声のトーンが違うくない？","鏡の中に君を助ける答えはない"],
+2:["正直、勘","オレですら怪しく思う","どう考えても人狼"],
+3:["理論はない、医者の勘","生体反応を見ろ","論理的に考えて人狼"],
+4:["観測者の勘","嘘をついている反応","誰の目に観ても人狼"],
+5:["神の直感","神の目からは逃れられない","哀れな咎人に神罰を下そう"],
+6:["刑事の勘","嘘つきなのはバレてますよ","人狼である証拠はあがってます"],
+7:["刑事の勘","嘘つきってバレてっから","証拠はもう揃ってんだよ"],
+8:["オレの直感は当たる","嘘つきなのは間違いない","負け犬程ごちゃごちゃうるせぇ"],
+9:["私的な直感","嘘つきの証拠は既にある","人狼という判決は覆せない"]
+};
+f.name2 = names[p];
+f.pushline1 = pushText[p];
+f.display01 = pushChoice[p][0];
+f.display02 = pushChoice[p][1];
+f.display03 = pushChoice[p][2];
+[endscript]
 
 [tb_start_text mode=1 ]
-#真経津
-「強く推すポイントは？」[p]
-「間違ったこと言うとむしろ恥ずかしい思いをするよ」[p]
+#&f.name2
+[emb exp="f.pushline1"][p]
 [_tb_end_text]
 
-[glink  color="black"  storage="doubt.ks"  size="20"  text="直感だけどね"  target="*damage1"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="声のトーンが違うくない？"  target="*damage2"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="鏡の中に君を助ける答えはない"  target="*damage3"  ]
-[s  ]
-*push_sisigami
-
-[tb_start_text mode=1 ]
-#獅子神
-「強く推すところはなんだ？」[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="doubt.ks"  size="20"  text="正直、勘"  target="*damage1"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="オレですら怪しく思う"  target="*damage2"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="どう考えても人狼"  target="*damage3"  ]
-[s  ]
-*push_murasame
-
-[tb_start_text mode=1 ]
-#村雨
-「強く推すその理由は？」[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="doubt.ks"  size="20"  text="理論はない、医者の勘"  target="*damage1"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="生体反応を見ろ"  target="*damage2"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="論理的に考えて人狼"  target="*damage3"  ]
-[s  ]
-*push_kano
-
-[tb_start_text mode=1 ]
-#叶
-「何を理由に強く推すんだ？」[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="doubt.ks"  size="20"  text="観測者の勘"  target="*damage1"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="嘘をついている反応"  target="*damage2"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="誰の目に観ても人狼"  target="*damage3"  ]
-[s  ]
-*push_tendo
-
-[tb_start_text mode=1 ]
-#天堂
-「強く推すには理由がいる」[p]
-[_tb_end_text]
-
-[glink  color="black"  storage="doubt.ks"  size="20"  text="神の直感"  target="*damage1"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="神の目からは逃れられない"  target="*damage2"  ]
-[glink  color="black"  storage="doubt.ks"  size="20"  text="哀れな咎人に神罰を下そう"  target="*damage3"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="&f.display01"  target="*damage1"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="&f.display02"  target="*damage2"  ]
+[glink  color="black"  storage="doubt.ks"  size="20"  text="&f.display03"  target="*damage3"  ]
 [s  ]
 *damage1
 
-[tb_eval  exp="f.win='d1'"  name="win"  cmd="="  op="t"  val="d1"  val_2="undefined"  ]
+[tb_eval  exp="f.judge='d1'"  name="judge"  cmd="="  op="t"  val="d1"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*push_damage"  ]
 *damage2
 
-[tb_eval  exp="f.win='d2'"  name="win"  cmd="="  op="t"  val="d2"  val_2="undefined"  ]
+[tb_eval  exp="f.judge='d2'"  name="judge"  cmd="="  op="t"  val="d2"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*push2_judge"  ]
 *damage3
 
-[tb_eval  exp="f.win='d3'"  name="win"  cmd="="  op="t"  val="d3"  val_2="undefined"  ]
+[tb_eval  exp="f.judge='d3'"  name="judge"  cmd="="  op="t"  val="d3"  val_2="undefined"  ]
 [jump  storage="doubt.ks"  target="*push3_judge"  ]
 *damage0
 
 [iscript]
 var playerNum=parseInt(f.player);
-if(playerNum===1){f.mafutsu_calm=f.mafutsu_calm-20;}
-else if(playerNum===2){f.sisigami_calm=f.sisigami_calm-20;}
-else if(playerNum===3){f.murasame_calm=f.murasame_calm-20;}
-else if(playerNum===4){f.kano_calm=f.kano_calm-20;}
-else{f.tendo_calm=f.tendo_calm-20;}
+// 平常心減算ヘルパー（獅子神=2は受けるダメージ1.1倍、gamemode9はさらに最終ダメージ1.2倍）
+function subCalm(num,val,actor){if(num===2){val*=1.1;}if(parseInt(f.gamemode)===9){val*=1.2;}var em=parseInt(f.Ezmode);if(em===2){val*=2;}else if(em===1&&parseInt(actor)!==parseInt(f.player)){val*=0.5;}var arr=String(f.calm).split(',');arr[num-1]=String(parseFloat(arr[num-1])-val);f.calm=arr.join(',');}
+subCalm(playerNum,20,playerNum);
 [endscript]
 
 [jump  storage="doubt.ks"  target="*push_back"  ]
@@ -483,22 +474,25 @@ else{f.tendo_calm=f.tendo_calm-20;}
 [iscript]
 var playerNum=parseInt(f.player);
 var targetNum=parseInt(f.target);
+function isAlive(c){return String(f.alive).split(',')[c-1]==='1';}
 var yusaburi;
 if(playerNum===1){yusaburi=0.9;}
 else if(playerNum===2){var steps=[0.5,0.6,0.7,0.8,0.9,1.0];yusaburi=steps[Math.floor(Math.random()*steps.length)];}
 else if(playerNum===3){yusaburi=0.6;}
 else if(playerNum===4){yusaburi=0.7;}
-else{yusaburi=0.8;}
+else if(playerNum===5){yusaburi=0.8;}
+else if(playerNum===6){yusaburi=0.7;if(isAlive(7))yusaburi*=1.2;}
+else if(playerNum===7){yusaburi=0.8;if(isAlive(6))yusaburi*=1.2;}
+else if(playerNum===8){yusaburi=0.7;if(isAlive(9))yusaburi*=1.4;}
+else{yusaburi=0.6;}
 var base=0;
-if(f.win==="d1"){base=10;}
-else if(f.win==="d2"){base=20;}
-else if(f.win==="d3"){base=30;}
+if(f.judge==="d1"){base=10;}
+else if(f.judge==="d2"){base=20;}
+else if(f.judge==="d3"){base=30;}
 var damage=base*yusaburi;
-if(targetNum===1){f.mafutsu_calm=f.mafutsu_calm-damage;}
-else if(targetNum===2){f.sisigami_calm=f.sisigami_calm-damage;}
-else if(targetNum===3){f.murasame_calm=f.murasame_calm-damage;}
-else if(targetNum===4){f.kano_calm=f.kano_calm-damage;}
-else{f.tendo_calm=f.tendo_calm-damage;}
+// 平常心減算ヘルパー（獅子神=2は受けるダメージ1.1倍、gamemode9はさらに最終ダメージ1.2倍）
+function subCalm(num,val,actor){if(num===2){val*=1.1;}if(parseInt(f.gamemode)===9){val*=1.2;}var em=parseInt(f.Ezmode);if(em===2){val*=2;}else if(em===1&&parseInt(actor)!==parseInt(f.player)){val*=0.5;}var arr=String(f.calm).split(',');arr[num-1]=String(parseFloat(arr[num-1])-val);f.calm=arr.join(',');}
+subCalm(targetNum,damage,playerNum);
 [endscript]
 
 [jump  storage="doubt.ks"  target="*push_back"  ]
@@ -507,10 +501,10 @@ else{f.tendo_calm=f.tendo_calm-damage;}
 [iscript]
 var playerNum=parseInt(f.player);
 var targetNum=parseInt(f.target);
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+function gi(a,b){var n=parseInt(f.gamemode);var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
 var lr=String(f.liar).split(",");
 var lv=parseInt(lr[gi(playerNum,targetNum)]);
-f.result=(lv===1||lv===3||lv===4)?0:1;
+f.result=(lv===1||lv===4||lv===5||lv===9)?0:1;
 [endscript]
 
 [jump  storage="doubt.ks"  target="*push_damage"  cond="f.result==0"  ]
@@ -520,20 +514,12 @@ f.result=(lv===1||lv===3||lv===4)?0:1;
 [iscript]
 var playerNum=parseInt(f.player);
 var targetNum=parseInt(f.target);
-var aliveArr=String(f.alive).split(",");
+var n=parseInt(f.gamemode);
 var lr=String(f.liar).split(",");
-var roles=[parseInt(f.mafutsu),parseInt(f.sisigami),parseInt(f.murasame),parseInt(f.kano),parseInt(f.tendo)];
-function gi(a,b){var o=(a-1)*4;var t=[];for(var i=1;i<=5;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
-// ① 全員のライアーに3が入ってるか
-var allThree=true;
-for(var i=1;i<=5;i++){
-if(i===targetNum)continue;
-if(aliveArr[i-1]==="0")continue;
-if(parseInt(lr[gi(i,targetNum)])!==3){allThree=false;break;}
-}
-// ② プレイヤーが本物占い師でライアーに3が入ってるか
-var seerThree=roles[playerNum-1]===3&&parseInt(lr[gi(playerNum,targetNum)])===3;
-f.result=(allThree||seerThree)?0:1;
+function gi(a,b){var o=(a-1)*(n-1);var t=[];for(var i=1;i<=n;i++){if(i!==a)t.push(i);}return o+t.indexOf(b);}
+// プレイヤー視点のライアーが5（確定）のときのみ成功
+var lv=parseInt(lr[gi(playerNum,targetNum)]);
+f.result=(lv===5)?0:1;
 [endscript]
 
 [jump  storage="doubt.ks"  target="*push_damage"  cond="f.result==0"  ]
@@ -545,7 +531,7 @@ var playerNum=parseInt(f.player);
 var currentTarget=parseInt(f.target);
 var aliveArr=String(f.alive).split(",");
 var candidates=[];
-for(var i=1;i<=5;i++){
+for(var i=1;i<=parseInt(f.gamemode);i++){
 if(i===playerNum)continue;
 if(i===currentTarget)continue;
 if(aliveArr[i-1]==="0")continue;
@@ -558,8 +544,8 @@ f.target=candidates[Math.floor(Math.random()*candidates.length)];
 
 [iscript]
 var playerNum=parseInt(f.player);
-var names=["真経津","獅子神","村雨","叶","天堂"];
-f.name2=names[playerNum-1];
+var names=["","真経津","獅子神","村雨","叶","天堂","時雨","山吹","牙頭","漆原"];
+f.name2=names[playerNum];
 [endscript]
 
 [jump  storage="mafutsu.ks"  target="*push_act"  cond="f.target==1"  ]
@@ -567,3 +553,7 @@ f.name2=names[playerNum-1];
 [jump  storage="murasame.ks"  target="*push_act"  cond="f.target==3"  ]
 [jump  storage="kano.ks"  target="*push_act"  cond="f.target==4"  ]
 [jump  storage="tendo.ks"  target="*push_act"  cond="f.target==5"  ]
+[jump  storage="shigure.ks"  target="*push_act"  cond="f.target==6"  ]
+[jump  storage="yamabuki.ks"  target="*push_act"  cond="f.target==7"  ]
+[jump  storage="gato.ks"  target="*push_act"  cond="f.target==8"  ]
+[jump  storage="urushibara.ks"  target="*push_act"  cond="f.target==9"  ]

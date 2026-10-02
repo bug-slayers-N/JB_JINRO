@@ -5,13 +5,9 @@
 
 [iscript]
 // 役職
-f.mafutsu = 3;
-f.sisigami = 2;
-f.murasame = 1;
-f.kano = 5;
-f.tendo = 4;
+f.character = "10,9,1,16,15";
 f.player = 4;
-f.role = 5;
+f.role = 16;
 // 進行
 f.day = 1;
 f.turn = 6;
@@ -19,35 +15,35 @@ f.win = 0;
 f.player_death = 0;
 f.say_human = 0;
 f.action = 0;
+f.tutorial = 1;
 // 平常心
-f.mafutsu_calm = 100;
-f.sisigami_calm = 80;
-f.murasame_calm = -30;
-f.kano_calm = 100;
-f.tendo_calm = 130;
-// like（初期値）
+f.calm = "100,80,-30,100,130";
+// like
 f.like = "10,0,0,0,30,0,0,0,30,0,0,0,10,0,0,0,10,0,0,0";
 // liar
-// 叶(4)・天堂(5)を見る全員→5、獅子神(2)を見る全員→1、真経津視点の村雨(3)→1
-f.liar = "1,1,5,5,0,0,5,5,0,1,5,5,0,1,0,5,0,1,0,5";
+f.liar = "1,1,15,15,0,0,15,15,0,1,15,15,0,1,0,15,0,1,0,15";
 // alive
 f.alive = "1,1,1,1,1";
 // CO：真経津・獅子神・村雨がCO済み
 f.co = "1,1,1,0,0";
-// claim：真経津→獅子神を人間、獅子神→天堂を人狼、村雨→叶を人間
-f.claim = "2,0,5,1,4,0,0,0,0,0";
-f.claim2 = "0,0,0,0,0,0,0,0,0,0";
-// seer_result：真経津が獅子神を人間と占った
-f.seer_result1 = "2,0";
-f.seer_result2 = "0,0";
+// sclaim（占いCOの公開申告ログ／day,報告者,対象,結果の4つ組）：
+// 真経津→獅子神を人間、獅子神→天堂を人狼、村雨→叶を人間　と1日目に申告
+f.sclaim = "1,1,2,0,1,2,5,1,1,3,4,0";
+// pclaim（霊媒COの公開申告ログ）：このチュートリアルでは霊媒COなし
+f.pclaim = "0";
+// seer_result（本物占い師＝真経津の私的な占い結果ログ）：獅子神を人間と占った
+f.seer_result = "2,0";
+// psychic_result（本物霊媒師の私的な結果ログ）：5人モードのため未使用
+f.psychic_result = "0";
 // 投票関連
 f.votes = "0,0,0,0,0";
-f.revote = 0;
-f.vote_disp1 = "";
-f.vote_disp2 = "";
-f.vote_disp3 = "";
-f.vote_disp4 = "";
-f.vote_disp5 = "";
+f.judge = 0;
+f.display01 = "";
+f.display02 = "";
+f.display03 = "";
+f.display04 = "";
+f.display05 = "";
+f.calm_low = 0;
 [endscript]
 
 [bg  time="1000"  method="crossfade"  storage="93853245_p0.png"  ]
@@ -60,7 +56,6 @@ f.vote_disp5 = "";
 [_tb_end_text]
 
 [chara_hide_all  time="1000"  wait="true"  ]
-[tb_eval  exp="f.tutorial=1"  name="tutorial"  cmd="="  op="t"  val="1"  val_2="undefined"  ]
 [call  storage="debate.ks"  target="*check"  ]
 *text
 

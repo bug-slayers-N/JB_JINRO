@@ -22,12 +22,12 @@
 ;タイトル表示
 
 
-[bg  storage="BG_title.png"  ]
+[bg  storage="BG_title_v2_261001.png"  ]
 *title
 
-[glink  color="btn_05_red"  text="・はじめから・"  x="330"  y="550"  size="20"  target="*start"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_05_black"  text="・つづきから・"  x="550"  y="550"  size="20"  target="*load"  width=""  height=""  _clickable_img=""  ]
-[glink  color="btn_05_white"  text="・　おまけ　・"  x="770"  y="550"  size="20"  target="*omake_top"  width=""  height=""  _clickable_img=""  storage="omake.ks"  ]
+[glink  color="btn_05_red"  text="・はじめから・"  x="290"  y="580"  size="20"  target="*start"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_black"  text="・つづきから・"  x="550"  y="580"  size="20"  target="*load"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_white"  text="・　おまけ　・"  x="810"  y="580"  size="20"  target="*omake_top"  width=""  height=""  _clickable_img=""  storage="omake.ks"  ]
 [s  ]
 
 ;-------ボタンが押されたときの処理

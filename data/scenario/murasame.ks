@@ -2,16 +2,24 @@
 
 *show
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[2])<27?1:0;
+[endscript]
+
 [chara_hide_all  time="500"  wait="true"  ]
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show2
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[2])<27?1:0;
+[endscript]
+
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show_normal
 
-[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<27"  ]
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_normal.png"  ]
 [return  ]
 *show_normal2
@@ -24,7 +32,7 @@
 [return  ]
 *show_do
 
-[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.murasame_calm<27"  ]
+[jump  storage="murasame.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="murasame"  time="300"  cross="false"  storage="chara/3/murasame_do.png"  ]
 [return  ]
 *show_ai
@@ -66,7 +74,6 @@
 *debate01
 
 [call  storage="murasame.ks"  target="*debate_Top"  ]
-[call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
 [jump  storage="murasame.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
 #村雨
@@ -82,6 +89,10 @@
 
 [return  ]
 *debate_Top
+
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[2])<27?1:0;
+[endscript]
 
 [chara_show  name="murasame"  time="1000"  wait="true"  storage="chara/3/murasame_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
 [call  storage="murasame.ks"  target="*show_normal"  ]
@@ -119,7 +130,10 @@
 [jump  storage="doubt.ks"  target="*doubt"  ]
 *doubt2
 
+[jump  storage="murasame.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="murasame.ks"  target="*show"  ]
+*doubt3
+
 [call  storage="murasame.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
@@ -127,9 +141,9 @@
 「[emb exp="f.name"]が怪しい」[p]
 [_tb_end_tyrano_code]
 
-[call  storage="murasame.ks"  target="*push"  cond="f.win=='d1'"  ]
-[call  storage="murasame.ks"  target="*push2"  cond="f.win=='d2'"  ]
-[call  storage="murasame.ks"  target="*push3"  cond="f.win=='d3'"  ]
+[call  storage="murasame.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="murasame.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="murasame.ks"  target="*push3"  cond="f.judge=='d3'"  ]
 [jump  storage="doubt.ks"  target="*show"  ]
 *push
 
@@ -175,8 +189,11 @@
 [jump  storage="cover.ks"  target="*cover"  ]
 *cover2
 
+[jump  storage="murasame.ks"  target="*add"  cond="f.judge=='add'"  ]
 [chara_hide_all  time="0"  wait="true"  ]
 [call  storage="murasame.ks"  target="*show"  ]
+*cover3
+
 [call  storage="murasame.ks"  target="*show_normal"  ]
 [call  storage="UI.ks"  target="*name_change"  ]
 [tb_start_tyrano_code]
@@ -197,7 +214,6 @@
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
-[tb_eval  exp="f.murasame_calm=110"  name="murasame_calm"  cmd="="  op="t"  val="110"  val_2="undefined"  ]
 [call  storage="murasame.ks"  target="*show"  ]
 [call  storage="murasame.ks"  target="*show_do"  ]
 [tb_start_text mode=1 ]
@@ -210,16 +226,25 @@
 *CO
 
 [call  storage="murasame.ks"  target="*show2"  ]
-[call  storage="murasame.ks"  target="*CO2"  cond="f.role2=='co'"  ]
+[call  storage="murasame.ks"  target="*CO2"  cond="f.judge=='co'"  ]
 [call  storage="murasame.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
+[jump  storage="murasame.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[tb_start_tyrano_code]
 #村雨
-「言っておく、私が占い師だ」[p]
-[_tb_end_text]
+「言っておく、私が[emb exp="f.display09"]だ」[p]
+[_tb_end_tyrano_code]
 
 [tb_start_tyrano_code]
-[emb exp="f.name"]を占った。結果は[emb exp="f.name2"]だ。[p]
+[emb exp="f.name"]を診断した。結果は[emb exp="f.name2"]だ。[p]
 [_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
+[tb_start_text mode=1 ]
+#村雨
+「霊媒師は私だが、結果は明日だ」[p]
+[_tb_end_text]
 
 [return  ]
 *CO2
@@ -253,10 +278,10 @@
 
 [call  storage="murasame.ks"  target="*show2"  ]
 [call  storage="murasame.ks"  target="*show_normal"  ]
-[tb_start_text mode=1 ]
+[tb_start_tyrano_code]
 #村雨
-「占い師は名乗り出るべきではないか？」[p]
-[_tb_end_text]
+「[emb exp="f.display09"]は名乗り出るべきではないか？」[p]
+[_tb_end_tyrano_code]
 
 [return  ]
 *s_human
@@ -278,7 +303,7 @@
 「当然、村人陣営だ」[p]
 [_tb_end_text]
 
-[return  ]
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
 *noisy
 
 [call  storage="murasame.ks"  target="*show2"  ]
@@ -364,7 +389,7 @@
 [return  ]
 *stop
 
-[call  storage="murasame.ks"  target="*show2"  ]
+[call  storage="murasame.ks"  target="*show"  ]
 [tb_start_text mode=1 ]
 #村雨
 「声をかける側は人間宣言しないのであろう？ならばむしろ怪しい」[p]
@@ -373,6 +398,7 @@
 [return  ]
 *stop2
 
+[call  storage="murasame.ks"  target="*show2"  ]
 [call  storage="murasame.ks"  target="*show_ai"  ]
 [tb_start_text mode=1 ]
 #村雨
@@ -380,3 +406,14 @@
 [_tb_end_text]
 
 [return  ]
+*add
+
+[call  storage="murasame.ks"  target="*show2"  ]
+[call  storage="murasame.ks"  target="*show_normal"  ]
+[tb_start_text mode=1 ]
+#村雨
+「私からも言わせてもらおう」[p]
+[_tb_end_text]
+
+[jump  storage="murasame.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="murasame.ks"  target="*cover3"  ]

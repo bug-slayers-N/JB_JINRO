@@ -21,10 +21,10 @@
 [tb_start_text mode=1 ]
 #システム
 Q.うるさいの条件は何？何か悪いこと起こってる？[p]
-A.プレイヤーによるコマンド率が50％を越えると"うるさい"されます。2日目以降は時期を問わず2回まで発言可能です。うるさいされるとプレイヤーの平常心が下がります。[p]
+A.7ターンの日は4回以上、5ターンの日は3回以上行動するとうるさいされ、プレイヤーの平常心が下がります。[p]
 Q.強く疑うで突っ込まれないためには？[p]
-A.一番目の選択肢は突っ込まれません。二番目は嘘つきを見つけていない状態で使うと突っ込まれます。三番目は人狼を見つけていないと突っ込まれます、正直占い師じゃないと使いどころないです。[p]
-Q.占い報告って後出し側が調整してる？先にCOした占い師が信頼できる？[p]
+A.一番目の選択肢は突っ込まれません。二番目は嘘つきと判明していない時に使うと突っ込まれます。三番目は人狼と判明していない時に使うと突っ込まれます、正直占い師じゃないと使いどころないです。[p]
+Q.占いや霊媒師の報告って後出し側が調整してる？先にCOした方が信頼できる？[p]
 A.そういった仕様は一切実装されていません。COの順番は推理に殆ど意味ない要素とお考えください。[p]
 Q.占い師2人の黒出しが被ったら人狼確定では？突っ込みされたんだけど？[p]
 A.一部のキャラは真占い師でも潜伏する場合があります。つまり占い師二人が黒出ししてもそれは人狼＆狂人の場合があるので人狼確定判定にはなりません。[p]
@@ -36,6 +36,8 @@ Q.コラボとか募集してる？ゲーム制作に興味ある。[p]
 A.してます！詳しくはらきのXのプロフにあるリトリンから！ゲ制経験不問ですが同人誌等の締切を守った実績が必須です。[p]
 Q.これ作ったヤツ、正気？[p]
 A.正気な訳ありません。ゲームが面白かったら、正気に戻さないようにプレイ報告して欲しいです！配信はわかりやすいところに非公式ってかいたらOKです。[p]
+Q.13人版いつ来るの？早く実装して？[p]
+A.イラスト担当のサカゴメさんの負担が大きいため、是非サカゴメさんにエールを送ってみましょう！[p]
 [_tb_end_text]
 
 [tb_hide_message_window  ]
@@ -103,7 +105,8 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [glink  color="gray"  storage="omake_story.ks"  size="20"  text="ストーリー15"  target="*s15"  x="1030"  y="550"  width=""  height=""  _clickable_img=""  ]
 *te_s03
 
-[glink  color="btn_01_red"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="1105"  y="30"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_purple"  storage="omake.ks"  size="20"  text="次のページへ"  target="*story2"  x="1078"  y="15"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_lime"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="52"  y="21"  width=""  height=""  _clickable_img=""  ]
 [s  ]
 *story_start
 
@@ -115,3 +118,38 @@ A.正気な訳ありません。ゲームが面白かったら、正気に戻さ
 [chara_hide_all  time="1000"  wait="true"  ]
 [tb_hide_message_window  ]
 [jump  storage="omake.ks"  target="*story"  ]
+*story_end2
+
+[chara_hide_all  time="1000"  wait="true"  ]
+[tb_hide_message_window  ]
+[jump  storage="omake.ks"  target="*story2"  ]
+*story2
+
+[bg  time="1000"  method="crossfade"  storage="omake2.png"  ]
+[glink  color="btn_05_purple"  storage="omake.ks"  size="20"  text="前のページへ"  target="*story"  x="1078"  y="15"  width=""  height=""  _clickable_img=""  ]
+[glink  color="btn_05_lime"  storage="omake.ks"  size="20"  text="おまけに戻る"  target="*omake_top"  x="52"  y="21"  width=""  height=""  _clickable_img=""  ]
+[jump  storage="omake.ks"  target="*keiji_s01"  cond="sf.keiji_s01!=1"  ]
+[glink  color="green"  storage="omake_story.ks"  size="20"  text="ストーリー16"  target="*s16"  x="178"  y="412"  width=""  height=""  _clickable_img=""  ]
+*keiji_s01
+
+[jump  storage="omake.ks"  target="*keiji_s02"  cond="sf.keiji_s02!=1"  ]
+[glink  color="green"  storage="omake_story.ks"  size="20"  text="ストーリー17"  target="*s17"  x="178"  y="482"  width=""  height=""  _clickable_img=""  ]
+*keiji_s02
+
+[jump  storage="omake.ks"  target="*keiji_s03"  cond="sf.keiji_s03!=1"  ]
+[glink  color="green"  storage="omake_story.ks"  size="20"  text="ストーリー18"  target="*s18"  x="178"  y="552"  width=""  height=""  _clickable_img=""  ]
+*keiji_s03
+
+[jump  storage="omake.ks"  target="*amigo_s01"  cond="sf.amigo_s01!=1"  ]
+[glink  color="white"  storage="omake_story.ks"  size="20"  text="ストーリー19"  target="*s19"  x="900"  y="412"  width=""  height=""  _clickable_img=""  ]
+*amigo_s01
+
+[jump  storage="omake.ks"  target="*amigo_s02"  cond="sf.amigo_s02!=1"  ]
+[glink  color="white"  storage="omake_story.ks"  size="20"  text="ストーリー20"  target="*s20"  x="900"  y="482"  width=""  height=""  _clickable_img=""  ]
+*amigo_s02
+
+[jump  storage="omake.ks"  target="*amigo_s03"  cond="sf.amigo_s03!=1"  ]
+[glink  color="white"  storage="omake_story.ks"  size="20"  text="ストーリー21"  target="*s21"  x="900"  y="552"  width=""  height=""  _clickable_img=""  ]
+*amigo_s03
+
+[s  ]

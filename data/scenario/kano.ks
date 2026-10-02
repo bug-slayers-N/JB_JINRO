@@ -10,16 +10,24 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[3])<25?1:0;
+[endscript]
+
 [chara_hide_all  time="500"  wait="true"  ]
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show2
 
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[3])<25?1:0;
+[endscript]
+
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  ]
 [return  ]
 *show_normal
 
-[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<25"  ]
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_normal.png"  ]
 [return  ]
 *show_normal2
@@ -32,7 +40,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [return  ]
 *show_do
 
-[jump  storage="kano.ks"  target="*show_normal2"  cond="f.kano_calm<25"  ]
+[jump  storage="kano.ks"  target="*show_normal2"  cond="f.calm_low==1"  ]
 [chara_mod  name="kano"  time="300"  cross="false"  storage="chara/4/kano_do.png"  ]
 [return  ]
 *show_ai
@@ -75,7 +83,6 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *debate01
 
 [call  storage="kano.ks"  target="*debate_Top"  ]
-[call  storage="uranai.ks"  target="*game_start"  cond="f.role==3"  ]
 [jump  storage="kano.ks"  target="*first"  cond="f.turn!=0"  ]
 [tb_start_text mode=1 ]
 #叶
@@ -91,6 +98,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 
 [return  ]
 *debate_Top
+
+[iscript]
+f.calm_low=parseFloat(String(f.calm).split(',')[3])<25?1:0;
+[endscript]
 
 [chara_show  name="kano"  time="1000"  wait="true"  storage="chara/4/kano_normal.png"  width="320"  height="720"  left="700"  top=""  reflect="false"  ]
 [call  storage="kano.ks"  target="*show_normal"  ]
@@ -128,7 +139,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [jump  storage="doubt.ks"  target="*doubt"  ]
 *doubt2
 
+[jump  storage="kano.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="kano.ks"  target="*show"  ]
+*doubt3
+
 [call  storage="UI.ks"  target="*name_change"  ]
 [call  storage="kano.ks"  target="*kano_namechange"  ]
 [tb_start_tyrano_code]
@@ -136,9 +150,9 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 「[emb exp="f.name"]が怪しいんだよなぁ」[p]
 [_tb_end_tyrano_code]
 
-[call  storage="kano.ks"  target="*push"  cond="f.win=='d1'"  ]
-[call  storage="kano.ks"  target="*push2"  cond="f.win=='d2'"  ]
-[call  storage="kano.ks"  target="*push3"  cond="f.win=='d3'"  ]
+[call  storage="kano.ks"  target="*push"  cond="f.judge=='d1'"  ]
+[call  storage="kano.ks"  target="*push2"  cond="f.judge=='d2'"  ]
+[call  storage="kano.ks"  target="*push3"  cond="f.judge=='d3'"  ]
 [jump  storage="doubt.ks"  target="*show"  ]
 *push
 
@@ -188,7 +202,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [jump  storage="cover.ks"  target="*cover"  ]
 *cover2
 
+[jump  storage="kano.ks"  target="*add"  cond="f.judge=='add'"  ]
 [call  storage="kano.ks"  target="*show"  ]
+*cover3
+
 [call  storage="UI.ks"  target="*name_change"  ]
 [call  storage="kano.ks"  target="*kano_namechange"  ]
 [call  storage="kano.ks"  target="*show_ki"  ]
@@ -210,7 +227,6 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 [jump  storage="vote.ks"  target="*player_vote"  ]
 *death
 
-[tb_eval  exp="f.kano_calm=100"  name="kano_calm"  cmd="="  op="t"  val="100"  val_2="undefined"  ]
 [call  storage="kano.ks"  target="*show"  ]
 [call  storage="kano.ks"  target="*show_do"  ]
 [tb_start_text mode=1 ]
@@ -223,17 +239,23 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 *CO
 
 [call  storage="kano.ks"  target="*show2"  ]
-[call  storage="kano.ks"  target="*CO2"  cond="f.role2=='co'"  ]
+[call  storage="kano.ks"  target="*CO2"  cond="f.judge=='co'"  ]
 [call  storage="kano.ks"  target="*show_ki"  ]
 [call  storage="kano.ks"  target="*kano_namechange"  ]
+[jump  storage="kano.ks"  target="*CO_day1"  cond="f.jump=='day1'"  ]
+[tb_start_tyrano_code]
+#叶
+「じゃーん！オレが[emb exp="f.display09"]！」[p]
+「[emb exp="f.name"]は[emb exp="f.name2"]だったぞ！[p]
+[_tb_end_tyrano_code]
+
+[return  ]
+*CO_day1
+
 [tb_start_text mode=1 ]
 #叶
-「じゃーん！オレが占い師！」[p]
+「霊媒師はオレだけど、結果は明日のお楽しみだな」[p]
 [_tb_end_text]
-
-[tb_start_tyrano_code]
-[emb exp="f.name"]を占ったぞ！結果は[emb exp="f.name2"]！[p]
-[_tb_end_tyrano_code]
 
 [return  ]
 *CO2
@@ -267,10 +289,10 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 
 [call  storage="kano.ks"  target="*show2"  ]
 [call  storage="kano.ks"  target="*show_ki"  ]
-[tb_start_text mode=1 ]
+[tb_start_tyrano_code]
 #叶
-「占い師が名乗り出た方が面白くない？」[p]
-[_tb_end_text]
+「[emb exp="f.display09"]が名乗り出た方が面白くない？」[p]
+[_tb_end_tyrano_code]
 
 [return  ]
 *s_human
@@ -292,7 +314,7 @@ if(nameMap[f.name]!==undefined)f.name=nameMap[f.name];
 「村人に決まってんじゃーん」[p]
 [_tb_end_text]
 
-[return  ]
+[jump  storage="say_human.ks"  target="*say_human_reply"  ]
 *noisy
 
 [call  storage="kano.ks"  target="*show2"  ]
@@ -392,7 +414,7 @@ if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 [return  ]
 *stop
 
-[call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show"  ]
 [call  storage="kano.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #叶
@@ -402,6 +424,7 @@ if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 [return  ]
 *stop2
 
+[call  storage="kano.ks"  target="*show2"  ]
 [call  storage="kano.ks"  target="*show_ki"  ]
 [tb_start_text mode=1 ]
 #叶
@@ -409,3 +432,14 @@ if(nameMap[f.name2]!==undefined) f.name2=nameMap[f.name2];
 [_tb_end_text]
 
 [return  ]
+*add
+
+[call  storage="kano.ks"  target="*show2"  ]
+[call  storage="kano.ks"  target="*show_ki"  ]
+[tb_start_text mode=1 ]
+#叶
+「オレからもいい？」[p]
+[_tb_end_text]
+
+[jump  storage="kano.ks"  target="*doubt3"  cond="f.jump=='doubt'"  ]
+[jump  storage="kano.ks"  target="*cover3"  ]
