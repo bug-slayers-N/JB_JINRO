@@ -149,9 +149,18 @@ return t;
 function pickLowest(a,arr){var best=-1,bc=999999;for(var i=0;i<arr.length;i++){var c=arr[i],pc=getPC(a,c);if(pc<bc||(pc===bc&&c<best)){bc=pc;best=c;}}return best;}
 var pn=parseInt(f.player);
 var n=parseInt(f.gamemode);
+var aliveCount=0;
+for(var i=1;i<=n;i++){if(isAlive(i))aliveCount++;}
 for(var actor=1;actor<=n;actor++){
 if(actor===pn||!isAlive(actor)||getRole(actor)!==9)continue;
 var votable=getVotable(actor),target=-1;
+// 生存者4人以下の終盤では、狂人視点で人狼(liar=5)と分かっている相手に投票すると人狼陣営の数的不利に直結するため、
+// 他に候補がいる限り最初から投票先の対象外にする（残り全員が人狼の場合のみやむを得ず含める）
+if(aliveCount<=4){
+var safeVotable=[];
+for(var i=0;i<votable.length;i++){if(getLiar(actor,votable[i])!==5)safeVotable.push(votable[i]);}
+if(safeVotable.length>0)votable=safeVotable;
+}
 if(hasCO(actor)){
 var opp=[];
 for(var i=0;i<votable.length;i++){if(hasCO(votable[i]))opp.push(votable[i]);}
