@@ -305,7 +305,8 @@ var resultNames=["人間","人狼"];
 var coArr=String(f.co).split(",");
 var today=parseInt(f.day);
 // kindは"s"(占い師/sclaim)または"p"(霊媒師/pclaim)。1種別分のテキストを丸ごと組み立てる
-// UI.ksの状況確認は当日(f.day)分の申告は表示しない
+// UI.ksの状況確認は、夜フェーズ(f.name2=='night')の時のみ当日(f.day)分の申告を表示しない。
+// 投票フェーズなど夜以外でこの状況確認が開かれた場合は、当日分の申告もdebate.ksと同様に表示する。
 // 霊媒師(kind==="p")のみ、CO済みだが当日分を除いた記帳が無い報告者を「結果無し」として補って表示する
 function buildClaimText(kind){
 var raw=(kind==="s")?String(f.sclaim):String(f.pclaim);
@@ -316,11 +317,11 @@ if(raw!=="0"){
 var arr=raw.split(',');
 for(var i=0;i<arr.length;i+=4){claims.push([parseInt(arr[i]),parseInt(arr[i+1]),parseInt(arr[i+2]),parseInt(arr[i+3])]);}
 }
-// 報告者ごとにまとめる：{reporter:[[day,target,result],...]}（当日分は除外）
+// 報告者ごとにまとめる：{reporter:[[day,target,result],...]}（夜フェーズのみ当日分は除外）
 var byReporter={};
 for(var j=0;j<claims.length;j++){
 var day=claims[j][0],reporter=claims[j][1],target=claims[j][2],result=claims[j][3];
-if(day===today)continue;
+if(f.name2==='night'&&day===today)continue;
 if(!byReporter[reporter])byReporter[reporter]=[];
 byReporter[reporter].push([day,target,result]);
 }

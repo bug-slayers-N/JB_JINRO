@@ -311,27 +311,27 @@ if(wolfNames.length>0)f.display01="仲間の人狼→"+wolfNames.join("、");
 [jump  storage="debate.ks"  target="*check_wolf_skip"  cond="f.display01==''"  ][p]
 [emb exp="f.display01"][p]
 
-*check_wolf_skip[p]
+*check_wolf_skip
 
 [jump  storage="debate.ks"  target="*check_seer_skip"  cond="f.display04==''"  ][p]
 [emb exp="f.display04"][p]
 
-*check_seer_skip[p]
+*check_seer_skip
 
 [jump  storage="debate.ks"  target="*check_psychic_skip"  cond="f.display05==''"  ][p]
 [emb exp="f.display05"][p]
 
-*check_psychic_skip[p]
+*check_psychic_skip
 
 [jump  storage="debate.ks"  target="*check_sclaim_skip"  cond="f.display02==''"  ][p]
 [emb exp="f.display02"][p]
 
-*check_sclaim_skip[p]
+*check_sclaim_skip
 
 [jump  storage="debate.ks"  target="*check_pclaim_skip"  cond="f.display03==''"  ][p]
 [emb exp="f.display03"][p]
 
-*check_pclaim_skip[p]
+*check_pclaim_skip
 
 [_tb_end_text]
 

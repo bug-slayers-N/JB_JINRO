@@ -129,11 +129,13 @@ var p=parseInt(f.player),r=parseInt(f.role),w=parseInt(f.win);
 var n=parseInt(f.gamemode);
 var ac=String(f.alive).split(',').filter(function(v){return v==='1';}).length;
 var pd=isAlive(p);
-// win2判定（人狼プレイヤーが狂人と2人生存で勝利）
+// win2判定（人狼陣営(role<10)の全キャラが生存して勝利）
 if(isWolfTeam(r)&&r!==9){
-var survivors=[];
-for(var i=1;i<=n;i++){if(isAlive(i))survivors.push(getRole(i));}
-if(survivors.length===2&&survivors.some(function(v){return v===r;})&&survivors.some(function(v){return v===9;})){
+var allWolfAlive=true;
+for(var i=1;i<=n;i++){
+if(getRole(i)<10&&!isAlive(i)){allWolfAlive=false;break;}
+}
+if(allWolfAlive){
 f.list='win2';
 }
 }
