@@ -3,7 +3,7 @@
 [tb_show_message_window  ]
 *night
 
-// 夜フェーズ判定用フラグ（一時変数f.name2を流用）。debate.ksの*debate_topで次の討論開始時に""へリセットされる。
+
 [tb_eval  exp="f.name2='night'"  name="name2"  cmd="="  op="t"  val="night"  val_2="undefined"  ]
 
 *liar_execution
