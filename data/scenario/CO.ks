@@ -73,6 +73,8 @@ f.display09=(result===1)?"占い師":"霊媒師";
 [call  storage="urushibara.ks"  target="*pCO"  cond="f.actor==9"  ]
 *please_CO_characall_end
 
+[jump  storage="CO.ks"  target="*PCO_tendo"  cond="f.keep==5"  ]
+
 *player_CO_start
 
 [iscript]
@@ -137,6 +139,93 @@ f.co=coArr.join(",");
 
 [bg  time="500"  method="crossfade"  storage="93853245_p0.png"  ]
 [jump  storage="CO.ks"  target="*CO_characall"  ]
+*PCO_tendo
+
+[iscript]
+// ===== 天堂(5番)が呼びかけ人の場合専用：通常抽選・プレイヤーへのCO確認より前に割り込み、 =====
+// ===== 「本物の役職者」と「人狼陣営(ロール10未満)の偽CO役」を先に両方確定させてしまう。 =====
+// ===== プレイヤーが対象になってもCOする/しないを選ばせず、強制的にCOへ合流させる。 =====
+var n=parseInt(f.gamemode);
+var caller=parseInt(f.keep); // ここでは常に5（天堂）
+var aliveArr=String(f.alive).split(",");
+var coArr=String(f.co).split(",");
+var charArr=String(f.character).split(",").map(Number);
+var pArr=[0,2,0,0,2,1,1,2,2,0];
+function getRole(i){return charArr[i-1];}
+
+// ----- 本物の役職者：生存・未COの場合のみ有効（抽選ではなく一意に特定） -----
+var specRoleT=(parseInt(f.result)===1)?10:11;
+var personB=0;
+for(var i=1;i<=n;i++){
+if(getRole(i)===specRoleT&&aliveArr[i-1]!=="0"&&coArr[i-1]==="0"){personB=i;break;}
+}
+
+// ----- 人狼陣営(ロール10未満)の偽CO役プール：生存・未CO -----
+var wolfPool=[];
+for(var j=1;j<=n;j++){
+if(aliveArr[j-1]==="0")continue;
+if(coArr[j-1]!=="0")continue;
+if(getRole(j)>=10)continue;
+wolfPool.push(j);
+}
+// 本物が不在（当選者を2人出せない）場合は、天堂自身をこのプールから除外する
+if(personB===0){
+wolfPool=wolfPool.filter(function(x){return x!==caller;});
+}
+
+// ----- 人狼陣営プールから性格重み(積極的3:普通2:消極的1)で1人抽選 -----
+var personA=0;
+if(wolfPool.length>0){
+var weights=wolfPool.map(function(c){
+var p=pArr[c];
+return (p===2)?3:(p===1)?2:1;
+});
+var totalW=0;
+for(var w=0;w<weights.length;w++)totalW+=weights[w];
+var rnd=Math.random()*totalW;
+var acc=0;
+for(var w2=0;w2<wolfPool.length;w2++){
+acc+=weights[w2];
+if(rnd<acc){personA=wolfPool[w2];break;}
+}
+}
+
+// ----- 1人目・2人目の割り当て（天堂が当選した場合は必ず2番目に固定） -----
+var first=0,second=0;
+if(personA>0&&personB>0){
+if(Math.random()<0.5){first=personA;second=personB;}
+else{first=personB;second=personA;}
+if(first===caller){
+second=first;
+first=(first===personA)?personB:personA;
+}
+}else if(personA>0){
+first=personA;second=99;
+}else if(personB>0){
+first=personB;second=99;
+}
+// 2人目だけを持ち越す（1人目はこの場で即消費。f.keepはspecialist.ksの偽CO処理で上書きされるため当てにしない）
+// 「T2:日数:2人目」形式。night.ks等がdisplay02に数値を入れるため、専用の目印と日数で誤作動を防ぐ
+f.display02="T2:"+parseInt(f.day)+":"+second;
+var pn=parseInt(f.player);
+if(first===0){
+f.display02="";
+f.jump=0;
+}else if(first===pn){
+f.actor=pn;
+f.jump=1;
+}else{
+f.actor=first;
+var countArr=String(f.count).split(',');
+countArr[first-1]=String(parseInt(countArr[first-1],10)+1);
+f.count=countArr.join(',');
+f.jump=2;
+}
+[endscript]
+
+[jump  storage="CO.ks"  target="*AI_lottery_end"  cond="f.jump==0"  ]
+[jump  storage="CO.ks"  target="*player_CO"  cond="f.jump==1"  ]
+[jump  storage="CO.ks"  target="*AI_CO"  ]
 *AI_lottery
 
 [iscript]
@@ -314,6 +403,13 @@ f.name2 = resultNames[latest[3]];
 *vsCO
 
 [iscript]
+var dp=String(f.display02).split(":");
+f.jump=(dp[0]==="T2"&&parseInt(dp[1])===parseInt(f.day))?"tendo2":0;
+[endscript]
+
+[jump  storage="CO.ks"  target="*PCO_tendo2"  cond="f.jump=='tendo2'"  ]
+
+[iscript]
 var pn=parseInt(f.player);
 var coArr=String(f.co).split(",");
 var playerCoed=coArr[pn-1]!=="0";
@@ -343,6 +439,34 @@ f.jump=qualifies?100:0;
 *player_vsCO_no
 
 [jump  storage="CO.ks"  target="*AI_vsCO"  ]
+*PCO_tendo2
+
+[iscript]
+// ===== 天堂(5番)が呼びかけ人の場合専用：対抗COのプレイヤー確認・確率抽選より前に割り込み、 =====
+// ===== *PCO_tendoで確定済みの2人目をそのまま合流させる。99なら対抗COなし＝*endへ直行。 =====
+var dp=String(f.display02).split(":");
+f.display02=""; // 使用後は即クリア（滞留・誤作動防止）
+f.jump=parseInt(dp[2]);
+[endscript]
+
+[jump  storage="CO.ks"  target="*end"  cond="f.jump==99"  ]
+
+[iscript]
+var pn=parseInt(f.player);
+var target=parseInt(f.jump);
+if(target===pn){
+f.actor=pn;
+}else{
+f.actor=target;
+var countArr=String(f.count).split(',');
+countArr[target-1]=String(parseInt(countArr[target-1],10)+1);
+f.count=countArr.join(',');
+}
+f.judge='co';
+[endscript]
+
+[jump  storage="CO.ks"  target="*player_CO"  cond="f.actor==f.player"  ]
+[jump  storage="CO.ks"  target="*AI_CO"  ]
 *AI_vsCO
 
 [iscript]
