@@ -173,12 +173,14 @@ if(personB===0){
 wolfPool=wolfPool.filter(function(x){return x!==caller;});
 }
 
-// ----- 人狼陣営プールから性格重み(積極的3:普通2:消極的1)で1人抽選 -----
+// ----- 人狼陣営プールから「性格基礎値×役職倍数」の重みで1人抽選 -----
 var personA=0;
 if(wolfPool.length>0){
 var weights=wolfPool.map(function(c){
 var p=pArr[c];
-return (p===2)?3:(p===1)?2:1;
+var base=(p===2)?3:(p===1)?2:1; // 性格基礎値（積極的3・普通2・消極的1）
+var mult=(getRole(c)===9)?3:1; // 役職倍数（狂人は3倍、人狼は1倍）
+return base*mult;
 });
 var totalW=0;
 for(var w=0;w<weights.length;w++)totalW+=weights[w];
